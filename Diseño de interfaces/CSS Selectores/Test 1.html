@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome file</title>
+<link href="https://stackedit.io/style.css" rel="stylesheet"/>
+</head>
+<body class="stackedit">
+<div class="stackedit__html"><h3 id="section">1.</h3>
+<p>Dado el selector:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">article  p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué selecciona?</p>
+<p>A. Todos los párrafos del documento.<br/>
+B. Solo los párrafos que estén dentro de un <code>&lt;article&gt;</code>.<br/>
+C. El primer párrafo dentro de un <code>&lt;article&gt;</code>.<br/>
+D. Solo los <code>&lt;article&gt;</code> que contengan párrafos.</p>
+<hr/>
+<h3 id="section-1">2.</h3><form><label><input name="q2" type="radio"/> A. Seleccionar todos los elementos de la página.B. Seleccionar únicamente los elementos de texto.C. Seleccionar todos los elementos con clase.D. Seleccionar elementos con cualquier atributo.</label><br/></form>
+<p>¿Cuál es el propósito del selector universal <code>*</code>?</p>
+
+<hr/>
+<h3 id="section-2">3.</h3>
+<p>Si tienes:</p>
+<pre class="language-css"><code class="prism language-css">&lt;h<span class="token number">2</span>  class=<span class="token string">"aviso"</span>&gt;Atención&lt;/h<span class="token number">2</span>&gt; 
+&lt;p  class=<span class="token string">"aviso urgente"</span>&gt;Mensaje importante&lt;/p&gt; 
+</code></pre>
+<p>Y aplicas el siguiente CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token class">.aviso.urgente</span> </span><span class="token punctuation">{</span> <span class="token property">background</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué ocurrirá?</p>
+<p>A. Ambos elementos tendrán fondo amarillo.<br/>
+B. Solo el <code>&lt;p&gt;</code> tendrá fondo amarillo.<br/>
+C. Ningún elemento se verá afectado.<br/>
+D. Solo el <code>&lt;h2&gt;</code> tendrá fondo amarillo.</p>
+<hr/>
+<h3 id="section-3">4.</h3>
+<p>Dado el siguiente HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span> 
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Elemento 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Elemento 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Elemento 3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>¿Qué efecto tiene este selector?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">li + li </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>A. Todos los <code>&lt;li&gt;</code> se ponen azules.<br/>
+B. Solo el primero.<br/>
+C. El segundo y tercer <code>&lt;li&gt;</code>.<br/>
+D. El tercero únicamente.</p>
+<hr/>
+<h3 id="section-4">5.</h3><form><label><input name="q5" type="radio"/> A.#menuB..warningC.p#introD.#1titulo</label><br/></form>
+<p>¿Cuál de estos <strong>NO es válido</strong> en CSS?</p>
+
+<hr/>
+<h3 id="section-5">6.</h3>
+<p>Dado el siguiente HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Título<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Texto 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Texto 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">h2 ~ p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué sucede?</p>
+<p>A. Solo “Texto 1” es verde.<br/>
+B. “Texto 1” y “Texto 2” son verdes.<br/>
+C. Nada, porque <code>~</code> no es válido.<br/>
+D. Solo “Texto 2” es verde.</p>
+<hr/>
+<h3 id="section-6">7.</h3>
+<p>¿Qué hace este selector?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">a<span class="token attribute">[href^="https"]</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>A. Selecciona todos los enlaces internos.<br/>
+B. Selecciona enlaces que empiecen por <code>https</code>.<br/>
+C. Selecciona enlaces que terminen en <code>https</code>.<br/>
+D. Selecciona todos los enlaces con atributo <code>href</code>.</p>
+<hr/>
+<h3 id="section-7">8.</h3>
+<p>Dado este código:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span>  <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>intro<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Bienvenido<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span>  <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>intro<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Texto repetido<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token id">#intro</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué ocurre?</p>
+<p>A. Solo el primer párrafo es rojo.<br/>
+B. Ambos párrafos son rojos.<br/>
+C. Ningún párrafo es rojo.<br/>
+D. Error: CSS no puede aplicarse a elementos repetidos.</p>
+<hr/>
+<h3 id="section-8">9.</h3><form><label><input name="q9" type="radio"/> A. Ninguna, son equivalentes.B.h2 pselecciona todos los párrafos dentro de unh2, mientras queh2 &gt; pselecciona solo los hijos directos.C.h2 pselecciona hijos directos,h2 &gt; pdescendientes en cualquier nivel.D.h2 &gt; pes inválido.</label><br/></form>
+<p>¿Cuál es la diferencia entre <code>h2 p</code> y <code>h2 &gt; p</code>?</p>
+
+<hr/>
+<h3 id="section-9">10.</h3>
+<p>Dado el siguiente HTML:</p>
+<pre class="language-css"><code class="prism language-css">&lt;a  href=<span class="token string">"documento.pdf"</span>&gt;Descargar&lt;/a&gt; 
+&lt;a  href=<span class="token string">"pagina.html"</span>&gt;Visitar&lt;/a&gt;
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">a[href$="<span class="token class">.pdf</span>"] </span><span class="token punctuation">{</span> <span class="token property">font-weight</span><span class="token punctuation">:</span> bold<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué sucede?</p>
+<p>A. Todos los enlaces son negrita.<br/>
+B. Solo el enlace a “documento.pdf” es negrita.<br/>
+C. Solo el enlace a “pagina.html” es negrita.<br/>
+D. Ninguno es afectado.</p>
+<hr/>
+<h3 id="section-10">11.</h3>
+<p>Dado este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token class">.warning</span>, <span class="token class">.error</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>¿Qué significa?</p>
+<p>A. Aplica rojo a cualquier elemento con clase <code>warning</code> o <code>error</code>.<br/>
+B. Aplica rojo solo si un elemento tiene ambas clases.<br/>
+C. Aplica rojo únicamente a párrafos.<br/>
+D. No es válido CSS.</p>
+<hr/>
+<h3 id="section-11">12.</h3>
+<p>¿Qué selecciona este CSS?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">p<span class="token attribute">[class~="nota"]</span> </span><span class="token punctuation">{</span> <span class="token property">background</span><span class="token punctuation">:</span> lightgray<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>A. Cualquier <code>&lt;p&gt;</code> con clase exactamente igual a <code>nota</code>.<br/>
+B. Cualquier <code>&lt;p&gt;</code> cuya clase contenga la palabra <code>nota</code> en una lista separada por espacios.<br/>
+C. Solo <code>&lt;p class="nota importante"&gt;</code>.<br/>
+D. Ninguno.</p>
+<hr/>
+<h3 id="section-12">13.</h3>
+<p>Dado este HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Título<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Texto<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Y este CSS:</p>
+<p><code>h2 + p { color: purple; }</code></p>
+<p>¿Qué pasa?</p>
+<p>A. Solo el párrafo después del <code>h2</code> es púrpura.<br/>
+B. Todos los párrafos del documento son púrpura.<br/>
+C. El <code>h2</code> es púrpura.<br/>
+D. Nada ocurre.</p>
+<hr/>
+<h3 id="section-13">14.</h3><form><label><input name="q14" type="radio"/> A.title { ... }B.[title] { ... }C..title { ... }D.#title { ... }</label><br/></form>
+<p>¿Cuál de las siguientes reglas aplica a <strong>todos los elementos con atributo <code>title</code></strong>?</p>
+
+<hr/>
+<h3 id="section-14">15.</h3>
+<p>Dado este HTML:</p>
+<pre class="language-css"><code class="prism language-css">&lt;div  class=<span class="token string">"noticia urgente"</span>&gt;Aviso&lt;/div&gt; 
+&lt;div  class=<span class="token string">"noticia"</span>&gt;Normal&lt;/div&gt;
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token class">.noticia.urgente</span> </span><span class="token punctuation">{</span> <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">2</span>px solid red<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>¿Qué ocurre?</p>
+<p>A. Ambos divs tienen borde rojo.<br/>
+B. Solo el primero tiene borde rojo.<br/>
+C. Solo el segundo tiene borde rojo.<br/>
+D. Ninguno tiene borde rojo.</p>
+<h3 id="section-15">16.</h3>
+<p>Dado el HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Título<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Párrafo 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Párrafo 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+</code></pre>
+<p>Y el CSS:</p>
+<pre class="language-html"><code class="prism language-html">h2 + p { color: red; }
+</code></pre>
+<p>¿Qué ocurre?</p>
+<p>A. Ambos párrafos se ponen rojos.<br/>
+B. Solo “Párrafo 1” se pone rojo.<br/>
+C. Solo “Párrafo 2” se pone rojo.<br/>
+D. Ninguno se pone rojo.</p>
+<hr/>
+<h3 id="section-16">17.</h3>
+<p>Dado el HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Título<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Párrafo 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Párrafo 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+</code></pre>
+<p>Y el CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">h2 ~ p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué ocurre?</p>
+<p>A. Solo “Párrafo 1” se pone azul.<br/>
+B. “Párrafo 1” y “Párrafo 2” se ponen azules.<br/>
+C. Ninguno cambia.<br/>
+D. Solo “Párrafo 2” se pone azul.</p>
+<hr/>
+<h3 id="section-17">18</h3>
+<p>¿Cuál es la diferencia principal entre estos dos selectores?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">div  p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+<span class="token selector">div &gt; p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>A. No hay diferencia, ambos hacen lo mismo.<br/>
+B. El primero selecciona todos los <code>&lt;p&gt;</code> dentro de un <code>&lt;div&gt;</code> (a cualquier nivel), el segundo solo los <code>&lt;p&gt;</code> que son hijos directos.<br/>
+C. El primero selecciona solo a los hijos directos, el segundo a todos los descendientes.<br/>
+D. El segundo no es válido en CSS.</p>
+<hr/>
+<h3 id="section-18">19.</h3>
+<p>¿Qué selecciona este CSS?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">a[href$="<span class="token class">.pdf</span>"] </span><span class="token punctuation">{</span> <span class="token property">font-weight</span><span class="token punctuation">:</span> bold<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>A. Enlaces cuyo <code>href</code> termina en <code>.pdf</code>.<br/>
+B. Enlaces cuyo <code>href</code> contiene la palabra “pdf” en cualquier parte.<br/>
+C. Todos los enlaces del documento.<br/>
+D. Enlaces que empiezan por <code>.pdf</code>.</p>
+<hr/>
+<h3 id="section-19">20.</h3>
+<p>Dado este HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>nota importante<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Texto A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>importante nota<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Texto B<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">p<span class="token attribute">[class="nota importante"]</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>¿Qué ocurre?</p>
+<p>A. Ambos párrafos se ponen rojos.<br/>
+B. Ninguno se pone rojo.<br/>
+C. Solo “Texto A” se pone rojo.<br/>
+D. Solo “Texto B” se pone rojo.</p>
+<hr/>
+<h3 id="section-20">21.</h3>
+<p>¿Cuál es el efecto de este selector?</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector">* </span><span class="token punctuation">{</span> <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>A. Solo afecta a párrafos.<br/>
+B. Afecta a todos los elementos de la página.<br/>
+C. Afecta solo a los elementos con clases.<br/>
+D. No es válido en CSS.</p>
+<hr/>
+<h3 id="section-21">22.</h3>
+<p>Si tienes estas reglas:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token id">#menu</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+<span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>Y este HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span>  <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>menu<span class="token punctuation">"</span></span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>menu<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Texto<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span> 
+</code></pre>
+<p>¿Qué color tendrá el texto?</p>
+<p>A. Azul, porque las clases tienen prioridad.<br/>
+B. Rojo, porque los IDs tienen más especificidad.<br/>
+C. Negro, porque hay conflicto y el navegador lo ignora.<br/>
+D. Depende del orden en que aparezcan las reglas.</p>
+<hr/>
+<h3 id="section-22">23.</h3>
+<p>Dado este HTML:</p>
+<pre class="language-html"><code class="prism language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>caja<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Uno<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>caja<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Dos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span> 
+</code></pre>
+<p>Y este CSS:</p>
+<pre class="language-css"><code class="prism language-css"><span class="token selector"><span class="token class">.caja</span> + <span class="token class">.caja</span> </span><span class="token punctuation">{</span> <span class="token property">background</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span> <span class="token punctuation">}</span> 
+</code></pre>
+<p>¿Qué sucede?</p>
+<p>A. Solo “Uno” tiene fondo amarillo.<br/>
+B. Solo “Dos” tiene fondo amarillo.<br/>
+C. Ambos tienen fondo amarillo.<br/>
+D. Ninguno cambia.</p>
+</div>
+</body>
+</html>

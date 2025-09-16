@@ -1,0 +1,81 @@
+/* Haz que todos los párrafos <p> usen la fuente Georgia y color gris oscuro. */
+p {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: rgb(92, 92, 92);
+}
+
+/* 
+Resalta todos los elementos con clase .urgente en fondo rojo claro.
+Los elementos con clase .importante deben aparecer en negrita.
+ */
+.urgente {
+  background-color: rgb(255, 102, 102);
+}
+
+/* El <h1 id="principal"> debe estar centrado, en mayúsculas y azul oscuro. */
+#principal {
+  text-align: center;
+  text-transform: uppercase;
+  color: rgb(0, 0, 199);
+}
+
+/*
+Cualquier enlace <a> que apunte a un .pdf debe aparecer con subrayado punteado y color verde.
+Los enlaces que contengan mailto: en su href deben ser cursivos.
+*/
+a[href$=".pdf"] {
+  color: green;
+  text-decoration: underline dotted;
+}
+
+a[href^="mailto:"] {
+  font-style: italic;
+}
+
+/*
+T0do <span> dentro de un <p> debe mostrarse en naranja.
+Solo los <li> dentro de .calendario deben tener un margen izquierdo de 20px.
+*/
+p span {
+  color: orange;
+}
+
+.calendario li {
+  margin-left: 20px;
+}
+
+/* Los <h2> que sean hijos directos de <section> deben tener borde inferior gris. */
+section > h2 {
+  border-bottom: 1px solid gray;
+}
+
+/* Haz que el párrafo que sigue inmediatamente a un <h2> tenga margen superior 0. */
+h2 + p {
+  margin-top: 0;
+}
+
+/* T0dos los párrafos que estén al mismo nivel y después de un <h1> deben tener el texto en itálica. */
+h1 ~ p {
+  font-style: italic;
+}
+
+/* 
+AMPLIACIÓN
+Usa el selector universal * para aplicar un estilo global (ej: márgenes o tipografía base).
+Combina varias clases, por ejemplo: .noticia.urgente debe tener un borde rojo.
+Usa un selector de atributo con coincidencia parcial:
+*/
+
+* {
+  margin: 10px 20px 10px 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.noticia.urgente {
+  border: 3px solid rgb(202, 1, 1);
+}
+
+a[title*="Erasmus"] {
+  color: purple;
+}

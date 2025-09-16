@@ -1,4 +1,1 @@
-h1 {
-  color: orangered;
-  background-color: skyblue;
-}
+.caja + .caja { background: yellow; } 
