@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML + JAVASCRIPT</title>
+  </head>
+  <body>
+    <center>
+      <h1>HTML + JAVASCRIPT</h1>
+      <p>Nombre: Iván</p>
+      <p>Hora: <span id="hora"></span></p>
+    </center>
+
+    <script>
+      const hora = new Date();
+      const horaBien = hora.toLocaleTimeString();
+      document.getElementById("hora").textContent = horaBien;
+    </script>
+  </body>
+</html>
