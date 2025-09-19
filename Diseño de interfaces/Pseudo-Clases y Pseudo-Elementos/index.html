@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica de CSS: Pseudo-Clases y Pseudo-Elementos</title>
+
+    <style>
+      body {
+        margin: 0 100px 0 100px;
+      }
+      h1 {
+        text-align: center;
+      }
+      ul li:first-child {
+        text-transform: uppercase;
+      }
+
+      ul li:last-child {
+        background-color: blue;
+      }
+
+      ul li:nth-child(odd) {
+        background-color: rgb(207, 207, 207);
+      }
+
+      ul li:nth-child(3) {
+        font-weight: bold;
+      }
+
+      table {
+        margin: 0 auto;
+      }
+
+      table th {
+        width: 300px;
+      }
+
+      table tr:first-child {
+        background-color: yellow;
+      }
+
+      table th:nth-child(3) {
+        border: 2px solid red;
+      }
+
+      table tr:nth-child(odd) {
+        background-color: yellow;
+      }
+
+      table tr:nth-child(even) {
+        background-color: rgb(6, 245, 6);
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      a:visited {
+        color: purple;
+      }
+
+      a:link {
+        color: blue;
+      }
+
+      a:active {
+        color: red;
+      }
+
+      button:hover {
+        background-color: red;
+      }
+
+      button:focus {
+        border: 2px yellow solid;
+      }
+
+      form input:required {
+        border: 1px red solid;
+      }
+
+      form input[id="email"]:valid {
+        background-color: green;
+      }
+
+      form input[id="email"]:invalid {
+        background-color: pink;
+      }
+
+      form input[id="edad"]:in-range {
+        background-color: green;
+      }
+
+      form input[id="edad"]:out-of-range {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Práctica de CSS: Pseudo-Clases y Pseudo-Elementos</h1>
+    <ul>
+      <li>
+        <a href="https://es.wikipedia.org/wiki/Aristóteles">Aristóteles</a>
+      </li>
+      <li><a href="https://es.wikipedia.org/wiki/Sócrates">Sócrates</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Platón">Platón</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Descartes">Descartes</a></li>
+      <li>
+        <a href="https://es.wikipedia.org/wiki/Simone_de_beauvoir"
+          >Simone de Beauvoir</a
+        >
+      </li>
+    </ul>
+
+    <table border="1" id="tabla">
+      <tr>
+        <th></th>
+        <th>Nacimiento</th>
+        <th>Fallecimiento</th>
+      </tr>
+      <tr>
+        <th>Aristóteles</th>
+        <th>384 a. C.</th>
+        <th>322 a. C.</th>
+      </tr>
+      <tr>
+        <th>Platón</th>
+        <th>427 a. C.</th>
+        <th>347 a. C.</th>
+      </tr>
+      <tr>
+        <th>Simone de Beauvoir</th>
+        <th>9 enero 1908</th>
+        <th>14 abril 1986</th>
+      </tr>
+    </table>
+    <p><a href="https://es.wikipedia.org/wiki/Karl_Marx">Karl Marx</a></p>
+    <p><a href="#tabla">Tabla</a></p>
+    <button>Botón</button>
+    <form>
+      <label for="nombre">Nombre:</label>
+      <input type="text" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" />
+
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" min="18" max="99" />
+
+      <label for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        Acepto los términos
+      </label>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </body>
+</html>

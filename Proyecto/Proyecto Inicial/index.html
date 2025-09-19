@@ -3,23 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Disponibilidad Valenbisi</title>
+    <style>
+      .card {
+        border: 1px solid #ccc;
+        padding: 1em;
+        margin: 1em;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+        font-family: sans-serif;
+        background-color: aliceblue;
+      }
+    </style>
   </head>
   <body>
-    <script>
-      function fetchJSONData() {
-        fetch("./file.json") // fetch("https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?limit=20")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Failed to fetch data:", error));
-      }
-      fetchJSONData();
-    </script>
+    <h1>Disponibilidad Valenbisi</h1>
+    <div id="contenedor"></div>
+    <script type="module" src="./Scripts/app.js"></script>
   </body>
 </html>
-https://valencia.opendatasoft.com/explore/dataset/valenbisi-disponibilitat-valenbisi-dsiponibilidad/api/?flg=es-es&location=2,17.97873,26.01563&basemap=e4bf90&dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6InZhbGVuYmlzaS1kaXNwb25pYmlsaXRhdC12YWxlbmJpc2ktZHNpcG9uaWJpbGlkYWQiLCJvcHRpb25zIjp7ImZsZyI6ImVzLWVzIn19LCJjaGFydHMiOlt7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJsaW5lIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoibnVtYmVyIiwic2NpZW50aWZpY0Rpc3BsYXkiOnRydWUsImNvbG9yIjoiIzY2YzJhNSJ9XSwieEF4aXMiOiJ1cGRhdGVfamNkIiwibWF4cG9pbnRzIjoiIiwidGltZXNjYWxlIjoieWVhciIsInNvcnQiOiIifV0sImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWV9
