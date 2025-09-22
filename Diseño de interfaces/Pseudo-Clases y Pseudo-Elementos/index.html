@@ -99,6 +99,45 @@
       form input[id="edad"]:out-of-range {
         background-color: red;
       }
+
+      input[type="checkbox"]:checked + label {
+        font-weight: bold;
+        color: red;
+      }
+
+      p[id="parrafo"]::first-letter {
+        text-transform: uppercase;
+      }
+
+      p[id="parrafo"]::first-line {
+        background-color: grey;
+      }
+
+      h2::before {
+        content: "★ ";
+        color: gold;
+      }
+
+      h2::after {
+        content: "★ ";
+        color: gold;
+      }
+
+      ol li::marker {
+        color: red;
+        font-weight: bold;
+      }
+
+      input::placeholder {
+        color: gray;
+        font-style: italic;
+      }
+
+      ::selection {
+        background-color: yellow;
+        color: black;
+      }
+
     </style>
   </head>
   <body>
@@ -140,7 +179,7 @@
       </tr>
     </table>
     <p><a href="https://es.wikipedia.org/wiki/Karl_Marx">Karl Marx</a></p>
-    <p><a href="#tabla">Tabla</a></p>
+    <p><a href="#placeholder">Tabla</a></p>
     <button>Botón</button>
     <form>
       <label for="nombre">Nombre:</label>
@@ -154,10 +193,25 @@
 
       <label for="checkbox">
         <input type="checkbox" id="checkbox" />
-        Acepto los términos
+        <label for="checkbox">Acepto los términos</label>
       </label>
 
       <button type="submit">Enviar</button>
     </form>
+
+    <p id="parrafo">
+      no puedo enseñar nada a nadie. Solo puedo hacerles pensar.<br />La peor
+      lucha es la que no se hace.<br />Vivir sin filosofar es, propiamente,
+      tener los ojos cerrados, sin tratar de abrirlos jamás.
+    </p>
+    <h2>Simone de Beauvoir: El Segundo Sexo</h2>
+
+    <ol>
+      <li>Elemento1</li>
+      <li>Elemento2</li>
+      <li>Elemento3</li>
+    </ol>
+
+    <input id="placeholder" type="text" placeholder="placeholder" />
   </body>
 </html>
