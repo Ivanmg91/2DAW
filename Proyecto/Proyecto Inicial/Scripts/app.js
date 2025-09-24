@@ -10,7 +10,8 @@ function fetchJSONData() {
     })
     .then((datos) => {
       const contenedor = document.getElementById("contenedor");
-      datos.forEach((obj) => { // Con slice puedo pone limite de cards: datos.slice(0, 5).forEach((obj) => {
+      datos.forEach((obj) => {
+        // Con slice puedo pone limite de cards: datos.slice(0, 5).forEach((obj) => {
         const punto = new PuntoServicio(obj);
         contenedor.innerHTML += punto.generarCardHTML();
       });
@@ -19,7 +20,7 @@ function fetchJSONData() {
 }
 
 // Ejecutamos la función al cargar el script
-fetchJSONData();
+// fetchJSONData();
 
 /*
 function fetchJSONData() {
@@ -42,3 +43,34 @@ function fetchJSONData() {
 
 fetchJSONData();
 */
+
+function fetchJSONDataInTable() {
+  fetch("./file.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const tbody = document.querySelector("#tabla tbody");
+
+      data.forEach((item) => {
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${item.address}</td>
+            <td>${item.number}</td>
+            <td>${item.open}</td>
+            <td>${item.available}</td>
+            <td>${item.free}</td>
+            <td>${item.total}</td>
+            <td>${item.ticket}</td>
+            <td>${item.updated_at}</td>
+            <td>${item.geo_point_2d.lat}</td>
+            <td>${item.geo_point_2d.lon}</td>
+          `;
+
+        tbody.appendChild(fila);
+      });
+    })
+    .catch((error) => {
+      console.error("Error al cargar el JSON:", error);
+    });
+}
+fetchJSONDataInTable();

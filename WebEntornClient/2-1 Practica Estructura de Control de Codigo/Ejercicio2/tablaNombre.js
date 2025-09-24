@@ -1,6 +1,6 @@
 let nombre = prompt("Introduce tu nombre:");
-let filas = prompt("Introduce un número de filas:");
-let columnas = prompt("Introduce un número de columnas:");
+let filas = parseInt(prompt("Introduce un número de filas:"));
+let columnas = parseInt(prompt("Introduce un número de columnas:"));
 
 if (isNaN(filas) || filas <= 0 || isNaN(columnas) || columnas <= 0) {
   alert("Introduce números válidos en las filas y columnas");

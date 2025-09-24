@@ -6,26 +6,25 @@ import java.util.List;
 
 public class Municipios {
 
-    // Make Municipio static
     public static class Municipio {
-        public String ano;
-        public String tipo;
-        public String codigoMunicipio;
         public String territorio;
-        public String valor;
-        public String estadoDato;
+        public String codigo;
+        public double valor;
 
+        public Municipio(String territorio, String codigo, double valor) {
+            this.territorio = territorio;
+            this.codigo = codigo;
+            this.valor = valor;
+        }
         @Override
         public String toString() {
-            return "Año:'" + ano + "Tipo:'" + tipo +"Código Municipio:'" + codigoMunicipio + "Territorio:'" + territorio +"Valor:'" + valor +"EstadoDato:'" + estadoDato + "";
+            return "Territorio: " + territorio + ", Código: " + codigo + ", Valor: " + valor;
         }
     }
-
     public static void main(String[] args) {
         String pathcsv = "viviendas-por-intensidad-de-uso-a-partir-del-consumo-electrico.-mediana-consumo-anual.csv";
         String linea;
         String delimitador = ";";
-
         List<Municipio> listaMunicipios = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(pathcsv))) {
@@ -33,24 +32,33 @@ public class Municipios {
             br.readLine();
 
             while ((linea = br.readLine()) != null) {
-                Municipio municipio = new Municipio();
                 String[] values = linea.split(delimitador);
-                // System.out.println(values[3] + ", " + values[4] + ", " + values[2]);
 
-                municipio.ano = values[0];
-                municipio.tipo = values[1];
-                municipio.codigoMunicipio = values[2];
-                municipio.territorio = values[3];
-                municipio.valor = values[4];
-                municipio.estadoDato = values[5];
+                if (values.length < 6)
+                    continue;
+                if (!values[1].equalsIgnoreCase("Municipios"))
+                    continue;
+                if (values[4].equals("-"))
+                    continue;
 
-                listaMunicipios.add(municipio);
+                double valor;
+                try {
+                    valor = Double.parseDouble(values[4]);
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+                listaMunicipios.add(new Municipio(values[3], values[2], valor));
             }
 
-            System.out.println(listaMunicipios);
+            listaMunicipios.sort((m1, m2) -> Double.compare(m2.valor, m1.valor));
+
+            System.out.println("Los 3 municipios con más mediana:");
+            for (int i = 0; i < 3 && i < listaMunicipios.size(); i++) {
+                System.out.println((i + 1) + ". " + listaMunicipios.get(i));
+            }
 
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }
