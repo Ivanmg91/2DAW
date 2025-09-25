@@ -1,27 +1,5 @@
 import { PuntoServicio } from "./PuntoServicio.js";
 
-function fetchJSONData() {
-  fetch("./file.json") // fetch("https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?limit=20")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((datos) => {
-      const contenedor = document.getElementById("contenedor");
-      datos.forEach((obj) => {
-        // Con slice puedo pone limite de cards: datos.slice(0, 5).forEach((obj) => {
-        const punto = new PuntoServicio(obj);
-        contenedor.innerHTML += punto.generarCardHTML();
-      });
-    })
-    .catch((error) => console.error("Failed to fetch data:", error));
-}
-
-// Ejecutamos la función al cargar el script
-// fetchJSONData();
-
 /*
 function fetchJSONData() {
   fetch("https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?limit=20")
@@ -43,6 +21,7 @@ function fetchJSONData() {
 
 fetchJSONData();
 */
+
 
 function fetchJSONDataInTable() {
   fetch("./file.json")
@@ -74,3 +53,21 @@ function fetchJSONDataInTable() {
     });
 }
 fetchJSONDataInTable();
+
+window.onload = function () {
+  // Crear el mapa centrado en Valladolid
+  const map = L.map('map').setView([39.476747340831494, -0.37534238089458904], 14);
+
+  // Capa base de OpenStreetMap (https HTTPS)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:
+      'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Añadir un marcador draggable
+  L.marker([39.476747340831494, -0.37534238089458904], { draggable: true }).addTo(map);
+
+  // Escala
+  L.control.scale().addTo(map);
+};

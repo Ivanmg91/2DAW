@@ -1,61 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Disponibilidad Valenbisi</title>
-    <script type="module" src="./Scripts/app.js"></script>
-    <style>
-      .card {
-        border: 1px solid #ccc;
-        padding: 1em;
-        margin: 1em;
-        border-radius: 8px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        max-width: 300px;
-        font-family: sans-serif;
-        background-color: aliceblue;
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disponibilidad Valenbisi</title>
 
-      table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f0f0f0;
-    }
+  <!-- leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    </style>
-  </head>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="./Scripts/app.js"></script>
+</head>
+
   <body>
     <h1>Disponibilidad Valenbisi</h1>
     <div id="contenedor"></div>
     <h1>Datos del JSON</h1>
-  <table id="tabla">
-    <thead>
-      <tr>
-        <th>Dirección</th>
-        <th>Número</th>
-        <th>Abierto</th>
-        <th>Disponibles</th>
-        <th>Libres</th>
-        <th>Total</th>
-        <th>Ticket</th>
-        <th>Última Actualización</th>
-        <th>Latitud</th>
-        <th>Longitud</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Aquí se insertarán los datos -->
-    </tbody>
-  </table>
+
+    <div id="map"></div>
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>Dirección</th>
+          <th>Número</th>
+          <th>Abierto</th>
+          <th>Disponibles</th>
+          <th>Libres</th>
+          <th>Total</th>
+          <th>Ticket</th>
+          <th>Última Actualización</th>
+          <th>Latitud</th>
+          <th>Longitud</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
     
   </body>
 </html>
