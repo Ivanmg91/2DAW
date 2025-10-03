@@ -67,3 +67,5 @@ echo "Salario máximo: " . salarioMaximo($trabajadores) . "\n";
 echo "Salario mínimo: " . salarioMinimo($trabajadores) . "\n";
 echo "Salario promedio: " . salarioMedio($trabajadores) . "\n";
 ?>
+
+<!-- Q SE PUEDA RELLENAR POR PANTALLA -->
