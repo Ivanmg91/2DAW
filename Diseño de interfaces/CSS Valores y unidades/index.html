@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valores y unidades</title>
+    <style>
+        div {
+            color: blue;
+        }
+
+        span {
+            color: inherit;
+        }
+
+        p {
+            font-weight: bold;
+        }
+
+        strong {
+            font-weight: initial; 
+        }
+
+        p::after {
+            content: " Hola mundo";
+            font-style: italic;
+            color: green;
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+        }
+
+        p::after {
+            content: " Hola mundo";
+            font-style: italic;
+            color: green;
+        }
+
+        @keyframes parpadeo {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        p.blink {
+            animation-name: parpadeo;
+            animation-duration: 1s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .contenedor {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .caja {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            text-align: center;
+            line-height: 100px;
+            border: 2px solid #000;
+        }
+
+        .caja:nth-child(1) {
+            background-color: lightcoral;
+            z-index: 1;
+        }
+
+        .caja:nth-child(2) {
+            background-color: lightgreen;
+            z-index: 2;
+        }
+
+        .caja:nth-child(3) {
+            background-color: lightyellow;
+            z-index: 3;
+        }
+
+        .box-opacity {
+            width: 200px;
+            height: 100px;
+            background-color: coral;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .contenedor-porcentaje {
+            width: 300px;
+            height: 200px;
+            background-color: lightgray;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .contenedor-porcentaje p {
+            margin-top: 10%;
+            background-color: lightcoral;
+            padding: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            background-color: lightblue;
+            padding: 20px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        p.absoluto {
+            font-size: 16px;
+            padding: 2em;
+            background-color: lightgreen;
+        }
+
+        p.anidado {
+            padding: 2em;
+            background-color: lightyellow;
+        }
+
+        p.rem {
+            font-size: 16px;
+            padding: 2rem;
+            background-color: lightcoral;
+        }
+
+        h1 {
+            font-size: 10vw;
+            background-color: lightblue;
+        }
+
+        main {
+            width: calc(100% - 200px);
+            background-color: lightgray;
+            padding: 20px;
+        }
+
+        p.min-max {
+            width: min(90%, 600px);
+            background-color: lightpink;
+            padding: 10px;
+        }
+
+        h1.clamp {
+            font-size: clamp(1rem, 5vw, 3rem);
+            background-color: lightyellow;
+            padding: 10px;
+        }
+
+        p[data-info]::after {
+            content: " (" attr(data-info) ")";
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        Texto div
+        <span>Texto span</span>
+    </div>
+
+    <p>
+        Texto parrafo
+        <strong>Texto strong</strong>
+    </p>
+
+    <p>
+        Texto antes del contenido generado
+    </p>
+
+    <p class="blink">
+        Este párrafo parpadea
+    </p>
+
+    <div class="contenedor">
+        <div class="caja">Caja 1</div>
+        <div class="caja">Caja 2</div>
+        <div class="caja">Caja 3</div>
+    </div>
+
+    <div class="box-opacity">
+        Este es un texto con opacidad
+    </div>
+
+    <div class="contenedor-porcentaje">
+        <p>Margen superior en porcentaje</p>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item">Columna 1</div>
+        <div class="grid-item">Columna 2</div>
+    </div>
+
+    <p class="absoluto">
+        Este párrafo tiene un font-size de 16px y padding de 2em
+    </p>
+
+    <p class="absoluto anidado">
+        Parrafo anidado
+    </p>
+
+    <p class="rem">
+        Párrafo padding en rem.
+    </p>
+
+    <h1>
+        Este título se escala con el tamaño de la ventana.
+    </h1>
+
+    <main>
+        Este main tiene un width calculado con calc()
+    </main>
+
+    <p class="min-max">
+        Párrafo limitado con min()
+    </p>
+
+    <h1 class="clamp">
+    </h1>
+
+    <p data-info="Capítulo 1">Hola</p>
+</body>
+</html>
