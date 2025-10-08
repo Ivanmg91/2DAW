@@ -27,14 +27,14 @@ function operaMatriz($matriz1, $matriz2, $operacion) {
             }
         }
     } else if ($operacion === "d") {
-        $inversa_matriz2 = inversa_matriz($matriz2);
-        $resultado = multiplicar_matrices($matriz1, $inversa_matriz2);
+        $inversaMatriz2 = inversaMatriz($matriz2);
+        $resultado = multiplicarMatrices($matriz1, $inversaMatriz2);
     }
 
     return $resultado;
 }
 
-function inversa_matriz($matriz) {
+function inversaMatriz($matriz) {
     $determinante = $matriz[0][0] * $matriz[1][1] - $matriz[0][1] * $matriz[1][0];
 
     if ($determinante == 0) {
@@ -50,7 +50,7 @@ function inversa_matriz($matriz) {
     return $inversa;
 }
 
-function multiplicar_matrices($matriz1, $matriz2) {
+function multiplicarMatrices($matriz1, $matriz2) {
     $resultado = [];
 
     for ($i = 0; $i < count($matriz1); $i++) {

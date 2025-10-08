@@ -1,4 +1,4 @@
-<!-- menu_basico SIN ACABAR-->
+<!-- menu_basico-->
 
 <?php
 
@@ -21,26 +21,35 @@ for ($i = 0; $i < $opcionesMenu; $i++) {
     echo "Introduce el caracter para seleccionar la opción del menú " . ($i + 1) . ": ";
     $opcion = rtrim(fgets(STDIN));
 
-    echo "Introduce el texto de la opción `$opcion`";
+    echo "Introduce el texto de la opción $opcion: ";
     $texto = rtrim(fgets(STDIN));
 
     $opciones[$opcion] = $texto;
 }
+
+$opciones["SALIR"] = $salirMenu;
 
 echo "Este es tu menu: \n";
 foreach ($opciones as $opcion => $texto) {
     echo "[$opcion] $texto\n";
 }
 
-while ($opcionElegida != "s") {
+while ($opcionElegida != $salirMenu) {
+
     echo "Introduce una opción: ";
     $opcionElegida = rtrim(fgets(STDIN));
     
-    for ($i=0; $i < $opciones; $i++) { 
-        if ($opcionElegida == $opciones[$i]) {
-            echo "`Has elegido la opción $opcion[$i]`";
+    foreach ($opciones as $opcion => $texto) {
+        if ($opcionElegida == $opcion) {
+            echo "Has elegido la opción > $opciones[$opcion] <\n";
         }
     }
+
+    echo "Este es tu menu: \n";
+    foreach ($opciones as $opcion => $texto) {
+        echo "[$opcion] $texto\n";
+    }
+    
 }
 
 
