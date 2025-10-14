@@ -71,7 +71,7 @@ function rellenaMatriz($filasYColumnas) {
 
     for ($i = 0; $i < $filasYColumnas; $i++) {
         echo "Introduce los valores de la fila " . ($i + 1) . " separados por espacios: ";
-        $valores = explode(" ", rtrim(fgets(STDIN)));
+        $valores = explode(" ", readline());
 
         if (count($valores) != $filasYColumnas) {
             echo "Error: la cantidad de valores no coincide con el número de columnas.\n";
@@ -88,18 +88,18 @@ function rellenaMatriz($filasYColumnas) {
 // INICIO PROGRAMA
 
 echo "Indica el numero de filas (el número de columnas será el mismo): ";
-$filasYColumnas = rtrim(fgets(STDIN));
+$filasYColumnas = readline();
 
 $matriz1 = rellenaMatriz($filasYColumnas);
 echo "Siguiente matriz\n";
 $matriz2 = rellenaMatriz($filasYColumnas);
 
 echo "¿Qué operación quieres realizar: suma(s), resta(r), multiplicación(m) o división(d)?: ";
-$operacion = rtrim(fgets(STDIN));
+$operacion = readline();
 
 while ($operacion !== "s" && $operacion !== "r" && $operacion !== "m" && $operacion !== "d") {
     echo "Debes introducir una de estas operaciones: suma(s), resta(r), multiplicación(m) o división(d)\n";
-    $operacion = rtrim(fgets(STDIN));
+    $operacion = readline();
 }
 
 $matrizResultado = operaMatriz($matriz1, $matriz2, trim($operacion));

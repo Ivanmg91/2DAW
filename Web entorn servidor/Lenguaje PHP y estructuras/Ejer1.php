@@ -13,5 +13,3 @@ function CalcularPotencia($base, $exponenteMax) {
 
 CalcularPotencia(3, 3);
 ?>
-
-<!-- REVISAR -->

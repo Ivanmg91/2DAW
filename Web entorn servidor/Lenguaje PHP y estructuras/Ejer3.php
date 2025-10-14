@@ -34,14 +34,14 @@ function mostrarTrabajadores($trabajadores) {
 $trabajadores = [];
 
 echo "Introduce número de trabajadores ";
-$cantidad = (int) trim(fgets(STDIN));
+$cantidad = (int) readline();
 
 for ($i = 0; $i < $cantidad; $i++) {
     echo "Introduce el nombre del trabajador " . ($i+1) . ": "; //los puntos son para concatenar
-    $nombre = trim(fgets(STDIN));
+    $nombre = readline();
 
     echo "Introduce el salario de $nombre: ";
-    $salario = (float) trim(fgets(STDIN));
+    $salario = (float) readline();
 
     $trabajadores[$nombre] = $salario;
 }
@@ -54,7 +54,7 @@ echo "Salario mínimo: " . salarioMinimo($trabajadores) . "\n";
 echo "Salario promedio: " . salarioMedio($trabajadores) . "\n";
 
 echo "\nIntroduce el porcentaje de incremento salarial: ";
-$incremento = (float) trim(fgets(STDIN));
+$incremento = (float) readline();
 
 foreach ($trabajadores as $nombre => $salario) {
     $trabajadores[$nombre] = $salario + ($salario * $incremento / 100);
@@ -67,5 +67,3 @@ echo "Salario máximo: " . salarioMaximo($trabajadores) . "\n";
 echo "Salario mínimo: " . salarioMinimo($trabajadores) . "\n";
 echo "Salario promedio: " . salarioMedio($trabajadores) . "\n";
 ?>
-
-<!-- Q SE PUEDA RELLENAR POR PANTALLA -->

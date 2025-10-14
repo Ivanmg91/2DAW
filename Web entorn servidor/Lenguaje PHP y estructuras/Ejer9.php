@@ -8,7 +8,7 @@ function pedirNumeroOpciones() {
 
     while (!is_numeric($opcionesMenu) || (int)$opcionesMenu == 0) {
         echo "¿Cuántas opciones tendrá el menú (debe de ser un número)?: ";
-        $opcionesMenu = rtrim(fgets(STDIN));
+        $opcionesMenu = readline();
     }
 
     $opcionesMenu = (int)$opcionesMenu;
@@ -18,7 +18,7 @@ function pedirNumeroOpciones() {
 
 function pedirCaracterSalir() {
     echo "Introduce el carácter para terminar el programa: ";
-    $salirMenu = rtrim(fgets(STDIN));
+    $salirMenu = readline();
 
     return $salirMenu;
 }
@@ -27,10 +27,10 @@ function pedirCaracterSalir() {
 function crearOpcionesMenu($opcionesMenu, $salirMenu) {
     for ($i = 0; $i < $opcionesMenu; $i++) {
         echo "Introduce el caracter para seleccionar la opción del menú " . ($i + 1) . ": ";
-        $opcion = rtrim(fgets(STDIN));
+        $opcion = readline();
 
         echo "Introduce el texto de la opción $opcion: ";
-        $texto = rtrim(fgets(STDIN));
+        $texto = readline();
 
         $opciones[$opcion] = $texto;
     }
@@ -52,7 +52,7 @@ function mostrarMenu($opciones, $salirMenu) {
     while ($opcionElegida != $salirMenu) {
 
         echo "Introduce una opción: ";
-        $opcionElegida = rtrim(fgets(STDIN));
+        $opcionElegida = readline();
         
         foreach ($opciones as $opcion => $texto) {
             if ($opcionElegida == $opcion) {
