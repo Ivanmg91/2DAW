@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>conceptos-complementarios.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="conceptos-css-complementarios">Conceptos CSS Complementarios</h1>
+<h2 id="transform---transformaciones-2d">1. Transform - Transformaciones 2D</h2>
+<p>La propiedad <code>transform</code> permite mover, rotar, escalar o inclinar elementos sin afectar el flujo del documento.</p>
+<h3 id="sintaxis-básica">Sintaxis básica:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span>x, y<span class="token punctuation">)</span> | 
+           <span class="token function">translateX</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> | 
+           <span class="token function">translateY</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> |
+            <span class="token function">scale</span><span class="token punctuation">(</span><span class="token punctuation">)</span> | 
+            <span class="token function">rotate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="translate---mover-elementos">Translate - Mover elementos:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.elemento</span> </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span><span class="token number">50</span>px, <span class="token number">100</span>px<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token comment">/* Mueve 50px derecha, 100px abajo */</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.centrado</span> </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateX</span><span class="token punctuation">(</span>-<span class="token number">50%</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token comment">/* Mueve hacia la izquierda el 50% de su ancho */</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="ejemplo-práctico---centrado-perfecto">Ejemplo práctico - Centrado perfecto:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.contenedor</span> </span><span class="token punctuation">{</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.caja-centrada</span> </span><span class="token punctuation">{</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> <span class="token number">50%</span><span class="token punctuation">;</span>           <span class="token comment">/* Posiciona en el centro vertical */</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> <span class="token number">50%</span><span class="token punctuation">;</span>          <span class="token comment">/* Posiciona en el centro horizontal */</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span>-<span class="token number">50%</span>, -<span class="token number">50%</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token comment">/* Ajusta por el tamaño del elemento */</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>💡 Clave:</strong> <code>translate()</code> usa el tamaño del propio elemento como referencia. <code>-50%</code> significa “muévete hacia atrás la mitad de tu tamaño”.</p>
+<blockquote>
+<p><strong>📝 Nota:</strong> Útil para <strong>Ejercicio 4</strong> (centrado perfecto)</p>
+</blockquote>
+<hr>
+<h2 id="transition---transiciones-suaves">2. Transition - Transiciones suaves</h2>
+<p>Las transiciones crean animaciones suaves entre estados CSS (hover, focus, etc.).</p>
+<h3 id="sintaxis-básica-1">Sintaxis básica:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token property">transition</span><span class="token punctuation">:</span> propiedad duración función-tiempo retraso<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="ejemplos-básicos">Ejemplos básicos:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.boton</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> background <span class="token number">0.3</span>s ease<span class="token punctuation">;</span> <span class="token comment">/* Transición suave del color */</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.boton</span><span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token comment">/* El cambio será gradual */</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="múltiples-propiedades">Múltiples propiedades:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.elemento</span> </span><span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span><span class="token number">20</span>px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> opacity <span class="token number">0.3</span>s ease, transform <span class="token number">0.3</span>s ease<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.elemento</span><span class="token pseudo-class">:hover</span> </span><span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateY</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="funciones-de-tiempo-comunes">Funciones de tiempo comunes:</h3>
+<ul>
+<li><code>ease</code> - Lento al inicio y final, rápido en medio</li>
+<li><code>linear</code> - Velocidad constante</li>
+<li><code>ease-in</code> - Lento al inicio</li>
+<li><code>ease-out</code> - Lento al final</li>
+</ul>
+<p><strong>💡 Clave:</strong> Las transiciones solo funcionan con propiedades que tienen valores numéricos (color, tamaño, posición, opacidad).</p>
+<blockquote>
+<p><strong>📝 Nota:</strong> Útil para <strong>Ejercicio 9</strong> (efectos de aparición suave)</p>
+</blockquote>
+<hr>
+<h2 id="media-queries---diseño-responsive">3. Media Queries - Diseño responsive</h2>
+<p>Las media queries permiten aplicar CSS solo cuando se cumplen ciertas condiciones (tamaño de pantalla, orientación, etc.).</p>
+<h3 id="sintaxis-básica-2">Sintaxis básica:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span>condición<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token comment">/* CSS que solo se aplica cuando se cumple la condición */</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="ejemplos-por-tamaño-de-pantalla">Ejemplos por tamaño de pantalla:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token comment">/* Estilos para pantallas pequeñas (móviles) */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">max-width</span><span class="token punctuation">:</span> 768px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.sidebar</span> </span><span class="token punctuation">{</span>
+        <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>
+        <span class="token property">float</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* Estilos para pantallas medianas (tablets) */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">min-width</span><span class="token punctuation">:</span> 769px<span class="token punctuation">)</span> and <span class="token punctuation">(</span><span class="token property">max-width</span><span class="token punctuation">:</span> 1024px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.contenido</span> </span><span class="token punctuation">{</span>
+        <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">16</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* Estilos para pantallas grandes (desktop) */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">min-width</span><span class="token punctuation">:</span> 1025px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.contenedor</span> </span><span class="token punctuation">{</span>
+        <span class="token property">max-width</span><span class="token punctuation">:</span> <span class="token number">1200</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="ejemplo-práctico---layout-responsive">Ejemplo práctico - Layout responsive:</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token comment">/* Estilos por defecto (desktop) */</span>
+<span class="token selector"><span class="token class">.sidebar</span> </span><span class="token punctuation">{</span>
+    <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.contenido</span> </span><span class="token punctuation">{</span>
+    <span class="token property">margin-left</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* Adaptación para móviles */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">max-width</span><span class="token punctuation">:</span> 768px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.sidebar</span> </span><span class="token punctuation">{</span>
+        <span class="token property">float</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>      <span class="token comment">/* Quita la flotación */</span>
+        <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>      <span class="token comment">/* Ocupa todo el ancho */</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token selector"><span class="token class">.contenido</span> </span><span class="token punctuation">{</span>
+        <span class="token property">margin-left</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">/* Quita el margen */</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="condiciones-comunes">Condiciones comunes:</h3>
+<ul>
+<li><code>max-width: 768px</code> - Pantallas de hasta 768px (móviles)</li>
+<li><code>min-width: 769px</code> - Pantallas de 769px en adelante</li>
+<li><code>orientation: portrait</code> - Orientación vertical</li>
+<li><code>orientation: landscape</code> - Orientación horizontal</li>
+</ul>
+<p><strong>💡 Clave:</strong> Piensa “mobile first” - diseña primero para móvil y luego adapta para pantallas más grandes.</p>
+<blockquote>
+<p><strong>📝 Nota:</strong> Útil para <strong>Ejercicios 7, 8 y 10</strong> (layouts que se adaptan a diferentes pantallas)</p>
+</blockquote>
+<hr>
+<h2 id="combinando-conceptos">4. Combinando conceptos</h2>
+<h3 id="ejemplo-menú-responsive-con-animaciones">Ejemplo: Menú responsive con animaciones</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> -<span class="token number">250</span>px<span class="token punctuation">;</span>                    <span class="token comment">/* Oculto por defecto */</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">250</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span>vh<span class="token punctuation">;</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#333</span><span class="token punctuation">;</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateX</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">/* Posición inicial */</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> transform <span class="token number">0.3</span>s ease<span class="token punctuation">;</span> <span class="token comment">/* Transición suave */</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.menu.abierto</span> </span><span class="token punctuation">{</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateX</span><span class="token punctuation">(</span><span class="token number">250</span>px<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">/* Se desliza hacia la derecha */</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* En móviles, el menú es diferente */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">max-width</span><span class="token punctuation">:</span> 768px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.menu</span> </span><span class="token punctuation">{</span>
+        <span class="token property">left</span><span class="token punctuation">:</span> -<span class="token number">100%</span><span class="token punctuation">;</span>
+        <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token selector"><span class="token class">.menu.abierto</span> </span><span class="token punctuation">{</span>
+        <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateX</span><span class="token punctuation">(</span><span class="token number">100%</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="ejemplo-tooltip-responsive">Ejemplo: Tooltip responsive</h3>
+<pre class=" language-css"><code class="prism  language-css"><span class="token selector"><span class="token class">.tooltip</span> </span><span class="token punctuation">{</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+    <span class="token property">bottom</span><span class="token punctuation">:</span> <span class="token number">100%</span><span class="token punctuation">;</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> <span class="token number">50%</span><span class="token punctuation">;</span>
+    <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translateX</span><span class="token punctuation">(</span>-<span class="token number">50%</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">/* Centrado horizontal */</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>                      <span class="token comment">/* Invisible por defecto */</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> opacity <span class="token number">0.2</span>s ease<span class="token punctuation">;</span>  <span class="token comment">/* Aparición suave */</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector"><span class="token class">.elemento</span><span class="token pseudo-class">:hover</span> <span class="token class">.tooltip</span> </span><span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>                      <span class="token comment">/* Visible al hacer hover */</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* En móviles, tooltip más grande */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">max-width</span><span class="token punctuation">:</span> 480px<span class="token punctuation">)</span></span> <span class="token punctuation">{</span>
+    <span class="token selector"><span class="token class">.tooltip</span> </span><span class="token punctuation">{</span>
+        <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">14</span>px<span class="token punctuation">;</span>
+        <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">8</span>px <span class="token number">12</span>px<span class="token punctuation">;</span>
+        <span class="token property">white-space</span><span class="token punctuation">:</span> normal<span class="token punctuation">;</span>         <span class="token comment">/* Permite salto de línea */</span>
+        <span class="token property">max-width</span><span class="token punctuation">:</span> <span class="token number">200</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h2 id="💡-tips-para-usar-estos-conceptos">💡 Tips para usar estos conceptos:</h2>
+<ol>
+<li><strong>Transform es tu amigo para centrado</strong> - Más flexible que márgenes negativos</li>
+<li><strong>Transition hace todo más profesional</strong> - Añade suavidad a los cambios</li>
+<li><strong>Media queries son esenciales hoy</strong> - Todo debe funcionar en móvil</li>
+<li><strong>Combina conceptos gradualmente</strong> - No uses todo a la vez al principio</li>
+<li><strong>Prueba en diferentes tamaños</strong> - Usa las herramientas de desarrollador del navegador</li>
+</ol>
+<hr>
+<h2 id="🔗-relación-con-los-ejercicios">🔗 Relación con los ejercicios:</h2>
+<ul>
+<li><strong>Ejercicio 4:</strong> Transform para centrado perfecto</li>
+<li><strong>Ejercicio 7:</strong> Media queries para layout responsive + border-radius</li>
+<li><strong>Ejercicio 8:</strong> Media queries para sidebar responsive</li>
+<li><strong>Ejercicio 9:</strong> Transform + transition para tooltips suaves</li>
+<li><strong>Ejercicio 10:</strong> Media queries para layout complejo responsive</li>
+</ul>
+</div>
+</body>
+
+</html>

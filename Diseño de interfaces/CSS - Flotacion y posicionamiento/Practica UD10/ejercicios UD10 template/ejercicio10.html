@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10: Layout Complejo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            /* TU CÓDIGO AQUÍ - header fijo */
+            background: #333;
+            color: white;
+            padding: 1em;
+        }
+
+        .wrapper {
+            /* TU CÓDIGO AQUÍ - contenedor principal */
+        }
+
+        .sidebar {
+            /* TU CÓDIGO AQUÍ - sidebar flotante */
+            background: #f0f0f0;
+            padding: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin: 10px 0;
+        }
+
+        .main-content {
+            /* TU CÓDIGO AQUÍ - contenido principal */
+            padding: 20px;
+        }
+
+        .footer {
+            /* TU CÓDIGO AQUÍ - footer al final */
+            background: #666;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .scroll-top {
+            /* TU CÓDIGO AQUÍ - botón scroll to top fijo */
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Mi Sitio Web</h1>
+        <nav>
+            <a href="#" style="color: white; margin-right: 20px;">Inicio</a>
+            <a href="#" style="color: white; margin-right: 20px;">Acerca</a>
+            <a href="#" style="color: white;">Contacto</a>
+        </nav>
+    </header>
+
+    <div class="wrapper">
+        <aside class="sidebar">
+            <h3>Menú Lateral</h3>
+            <ul>
+                <li><a href="#">Categoría 1</a></li>
+                <li><a href="#">Categoría 2</a></li>
+                <li><a href="#">Categoría 3</a></li>
+                <li><a href="#">Categoría 4</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h2>Contenido Principal</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            
+            <h3>Sección 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            
+            <h3>Sección 2</h3>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            
+            <h3>Sección 3</h3>
+            <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt.</p>
+            <p>Explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+            
+            <!-- Más contenido para generar scroll -->
+            <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+            <p>Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+            <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+            <p>Nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
+            <p>Velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+    </footer>
+
+    <button class="scroll-top">↑</button>
+
+    <div style="background: #f8f9fa; padding: 20px; margin: 20px;">
+        <h3>Objetivo del Layout:</h3>
+        <ul>
+            <li>Header fijo en la parte superior</li>
+            <li>Sidebar flotante a la izquierda</li>
+            <li>Contenido principal que fluye alrededor del sidebar</li>
+            <li>Footer que siempre esté al final de la página</li>
+            <li>Un botón "scroll to top" fijo en la esquina inferior derecha</li>
+        </ul>
+        <p><strong>Restricción:</strong> No uses Flexbox ni Grid, solo float y position.</p>
+    </div>
+</body>
+</html>

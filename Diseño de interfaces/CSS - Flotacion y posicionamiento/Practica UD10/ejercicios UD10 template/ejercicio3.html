@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3: El Misterio del Contenedor</title>
+    <style>
+        .contenedor {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            background: lightblue;
+            margin: 50px auto;
+        }
+
+        .caja-roja {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 3: El Misterio del Contenedor</h1>
+    <p><strong>Problema:</strong> Este código debería mostrar una caja roja en la esquina superior derecha del contenedor azul, pero aparece en la esquina del navegador. ¿Qué está mal?</p>
+
+    <div class="contenedor">
+        <div class="caja-roja"></div>
+        <p>Contenido del contenedor...</p>
+    </div>
+
+    <h3>Tareas:</h3>
+    <ol>
+        <li>Identifica el problema: </li>
+        El problema que no esta definido el position del contenedor.
+        <li>Corrígelo con el mínimo cambio posible: </li>
+        Para solucionarlo añadimos "position: relative;" al contenedor.
+        <li>Explica el concepto de "contenedor posicionado"</li>
+        Un contenedor posicionado es cuando un elemento tiene una propiedad position que no es static.
+    </ol>
+</body>
+</html>

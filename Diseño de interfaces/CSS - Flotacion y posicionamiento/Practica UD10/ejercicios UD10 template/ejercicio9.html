@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 9: Tooltip Inteligente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .trigger {
+            /* TU CÓDIGO AQUÍ - configurar el elemento trigger */
+        }
+
+        .trigger::before {
+            /* TU CÓDIGO AQUÍ - crear el tooltip */
+        }
+
+        .trigger::after {
+            /* TU CÓDIGO AQUÍ - crear la flecha del tooltip */
+        }
+
+        .trigger:hover::before,
+        .trigger:hover::after {
+            /* TU CÓDIGO AQUÍ - mostrar tooltip al hacer hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 9: Tooltip Inteligente</h1>
+    <p><strong>Objetivo:</strong> Crea un tooltip que aparezca al hacer hover, centrado respecto al elemento trigger.</p>
+
+    <div style="margin: 100px 0;">
+        <p>Pasa el ratón sobre <span class="trigger">esta palabra</span> para ver el tooltip.</p>
+        
+        <p>También puedes probar con <span class="trigger">otra palabra</span> en diferentes posiciones del texto.</p>
+        
+        <p>El tooltip debería aparecer <span class="trigger">correctamente posicionado</span> sin importar dónde esté la palabra en la página.</p>
+    </div>
+
+    <h3>Reto:</h3>
+    <p>Hazlo solo con CSS (sin JavaScript).</p>
+
+    <h3>Requisitos:</h3>
+    <ul>
+        <li>Debe aparecer centrado respecto al elemento trigger</li>
+        <li>Debe tener una flecha apuntando al elemento</li>
+        <li>Debe aparecer/desaparecer suavemente</li>
+        <li>Solo debe usar CSS (::before y ::after)</li>
+    </ul>
+</body>
+</html>

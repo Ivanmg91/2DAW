@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1: Contenedor Colapsado</title>
+    <style>
+        .gallery {
+            border: 3px solid green;
+            padding: 10px;
+        }
+
+        .gallery img {
+            overflow: hidden;
+            width: 30%;
+            margin: 1%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 1: Contenedor Colapsado</h1>
+    <p><strong>Problema:</strong> El contenedor .gallery no muestra su borde verde. ¿Por qué ocurre y cómo lo solucionas?</p>
+    
+    <div class="gallery">
+        <img src="https://picsum.photos/200/150?random=1" alt="Foto 1">
+        <img src="https://picsum.photos/200/150?random=2" alt="Foto 2">
+        <img src="https://picsum.photos/200/150?random=3" alt="Foto 3">
+    </div>
+
+    <p>Texto después de la galería para ver el problema.</p>
+
+    <h3>Tareas:</h3>
+    <ol>
+        <li>Explica por qué el borde no se ve:</li>
+        El borde no se ve con la propiedad "float: left;" porque hace que los elementos floten a la izquierda lo que los saca del borde.
+        <li>Proporciona 2 soluciones diferentes</li>
+        Una solucion efectiva para este caso seria eliminar la línea de "float: left;" o bien cambiarla por "overflow: hidden"
+        <li>¿Cuál es la solución moderna recomendada?</li>
+        La solución más recomendada sería usar o flexbox o grid.
+    </ol>
+</body>
+</html>

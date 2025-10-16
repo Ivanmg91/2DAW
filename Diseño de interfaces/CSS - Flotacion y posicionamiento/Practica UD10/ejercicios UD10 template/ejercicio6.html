@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6: Z-Index Caótico</title>
+    <style>
+        .escena {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 50px auto;
+            border: 2px dashed #ccc;
+        }
+
+        .caja {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .roja { 
+            background: red; 
+            top: 20px; 
+            left: 20px; 
+            z-index: 100; 
+        }
+
+        .azul { 
+            background: blue; 
+            top: 40px; 
+            left: 40px; 
+            z-index: 50; 
+        }
+
+        .verde { 
+            background: green; 
+            top: 60px; 
+            left: 60px; 
+            z-index: 10; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 6: Z-Index Caótico</h1>
+    <p><strong>Problema:</strong> Tienes 3 cajas superpuestas, pero el orden de apilamiento está mal. La caja verde debería estar encima de todo, luego la azul, y la roja al fondo.</p>
+
+    <div class="escena">
+        <div class="caja roja">Roja</div>
+        <div class="caja azul">Azul</div>
+        <div class="caja verde">Verde</div>
+    </div>
+
+    <h3>Orden deseado (de arriba a abajo):</h3>
+    <ol>
+        <li>Verde (encima de todo)</li>
+        <li>Azul (en medio)</li>
+        <li>Roja (al fondo)</li>
+    </ol>
+
+    <h3>Pregunta trampa:</h3>
+    <p>¿Por qué no basta con cambiar solo los valores de z-index?</p>
+</body>
+</html>

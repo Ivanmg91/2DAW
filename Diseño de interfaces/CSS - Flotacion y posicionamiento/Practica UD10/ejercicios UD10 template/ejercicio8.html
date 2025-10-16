@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8: Debugging Challenge</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+
+        .sidebar {
+            float: left;
+            width: 200px;
+            background: #333;
+            height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 10px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .content {
+            margin-left: 200px;
+        }
+
+        .hero {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .cta {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999999;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="padding: 20px; margin: 0; background: #f8f9fa;">Ejercicio 8: Debugging Challenge</h1>
+    <p style="padding: 0 20px; background: #f8f9fa; margin: 0; padding-bottom: 20px;"><strong>Problema:</strong> Este código tiene múltiples problemas. Encuentra y corrige todos.</p>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        
+        <main class="content">
+            <div class="hero">
+                <h1>Título Principal</h1>
+                <button class="cta">¡Comprar Ahora!</button>
+            </div>
+            
+            <div class="main-content">
+                <h2>Contenido principal</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </main>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; margin-top: 20px;">
+        <h3>Problemas a encontrar:</h3>
+        <ol>
+            <li>El wrapper colapsa</li>
+            <li>El botón CTA no se posiciona correctamente</li>
+            <li>Uso inadecuado de z-index</li>
+            <li>Falta de clearfix o alternativa moderna</li>
+            <li>Problemas de responsive</li>
+        </ol>
+    </div>
+</body>
+</html>

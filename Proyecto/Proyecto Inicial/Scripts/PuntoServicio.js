@@ -8,7 +8,10 @@ export class PuntoServicio {
     this.total = data.total;
     this.ticket = data.ticket;
     this.actualizado = data.updated_at;
-    this.geo_point_2d = data.geo_point_2d.lat;
-    this.geo_point_2d = data.geo_point_2d.lon;
+    // Guardar geo_point_2d como objeto con lat y lon
+    this.geo_point_2d = {
+      lat: data.geo_point_2d.lat,
+      lon: data.geo_point_2d.lon,
+    };
   }
 }

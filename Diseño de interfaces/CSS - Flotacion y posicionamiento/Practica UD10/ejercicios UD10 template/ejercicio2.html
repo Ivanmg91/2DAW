@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2: Float vs Position</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .imagen {
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Versión A: Usando float */
+        .version-a .imagen {
+            float: left;
+        }
+
+        /* Versión B: Usando position */
+        .version-b {
+            position: relative;
+        }
+
+        .version-b .imagen {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 2: Float vs Position</h1>
+    <p><strong>Objetivo:</strong> Crea dos versiones del mismo layout: una imagen a la izquierda y texto que la rodea.</p>
+
+    <h2>Versión A: Usando float</h2>
+    <div class="container version-a">
+        <img src="https://picsum.photos/150/150?random=4" alt="Avatar" class="imagen">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+    </div>
+
+    <h2>Versión B: Usando position absolute</h2>
+    <div class="container version-b">
+        <img src="https://picsum.photos/150/150?random=5" alt="Avatar" class="imagen">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+    </div>
+
+    <h3>Pregunta:</h3>
+    <p>¿Qué diferencias observas en el comportamiento del texto?</p>
+    La principal diferencia es que usando float, la imagen flota a la izquierda y el texto queda alrededor de la imagen ocupando el espacio sobrante; mientras que, usando position la imagen se posiciona asbolutamente, es decir, por encima de los demás elementos y queda por encima del texto que se posiciona acorde el contenedor.
+</body>
+</html>
