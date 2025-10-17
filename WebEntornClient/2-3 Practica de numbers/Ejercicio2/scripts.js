@@ -91,3 +91,38 @@ menu3 = menusPorElegir;
 
 mostrarResultadoMenus(numeroComensales, numeroComensalesNinios, numeroComensalesAdultos, menu1, menu2, menu3, menu4);
 
+alert(`Debe saber que ${numeroComensalesAbuelos} menú/s se beneficiarán de un 15% de descuento,\n\nrespecto al menú de adultos por ser mayores de 65 años\n\nNOTA: El descuento será aplicado a los menús más económicos`);
+alert(`Los menús infantiles tienen un precio de 9.25€ + IVA\n\nEn su caso, se le apliacrá este precio a ${numeroComensalesNinios} comensales`);
+
+const preciosAdultos = [
+    { menu: "del día", precio: 12.5, cantidad: menu1 },
+    { menu: "PREMIUM", precio: 17.45, cantidad: menu2 },
+    { menu: "Buffet", precio: 23.85, cantidad: menu3 },
+];
+
+let abuelosRestantes = numeroComensalesAbuelos;
+let totalFinal = 0;
+let resumenLineas = [];
+
+for (let i = 0; i < preciosAdultos.length; i++) {
+    let { menu, precio, cantidad } = preciosAdultos[i];
+
+    let abuelosConDescuento = Math.min(abuelosRestantes, cantidad);
+    abuelosRestantes -= abuelosConDescuento;
+
+    let totalMenu = (cantidad - abuelosConDescuento) * precio + abuelosConDescuento * precio * 0.85;
+
+    resumenLineas.push(`${cantidad} menú/s ${menu} x ${precio} € ....... ${totalMenu.toFixed(2)} €\n`);
+    totalFinal += totalMenu;
+}
+
+// children menu
+let subtotalNinios = menu4 * 9.25;
+resumenLineas.push(`${menu4} menú/s infantil/es x 9.25 € ....... ${subtotalNinios.toFixed(2)} €`);
+
+totalFinal += subtotalNinios;
+
+const iva = totalFinal * 0.10;
+const totalConIva = totalFinal + iva;
+
+alert(`Los menús que se servirán serán los siguientes:\n\n${resumenLineas.join('\n')}\n\nIVA 10% ....... ${iva.toFixed(2)} €\n\nTOTAL CON IVA ....... ${totalConIva.toFixed(2)} €`);
