@@ -8,26 +8,33 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            padding-top: 50px; /* Se agrega un padding en la parte superior para evitar que el header se sobreponga */
         }
 
         .header {
             position: sticky;
+            top: 0; /* Asegúrate de que el sticky header se quede pegado en la parte superior */
             background: navy;
             color: white;
             padding: 1em;
-
-            top: 0;
+            z-index: 1; /* Asegura que el header esté por encima de otros elementos si es necesario */
         }
 
         .content {
             padding: 20px;
             line-height: 1.6;
         }
+
+        h1 {
+            padding: 20px;
+            margin: 0;
+            background-color: lightgray;
+        }
     </style>
 </head>
 <body>
-    <h1 style="padding: 20px; margin: 0;">Ejercicio 5: Sticky Header Problemático</h1>
-    <p style="padding: 0 20px;"><strong>Problema:</strong> Este header sticky no funciona. Identifica y corrige todos los problemas.</p>
+    <h1>Ejercicio 5: Sticky Header Problemático</h1>
+    <p><strong>Problema:</strong> Este header sticky no funciona. Identifica y corrige todos los problemas.</p>
 
     <header class="header">Menú Principal</header>
     
@@ -55,7 +62,8 @@
         <p>Officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint.</p>
     </main>
 
-    <h3 style="padding: 0 20px;">Pistas:</h3>
-    <p style="padding: 0 20px;">Hay al menos 2 problemas que impiden que funcione correctamente.</p>
+    <h3>Pistas:</h3>
+    <p>Hay al menos 2 problemas que impiden que funcione correctamente.</p>
+    CORREGIDO
 </body>
 </html>

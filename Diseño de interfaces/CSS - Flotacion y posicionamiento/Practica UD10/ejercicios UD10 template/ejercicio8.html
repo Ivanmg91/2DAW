@@ -10,8 +10,16 @@
             font-family: Arial, sans-serif;
         }
 
+        .wrapper::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
         .wrapper {
             width: 100%;
+            display: flex;
         }
 
         .sidebar {
@@ -38,7 +46,7 @@
         }
 
         .content {
-            margin-left: 200px;
+            width: 100%;
         }
 
         .hero {
@@ -59,8 +67,9 @@
         .cta {
             position: absolute;
             bottom: 20px;
-            right: 20px;
-            z-index: 999999;
+            right: 50%;
+            transform: translateX(50%);
+            z-index: 999;
             background: #ff6b6b;
             color: white;
             border: none;
