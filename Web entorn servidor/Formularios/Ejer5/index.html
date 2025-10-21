@@ -2,28 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcular Llamadas</title>
+    <title>Ejercicio 5</title>
 </head>
 <body>
-    <h2>Calcular Precio Llamadas</h2>
-    <form action="Ejer4.php" method="post">
-        <label for="llamada">Minutos llamada:</label>
-        <input type="number" id="1" name="1" required><br><br>
+    <form method="post" action="Ejer5.php">
+        <p><strong>Selecciona las operaciones:</strong></p>
+        <label><input type="checkbox" name="operaciones[]" value="salarioMaximo"> Salario Máximo</label><br>
+        <label><input type="checkbox" name="operaciones[]" value="salarioMinimo"> Salario Mínimo</label><br>
+        <label><input type="checkbox" name="operaciones[]" value="salarioMedio"> Salario Medio</label><br><br>
 
-        <label for="llamada">Minutos llamada:</label>
-        <input type="number" id="2" name="2" required><br><br>
+        <label>Aplicar porcentaje a salarios (puede ser negativo):</label><br>
+        <input type="number" name="porcentaje" value="0"> %<br><br>
 
-        <label for="llamada">Minutos llamada:</label>
-        <input type="number" id="3" name="3" required><br><br>
-
-        <label for="llamada">Minutos llamada:</label>
-        <input type="number" id="4" name="4" required><br><br>
-
-        <label for="llamada">Minutos llamada:</label>
-        <input type="number" id="5" name="5" required><br><br>
-
-        <input type="submit" value="Calcular Precios">
+        <input type="submit" value="Calcular">
     </form>
 </body>
 </html>
