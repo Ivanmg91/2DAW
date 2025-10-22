@@ -1,4 +1,13 @@
-.card {
+body {
+  margin: 0;
+  height: 100%;             /* Hace que el body ocupe toda la altura de la ventana */
+  display: flex;
+  justify-content: center;   /* Centra el contenido horizontalmente */
+  align-items: center;       /* Centra el contenido verticalmente */
+  flex-direction: column;    /* Asegura que los elementos se apilen verticalmente */
+}
+
+card {
   border: 1px solid #ccc;
   padding: 1em;
   margin: 1em;
@@ -26,6 +35,6 @@ th {
 
 #map {
   height: 500px;
-  width: 100%;
+  width: 50%;
   margin-bottom: 20px;
 }
