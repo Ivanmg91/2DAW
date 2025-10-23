@@ -1,43 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Disponibilidad Valenbisi</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disponibilidad Valenbisi</title>
 
-  <!-- leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="./Scripts/app.js"></script>
-</head>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="./Scripts/app.js"></script>
+
+  </head>
 
   <body>
-    <h1>Disponibilidad Valenbisi</h1>
-    <div id="contenedor"></div>
-    <h1>Datos del JSON</h1>
 
-    <div id="map"></div>
-    <table id="tabla">
-      <thead>
-        <tr>
-          <th>Dirección</th>
-          <th>Número</th>
-          <th>Abierto</th>
-          <th>Disponibles</th>
-          <th>Libres</th>
-          <th>Total</th>
-          <th>Ticket</th>
-          <th>Última Actualización</th>
-          <th>Latitud</th>
-          <th>Longitud</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
-    
+    <input type="text" id="barraBusqueda" class="input-busqueda" placeholder="Buscar ubicación..." />
+
+    <div class="contenedor">
+      <div id="map"></div>
+    </div>
+
   </body>
 </html>
