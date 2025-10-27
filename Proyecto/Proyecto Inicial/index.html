@@ -14,32 +14,34 @@
   </head>
 
   <body>
-
+    <!-- ESTO ES LA BARRA DE BUSQUEDA -->
     <div class="tabladiv">
       <button class="tablabutton" id="tablabutton">☰</button>
       <input type="text" id="barraBusqueda" class="input-busqueda" placeholder="Buscar ubicación..." />
     </div>
 
-    <div class="tabla" id="tabla">
-      <button class="tablabuttonCerrar" id="tablabuttonCerrar">X</button>
-      <h3>Puntos de Servicio</h3>
-      <table id="tablaPuntos">
-        <thead>
-          <tr>
-            <th>Dirección</th>
-            <th>Disponibles</th>
-            <th>Libres</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div id="tamanosAbrirMenu">
+      <div class="tabla" id="tabla">
+        <button class="tablabuttonCerrar" id="tablabuttonCerrar">X</button>
+        <h3>Puntos de Servicio</h3>
+        <table id="tablaPuntos">
+          <thead>
+            <tr>
+              <th>Dirección</th>
+              <th>Disponibles</th>
+              <th>Libres</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
 
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
 
-    <div class="contenedor">
-      <div id="map"></div>
+      <div class="contenedor">
+        <div id="map"></div>
+      </div>
     </div>
 
   </body>

@@ -217,13 +217,20 @@ window.onload = async function () {
   document.getElementById("tablabutton").addEventListener("click", function name() {
 
     document.getElementById("tabla").style.visibility = "visible";
-    document.getElementById("map").style.width = "10px";
+    document.getElementById("tabla").style.position = "relative";
+    document.querySelector(".tabladiv").style.left = "27%";
+    document.getElementById("tablabutton").style.visibility = "hidden";
 
   })
 
   document.getElementById("tablabuttonCerrar").addEventListener("click", function name() {
 
     document.getElementById("tabla").style.visibility = "hidden";
+    document.getElementById("tabla").style.position = "absolute";
+
+    document.querySelector(".tabladiv").style.left = "2%";
+    document.getElementById("tablabutton").style.visibility = "visible";
+    
   })
 
   console.log(puntosServicio);
