@@ -7,6 +7,7 @@ body {
   flex-direction: column;
   font-family: Arial, sans-serif;
   position: relative;
+  overflow: hidden;
 }
 
 .contenedor {
@@ -55,4 +56,23 @@ body {
   border: 1PX solid #ccc;
   border-radius: 20px;
   font-size: 16px;
+}
+
+.tablabuttonCerrar {
+  padding: 10px 10px 10px 10px;
+  border: 1PX solid #ff0000;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.tabla {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  z-index: 11;
+  width: 40%;
+  height: 100%;
+  background-color: #007BFF;
+  visibility: hidden;
+  overflow-y: auto;
 }

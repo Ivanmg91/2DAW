@@ -27,7 +27,6 @@ if (isNaN(cantidadCadenas) || cantidadCadenas <= 0) {
     }
   }
 
-
   cadenas.forEach((c, i) => {
     console.log(`Cadena nº ${i + 1}: "${c}"`);
   });

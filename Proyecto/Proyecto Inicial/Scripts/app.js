@@ -19,8 +19,33 @@ async function fetchJSONDataInTable() {
   }
 }
 
+function mostrarTablaPuntos() {
+  const tbody = document.querySelector("#tablaPuntos tbody");
+  tbody.innerHTML = ""; // Limpiar contenido previo
+
+  puntosServicio.forEach((punto) => {
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+      <td>${punto.direccion}</td>
+      <td>${punto.disponibles}</td>
+      <td>${punto.libres}</td>
+      <td>${punto.total}</td>
+    `;
+
+    // Al hacer clic en una fila, centramos el mapa en ese punto
+    fila.addEventListener("click", () => {
+      map.setView([punto.geo_point_2d.lat, punto.geo_point_2d.lon], 17);
+    });
+
+    tbody.appendChild(fila);
+  });
+}
+
+
 
 window.onload = async function () {
+
   //MAPA
   const map = L.map("map").setView(
     [39.476747340831494, -0.37534238089458904],
@@ -36,6 +61,7 @@ window.onload = async function () {
   }).addTo(map);
 
   await fetchJSONDataInTable();
+  mostrarTablaPuntos();
 
   //capas
   setupLayerController(map);
@@ -185,7 +211,20 @@ window.onload = async function () {
       markerGroup.clearLayers();
       buscarPuntos(barraBusqueda.value);
     }
-});
+  });
+
+  // Mostar la tabla desplegable de la izquerda
+  document.getElementById("tablabutton").addEventListener("click", function name() {
+
+    document.getElementById("tabla").style.visibility = "visible";
+    document.getElementById("map").style.width = "10px";
+
+  })
+
+  document.getElementById("tablabuttonCerrar").addEventListener("click", function name() {
+
+    document.getElementById("tabla").style.visibility = "hidden";
+  })
 
   console.log(puntosServicio);
 };
