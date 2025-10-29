@@ -25,13 +25,18 @@
         <br>
 
         <label>Estado Civil:</label><br>
-        <select name="estado-civil" id="estado-civil">
-            <option value="Soltero">Soltero</option>
-            <option value="Casado">Casado</option>
-            <option value="Viudo">Viudo</option>
-            <option value="Divorciado">Divorciado</option>
-            <option value="Otro">Otro</option>
-        </select>
+        <input type="radio" id="soltero" name="estado-civil" value="Soltero" required>
+        <label for="soltero">Soltero</label>
+        <input type="radio" id="casado" name="estado-civil" value="Casado">
+        <label for="casado">Casado</label>
+        <input type="radio" id="viudo" name="estado-civil" value="Viudo">
+        <label for="viudo">Viudo</label>
+        <input type="radio" id="divorciado" name="estado-civil" value="Divorciado">
+        <label for="divorciado">Divorciado</label>
+        <input type="radio" id="otro" name="estado-civil" value="Otro">
+        <label for="otro">Otro</label>
+        <input type="text" name="estado-civil-otro">
+        <br>
 
         <br>
 

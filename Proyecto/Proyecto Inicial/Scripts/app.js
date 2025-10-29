@@ -233,5 +233,36 @@ window.onload = async function () {
     
   })
 
+  // ORDENAR LA TABLA AL PULSAR EN EL ENCABEZADO DE LAS COLUMNAS
+  const encabezados = document.querySelectorAll("#tablaPuntos thead th");
+  encabezados.forEach((th, index) => {
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => {
+      const campo = ["direccion", "disponibles", "libres", "total"][index];
+      ordenarTabla(campo);
+    });
+  });
+
+  let ordenAscendente = true;
+
+  function ordenarTabla(campo) {
+    // Determinar si el campo es numérico
+    const esNumerico = ["disponibles", "libres", "total"].includes(campo);
+
+    puntosServicio.sort((a, b) => {
+      if (esNumerico) {
+        return ordenAscendente ? a[campo] - b[campo] : b[campo] - a[campo];
+      } else {
+        return ordenAscendente
+          ? a[campo].localeCompare(b[campo])
+          : b[campo].localeCompare(a[campo]);
+      }
+    });
+
+    ordenAscendente = !ordenAscendente; // Alternar orden asc/desc
+    mostrarTablaPuntos(); // Volver a renderizar la tabla
+  }
+
+
   console.log(puntosServicio);
 };

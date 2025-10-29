@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Ejer8</title></head>
+<body>
+    <form action="Ejer11.php" id="formulario" method="POST">
+        <label>Nombre: <input type="text" name="nombre" required></label>
+        
+
+        <br>
+
+        <label>Apellidos: <input type="text" name="apellidos" required></label>
+
+        <br>
+
+        <label>Contraseña: <input type="password" name="contrasena" minlength="6" required></label>
+
+        <br><br>
+
+        <label>Nivel de estudio:</label><br>
+        <select name="nivel-estudio" id="nivel-estudio" required>
+            <option value="Sin estudios">Sin estudios</option>
+            <option value="Educación Secundaria Obligatoria">Educación Secundaria Obligatoria</option>
+            <option value="Bachillerato">Bachillerato</option>
+            <option value="Formación Profesional">Formación Profesional</option>
+            <option value="Estudios Universitarios">Estudios Universitarios</option>
+        </select>
+
+        <br><br>
+
+        <label>nacionalidad:</label><br>
+        <input type="radio" id="espanola" name="nacionalidad" value="Española" required>
+        <label for="espanola">Española</label>
+        <input type="radio" id="otro" name="nacionalidad" value="Otro">
+        <label for="otro">Otro</label>
+        <input type="text" name="nacionalidad-otra">
+
+        <br><br>
+
+        <label>Idiomas:</label><br>
+        <input type="checkbox" name="idiomas[]" value="Español"> Español
+        <input type="checkbox" name="idiomas[]" value="Inglés"> Inglés
+        <input type="checkbox" name="idiomas[]" value="Francés"> Francés
+        <input type="checkbox" name="idiomas[]" value="Alemán"> Alemán
+        <input type="checkbox" name="idiomas[]" value="Italiano"> Italiano
+        <input type="checkbox" name="idiomas[]" value="Series"> Series
+        <input type="checkbox" name="idiomas[]" value="Videojuegos"> Videojuegos
+
+        <br><br>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <br>    
+
+        <label>Imágen</label>
+        <input type="file" accept="image/*" name="imagen" required>
+
+        <br><br>
+
+        <input type="submit" value="Validar">
+        <input type="submit" value="Enviar">
+        <button type="button" onclick="document.getElementById('formulario').reset()">Borrar</button>
+    </form>
+</body>
+</html>

@@ -9,7 +9,7 @@
         <br>
 
         <label>Nivel de estudio:</label><br>
-        <select name="nivel-estudio" id="nivel-estudio">
+        <select name="nivel-estudio" id="nivel-estudio" required>
             <option value="Primaria">Primaria</option>
             <option value="Secundaria">Secundaria</option>
             <option value="Bachillerato">Bachillerato</option>
@@ -20,7 +20,7 @@
         <br>
 
         <label>Situación actual:</label><br>
-        <select name="situacion-actual" id="situacion-actual" multiple>
+        <select name="situacion-actual[]" id="situacion-actual" multiple required>
             <option value="Estudiando">Estudiando</option>
             <option value="Trabajando">Trabajando</option>
             <option value="Buscando Empleo">Buscando Empleo</option>
@@ -37,6 +37,8 @@
         <input type="checkbox" name="hobbies[]" value="Cómics"> Cómics
         <input type="checkbox" name="hobbies[]" value="Series"> Series
         <input type="checkbox" name="hobbies[]" value="Videojuegos"> Videojuegos
+        <br>
+        Otros: <input type="text" name="hobbies[]">
 
         <br><br>
 

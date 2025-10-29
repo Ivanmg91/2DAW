@@ -4,7 +4,7 @@
     $edad = isset($_POST['edad']) ? $_POST['edad'] : null;
     $peso = isset($_POST['peso']) ? $_POST['peso'] : null;
     $sexo = isset($_POST['sexo']) ? $_POST['sexo'] : null;
-    $estadoCivil = isset($_POST['estado-civil']) ? $_POST['estado-civil'] : null;
+    $estadoCivil = isset($_POST['estado-civil-otro']) ? $_POST['estado-civil-otro'] : null;
     $aficiones = isset($_POST['aficiones']) ? $_POST['aficiones'] : [];
 
     echo "<h2>$nombre $apellidos</h2>";
