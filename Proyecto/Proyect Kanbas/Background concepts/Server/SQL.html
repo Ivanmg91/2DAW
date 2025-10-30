@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="referencias-de-instrucciones-y-consultas-sql">Referencias de instrucciones y consultas SQL</h1>
+<h2 id="comandos-básicos">Comandos Básicos</h2>
+<h3 id="nivel-base-de-datos-database">Nivel Base de Datos (Database):</h3>
+
+<table>
+<thead>
+<tr>
+<th>Enlace</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_create_db.asp">CREATE DATABASE</a></td>
+<td>Crea una nueva base de datos en el sistema de gestión de bases de datos.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_drop_db.asp">DROP DATABASE</a></td>
+<td>Elimina permanentemente una base de datos</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_backup_db.asp">BACKUP DATABASE</a></td>
+<td>Realiza una copia de seguridad completa de una base de datos (en sistemas que lo soportan).</td>
+</tr>
+</tbody>
+</table><h3 id="nivel-tabla-table">Nivel Tabla (Table):</h3>
+
+<table>
+<thead>
+<tr>
+<th>Enlace</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_create_table.asp">CREATE TABLE</a></td>
+<td>Crea una nueva tabla dentro de una base de datos con sus columnas y tipos de datos.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_ref_drop.asp">DROP TABLE</a></td>
+<td>Elimina una tabla existente junto con todos sus datos.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_alter.asp">ALTER TABLE</a></td>
+<td>Modifica la definición de una tabla: agregar, eliminar o cambiar columnas o restricciones.</td>
+</tr>
+</tbody>
+</table><h3 id="nivel-registro-o-datos-data">Nivel Registro o Datos (Data):</h3>
+
+<table>
+<thead>
+<tr>
+<th>Enlace</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_select.asp">SELECT</a></td>
+<td>Consulta para extraer datos de una o más tablas.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_distinct.asp">SELECT DISTINCT</a></td>
+<td>Devuelve sólo los valores distintos (sin duplicados) de la(s) columna(s) seleccionada(s).</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_where.asp">WHERE</a></td>
+<td>Filtro para limitar las filas que cumplen una condición específica dentro de SELECT/UPDATE/DELETE.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_orderby.asp">ORDER BY</a></td>
+<td>Ordena el resultado de una consulta por una o más columnas (ascendente o descendente). :contentReference[oaicite:8]{index=8}</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/mysql/mysql_and_or.asp">AND / OR / NOT</a></td>
+<td>Operadores lógicos para combinar condiciones en cláusulas WHERE u otras condiciones.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_insert.asp">INSERT INTO</a></td>
+<td>Inserta nuevos registros o filas en una tabla con valores para sus columnas.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_update.asp">UPDATE</a></td>
+<td>Modifica uno o más registros existentes en una tabla, según condiciones definidas.</td>
+</tr>
+<tr>
+<td><a href="https://www.w3schools.com/sql/sql_delete.asp">DELETE</a></td>
+<td>Elimina uno o más registros de una tabla según una condición especificada en la cláusula WHERE.</td>
+</tr>
+</tbody>
+</table><h1 id="ejemplos-sql-—-tablero-kanban">Ejemplos SQL — Tablero Kanban</h1>
+<p>Este documento muestra ejemplos prácticos de comandos SQL aplicados a una base de datos que gestiona un <strong>tablero Kanban</strong>, con una tabla principal <code>tasks</code>.</p>
+<hr>
+<h2 id="base-de-datos">1. Base de Datos</h2>
+<h3 id="🔹-crear-la-base-de-datos">🔹 Crear la base de datos</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> kanban_board<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-seleccionar-la-base-de-datos">🔹 Seleccionar la base de datos</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">USE</span> kanban_board<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-opcional-hacer-copia-de-seguridad">🔹 (Opcional) Hacer copia de seguridad</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Para MySQL/MariaDB</span>
+mysqldump <span class="token operator">-</span>u root <span class="token operator">-</span>p kanban_board <span class="token operator">&gt;</span> kanban_board_backup<span class="token punctuation">.</span>sql
+
+<span class="token comment">-- Para restaurar:</span>
+mysql <span class="token operator">-</span>u root <span class="token operator">-</span>p kanban_board <span class="token operator">&lt;</span> kanban_board_backup<span class="token punctuation">.</span>sql
+</code></pre>
+<h3 id="🔹-opcional-eliminar-la-base-de-datos">🔹 (Opcional) Eliminar la base de datos</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> kanban_board<span class="token punctuation">;</span>
+</code></pre>
+<h2 id="tablas">2. Tablas</h2>
+<h3 id="🔹-crear-la-tabla-principal-tasks">🔹 Crear la tabla principal <code>tasks</code></h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> tasks <span class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+    description <span class="token keyword">TEXT</span><span class="token punctuation">,</span>
+    <span class="token keyword">status</span> <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'deleted'</span><span class="token punctuation">,</span>
+                <span class="token string">'Some day'</span><span class="token punctuation">,</span> 
+                <span class="token string">'This week'</span><span class="token punctuation">,</span> 
+                <span class="token string">'Tomorrow'</span><span class="token punctuation">,</span> 
+                <span class="token string">'Today'</span><span class="token punctuation">,</span> 
+                <span class="token string">'In progress'</span><span class="token punctuation">,</span>
+                <span class="token string">'Done'</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+    priority <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'top'</span><span class="token punctuation">,</span>
+                  <span class="token string">'high'</span><span class="token punctuation">,</span> 
+                  <span class="token string">'medium'</span><span class="token punctuation">,</span> 
+                  <span class="token string">'low'</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'medium'</span><span class="token punctuation">,</span>
+    created_at <span class="token keyword">TIMESTAMP</span> 
+               <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
+    updated_at <span class="token keyword">TIMESTAMP</span> 
+               <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> 
+               <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span> <span class="token keyword">CURRENT_TIMESTAMP</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-modificar-la-tabla-agregar-columna">🔹 Modificar la tabla (agregar columna)</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> tasks <span class="token keyword">ADD</span> <span class="token keyword">COLUMN</span> owner <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-eliminar-la-tabla">🔹 Eliminar la tabla</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> tasks<span class="token punctuation">;</span>
+</code></pre>
+<h2 id="consultas-y-manipulación-de-datos">3. Consultas y Manipulación de Datos</h2>
+<h3 id="🔹-insertar-tareas">🔹 Insertar tareas</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> tasks <span class="token punctuation">(</span>description<span class="token punctuation">,</span> <span class="token keyword">status</span><span class="token punctuation">,</span> priority<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span><span class="token string">'Diseñar la interfaz del tablero'</span><span class="token punctuation">,</span> <span class="token string">'Today'</span><span class="token punctuation">,</span>
+<span class="token string">'high'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Preparar la reunión semanal'</span><span class="token punctuation">,</span> <span class="token string">'This week'</span><span class="token punctuation">,</span>
+<span class="token string">'medium'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Actualizar documentación técnica'</span><span class="token punctuation">,</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+<span class="token string">'low'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-consultar-todas-las-tareas">🔹 Consultar todas las tareas</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> tasks<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-consultar-estados-distintos">🔹 Consultar estados distintos</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token keyword">status</span> <span class="token keyword">FROM</span> tasks<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-contar-tarjetas-del-tablero-según-su-estado">🔹 Contar tarjetas del tablero según su estado</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">status</span><span class="token punctuation">,</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> total_tasks
+<span class="token keyword">FROM</span> tasks
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token keyword">status</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> total_tasks <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="resultado-de-ejemplo">- Resultado de ejemplo:</h4>
+
+<table>
+<thead>
+<tr>
+<th>status</th>
+<th>total_tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>In progress</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Today</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Done</td>
+<td>2</td>
+</tr>
+<tr>
+<td>This week</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Some day</td>
+<td>1</td>
+</tr>
+</tbody>
+</table><h3 id="🔹-ordenar-tareas-por-prioridad-y-fecha">🔹 Ordenar tareas por prioridad y fecha</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> tasks
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> priority <span class="token keyword">ASC</span><span class="token punctuation">,</span> created_at <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-filtrar-con-condiciones-lógicas">🔹 Filtrar con condiciones lógicas</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> tasks
+<span class="token keyword">WHERE</span> <span class="token punctuation">(</span><span class="token keyword">status</span> <span class="token operator">=</span> <span class="token string">'Today'</span> 
+       <span class="token operator">OR</span> <span class="token keyword">status</span> <span class="token operator">=</span> <span class="token string">'In progress'</span><span class="token punctuation">)</span>
+       <span class="token operator">AND</span> priority <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token string">'top'</span><span class="token punctuation">,</span> <span class="token string">'high'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-actualizar-tareas-cambiar-estado">🔹 Actualizar tareas (cambiar estado)</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">UPDATE</span> tasks
+<span class="token keyword">SET</span> <span class="token keyword">status</span> <span class="token operator">=</span> <span class="token string">'Done'</span>
+<span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">UPDATE</span> tasks
+<span class="token keyword">SET</span> description <span class="token operator">=</span> <span class="token string">'Revisar interfaz final'</span><span class="token punctuation">,</span> 
+    <span class="token keyword">status</span> <span class="token operator">=</span> <span class="token string">'In progress'</span>
+<span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="🔹-eliminar-tareas-completadas">🔹 Eliminar tareas completadas</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> tasks
+<span class="token keyword">WHERE</span> <span class="token keyword">status</span> <span class="token operator">=</span> <span class="token string">'Done'</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="archivo-sql-completo-para-phpmyadmin">Archivo SQL completo para phpMyAdmin</h2>
+<p>Puedes copiar y pegar este código directamente en phpMyAdmin para crear la base de datos y tabla completas:</p>
+<p><strong>Archivo: <code>kanban_setup.sql</code></strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Crear base de datos</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> kanban_board<span class="token punctuation">;</span>
+<span class="token keyword">USE</span> kanban_board<span class="token punctuation">;</span>
+
+<span class="token comment">-- Crear tabla tasks</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> tasks <span class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+    description <span class="token keyword">TEXT</span><span class="token punctuation">,</span>
+    <span class="token keyword">status</span> <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'deleted'</span><span class="token punctuation">,</span>
+                <span class="token string">'Some day'</span><span class="token punctuation">,</span> 
+                <span class="token string">'This week'</span><span class="token punctuation">,</span> 
+                <span class="token string">'Tomorrow'</span><span class="token punctuation">,</span> 
+                <span class="token string">'Today'</span><span class="token punctuation">,</span> 
+                <span class="token string">'In progress'</span><span class="token punctuation">,</span>
+                <span class="token string">'Done'</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+    priority <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'top'</span><span class="token punctuation">,</span>
+                  <span class="token string">'high'</span><span class="token punctuation">,</span> 
+                  <span class="token string">'medium'</span><span class="token punctuation">,</span> 
+                  <span class="token string">'low'</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'medium'</span><span class="token punctuation">,</span>
+    created_at <span class="token keyword">TIMESTAMP</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
+    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">ON</span> 
+    <span class="token keyword">UPDATE</span> <span class="token keyword">CURRENT_TIMESTAMP</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Insertar datos de ejemplo</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> tasks <span class="token punctuation">(</span>description<span class="token punctuation">,</span> <span class="token keyword">status</span><span class="token punctuation">,</span> priority<span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span><span class="token string">'Diseñar la interfaz del tablero'</span><span class="token punctuation">,</span> <span class="token string">'Today'</span><span class="token punctuation">,</span> <span class="token string">'high'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Preparar la reunión semanal'</span><span class="token punctuation">,</span> <span class="token string">'This week'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Actualizar documentación técnica'</span><span class="token punctuation">,</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span> <span class="token string">'low'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Implementar API REST'</span><span class="token punctuation">,</span> <span class="token string">'In progress'</span><span class="token punctuation">,</span> <span class="token string">'top'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'Revisar código del frontend'</span><span class="token punctuation">,</span> <span class="token string">'Tomorrow'</span><span class="token punctuation">,</span> <span class="token string">'high'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>Instrucciones para phpMyAdmin:</strong></p>
+<ol>
+<li>Abre phpMyAdmin en tu navegador</li>
+<li>Ve a la pestaña “SQL”</li>
+<li>Copia y pega el código anterior</li>
+<li>Haz clic en “Continuar” o “Ejecutar”</li>
+<li>La base de datos <code>kanban_board</code> y la tabla <code>tasks</code> se crearán automáticamente con datos de ejemplo</li>
+</ol>
+</div>
+</body>
+
+</html>

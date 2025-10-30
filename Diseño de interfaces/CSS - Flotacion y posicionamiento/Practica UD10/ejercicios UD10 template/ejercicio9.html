@@ -12,20 +12,48 @@
         }
 
         .trigger {
-            /* TU CÓDIGO AQUÍ - configurar el elemento trigger */
+            position: relative;
+            color: #007bff;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         .trigger::before {
-            /* TU CÓDIGO AQUÍ - crear el tooltip */
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: bottom center;
         }
 
         .trigger::after {
-            /* TU CÓDIGO AQUÍ - crear la flecha del tooltip */
+            content: "";
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+            opacity: 0;
         }
 
         .trigger:hover::before,
         .trigger:hover::after {
-            /* TU CÓDIGO AQUÍ - mostrar tooltip al hacer hover */
+            opacity: 1;
+        }
+
+        .trigger:hover::before {
+            transform: translateX(-50%) translateY(-5px);
         }
     </style>
 </head>
@@ -34,11 +62,11 @@
     <p><strong>Objetivo:</strong> Crea un tooltip que aparezca al hacer hover, centrado respecto al elemento trigger.</p>
 
     <div style="margin: 100px 0;">
-        <p>Pasa el ratón sobre <span class="trigger">esta palabra</span> para ver el tooltip.</p>
+        <p>Pasa el ratón sobre <span class="trigger" data-tooltip="Tooltip de ejemplo">esta palabra</span> para ver el tooltip.</p>
         
-        <p>También puedes probar con <span class="trigger">otra palabra</span> en diferentes posiciones del texto.</p>
+        <p>También puedes probar con <span class="trigger" data-tooltip="Otro tooltip diferente">otra palabra</span> en diferentes posiciones del texto.</p>
         
-        <p>El tooltip debería aparecer <span class="trigger">correctamente posicionado</span> sin importar dónde esté la palabra en la página.</p>
+        <p>El tooltip debería aparecer <span class="trigger" data-tooltip="Perfectamente centrado">correctamente posicionado</span> sin importar dónde esté la palabra en la página.</p>
     </div>
 
     <h3>Reto:</h3>

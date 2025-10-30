@@ -1,0 +1,1162 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Api REST.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="backend-para-la-gestión-de-tareas-restful-api">Backend para la gestión de tareas (RESTful API)</h1>
+<p>Este apartado explica cómo implementar un backend simple en <strong>PHP</strong> para interactuar con la base de datos del tablero Kanban (<code>tasks</code>) usando <strong>endpoints RESTful</strong>.</p>
+<p>La API permitirá:</p>
+
+<table>
+<thead>
+<tr>
+<th>Método HTTP</th>
+<th>Endpoint</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/api/tasks.php</td>
+<td>Obtener todas las tareas.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/api/tasks.php</td>
+<td>Crear una nueva tarea.</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>/api/tasks.php?id={id}</td>
+<td>Actualizar una tarea existente.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/api/tasks.php?id={id}</td>
+<td>Eliminar una tarea por su ID.</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>/api/tasks.php?id={id}</td>
+<td>Actualizar solo el estado de una tarea.</td>
+</tr>
+</tbody>
+</table><hr>
+<h1 id="🌐-introducción-a-las-api-restful">🌐 Introducción a las API RESTful</h1>
+<p>Una <strong>API RESTful</strong> (o simplemente <strong>API REST</strong>) es una interfaz que permite la comunicación entre un cliente (por ejemplo, una aplicación web o móvil) y un servidor, usando el protocolo <strong>HTTP</strong>.</p>
+<p>Su objetivo es exponer los datos y operaciones de una aplicación de forma <strong>ordenada, predecible y estandarizada</strong>, de modo que otros sistemas puedan interactuar fácilmente con ella.</p>
+<hr>
+<h2 id="🔹-¿qué-significa-“rest”">🔹 ¿Qué significa “REST”?</h2>
+<p><strong>REST</strong> son las siglas de <strong>Representational State Transfer</strong>.<br>
+No es una tecnología en sí, sino un <strong>estilo de arquitectura</strong> que define un conjunto de <strong>principios</strong> para diseñar servicios web.</p>
+<p>Entre sus características principales están:</p>
+<ol>
+<li>
+<p><strong>Uso de los métodos HTTP</strong> estándar:</p>
+
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Acción</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td>Leer</td>
+<td>Obtiene recursos (por ejemplo, todas las tareas)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>Crear</td>
+<td>Crea un nuevo recurso</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td>Reemplazar</td>
+<td>Actualiza completamente un recurso existente</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td>Modificar</td>
+<td>Actualiza parcialmente un recurso</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>Eliminar</td>
+<td>Borra un recurso</td>
+</tr>
+</tbody>
+</table></li>
+<li>
+<p><strong>Recursos identificados por URLs</strong><br>
+Cada tipo de dato o entidad (por ejemplo, <code>tasks</code>) se representa mediante una URL base: <strong>/api/tasks.php</strong></p>
+</li>
+<li>
+<p><strong>Formato de intercambio de datos estándar (JSON)</strong><br>
+Las respuestas se devuelven generalmente en formato <strong>JSON</strong>, fácil de leer y procesar por el cliente.</p>
+</li>
+<li>
+<p><strong>Sin estado (Stateless)</strong><br>
+Cada solicitud HTTP contiene toda la información necesaria para procesarla.<br>
+El servidor <strong>no guarda contexto</strong> entre una petición y otra.</p>
+</li>
+</ol>
+<hr>
+<h2 id="ejemplo-en-contexto-tablero-kanban">Ejemplo en contexto: tablero Kanban</h2>
+<p>En este proyecto, la API RESTful permite gestionar las tareas de un tablero Kanban.<br>
+Cada tarea tiene información como descripción, estado y prioridad.</p>
+<p>La base de datos contiene una tabla principal llamada <code>tasks</code>:</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> tasks <span class="token punctuation">(</span>
+ id <span class="token keyword">INT</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+ description <span class="token keyword">TEXT</span><span class="token punctuation">,</span>
+ <span class="token keyword">status</span> <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'deleted'</span><span class="token punctuation">,</span><span class="token string">'Some day'</span><span class="token punctuation">,</span> <span class="token string">'This week'</span><span class="token punctuation">,</span> 
+ <span class="token string">'Tomorrow'</span><span class="token punctuation">,</span> <span class="token string">'Today'</span><span class="token punctuation">,</span> <span class="token string">'In progress'</span><span class="token punctuation">,</span><span class="token string">'Done'</span><span class="token punctuation">)</span> 
+ <span class="token keyword">DEFAULT</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+ priority <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'top'</span><span class="token punctuation">,</span><span class="token string">'high'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">,</span> <span class="token string">'low'</span><span class="token punctuation">)</span> 
+ <span class="token keyword">DEFAULT</span> <span class="token string">'medium'</span><span class="token punctuation">,</span>
+ created_at <span class="token keyword">TIMESTAMP</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
+ updated_at <span class="token keyword">TIMESTAMP</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> 
+             <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span> <span class="token keyword">CURRENT_TIMESTAMP</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Mediante la API, se podrán realizar operaciones como:</p>
+<ul>
+<li>
+<p>📋 Obtener todas las tareas (<code>GET</code>)</p>
+</li>
+<li>
+<p>✏️ Crear una nueva tarea (<code>POST</code>)</p>
+</li>
+<li>
+<p>🔄 Editar una tarea (<code>PUT</code> o <code>PATCH</code>)</p>
+</li>
+<li>
+<p>❌ Eliminar una tarea (<code>DELETE</code>)</p>
+</li>
+</ul>
+<hr>
+<h2 id="🚀-beneficios-de-una-api-restful">🚀 Beneficios de una API RESTful</h2>
+<ul>
+<li>
+<p><strong>Simplicidad:</strong> se basa en el protocolo HTTP estándar.</p>
+</li>
+<li>
+<p><strong>Escalabilidad:</strong> puede crecer fácilmente según las necesidades.</p>
+</li>
+<li>
+<p><strong>Compatibilidad:</strong> cualquier aplicación (web, móvil, IoT) puede consumirla.</p>
+</li>
+<li>
+<p><strong>Separación de capas:</strong> el frontend y el backend pueden desarrollarse de forma independiente.</p>
+</li>
+</ul>
+<hr>
+<h1 id="conexión-con-la-base-de-datos-usando-pdo-y-mysql">Conexión con la base de datos usando PDO y MySQL</h1>
+<p>Para que nuestra API RESTful pueda guardar, leer y modificar tareas, necesitamos conectarla a una <strong>base de datos MySQL</strong>.<br>
+En PHP, existen varias formas de hacerlo, pero la más moderna y segura es utilizando <strong>PDO</strong> (<em>PHP Data Objects</em>).</p>
+<hr>
+<h2 id="🔹-¿qué-es-pdo">🔹 ¿Qué es PDO?</h2>
+<p><strong>PDO (PHP Data Objects)</strong> es una <strong>interfaz de acceso a bases de datos</strong> incluida en PHP.<br>
+Su propósito es ofrecer una forma <strong>unificada y segura</strong> de conectarse a distintos motores de base de datos, como:</p>
+<ul>
+<li>MySQL / MariaDB</li>
+<li>PostgreSQL</li>
+<li>SQLite</li>
+<li>SQL Server</li>
+<li>Oracle</li>
+</ul>
+<p>Con PDO puedes escribir el mismo código para conectarte a diferentes sistemas de base de datos —solo necesitas cambiar la cadena de conexión.</p>
+<hr>
+<h2 id="🔹-ventajas-de-usar-pdo">🔹 Ventajas de usar PDO</h2>
+
+<table>
+<thead>
+<tr>
+<th>Ventaja</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔒 <strong>Seguridad</strong></td>
+<td>Soporta <strong>sentencias preparadas</strong>, que evitan ataques de <strong>inyección SQL</strong>.</td>
+</tr>
+<tr>
+<td>💻 <strong>Compatibilidad</strong></td>
+<td>Funciona con distintos motores (no dependes solo de MySQL).</td>
+</tr>
+<tr>
+<td>⚡ <strong>Simplicidad</strong></td>
+<td>Proporciona una API limpia y orientada a objetos.</td>
+</tr>
+<tr>
+<td>🧩 <strong>Flexibilidad</strong></td>
+<td>Permite establecer atributos como el modo de error, codificación, y comportamiento de los resultados.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="🔹-pdo-con-mysql">🔹 PDO con MySQL</h2>
+<p>Para conectarse a una base de datos MySQL con PDO, se utiliza una cadena <strong>DSN (Data Source Name)</strong> que indica el tipo de base de datos y la información de conexión.</p>
+<hr>
+<h2 id="🔹-1.-configuración-inicial-de-conexión-a-la-base-de-datos">🔹 1. Configuración inicial de conexión a la base de datos</h2>
+<p>Se recomienda crear un archivo <code>db.php</code> con la conexión PDO a MySQL:</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$host</span> <span class="token operator">=</span> <span class="token string">'localhost'</span><span class="token punctuation">;</span>
+<span class="token variable">$db</span>   <span class="token operator">=</span> <span class="token string">'kanban_board'</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
+<span class="token variable">$pass</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token variable">$charset</span> <span class="token operator">=</span> <span class="token string">'utf8mb4'</span><span class="token punctuation">;</span>
+
+<span class="token variable">$dsn</span> <span class="token operator">=</span> <span class="token string">"mysql:host=$host;
+        dbname=$db;
+        charset=$charset"</span><span class="token punctuation">;</span>
+        
+<span class="token variable">$options</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_ERRMODE</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ERRMODE_EXCEPTION</span><span class="token punctuation">,</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_DEFAULT_FETCH_MODE</span> <span class="token operator">=</span><span class="token operator">&gt;</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">FETCH_ASSOC</span><span class="token punctuation">,</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_EMULATE_PREPARES</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token variable">$pdo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PDO</span><span class="token punctuation">(</span><span class="token variable">$dsn</span><span class="token punctuation">,</span> <span class="token variable">$user</span><span class="token punctuation">,</span> <span class="token variable">$pass</span><span class="token punctuation">,</span> <span class="token variable">$options</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error de 
+                  conexión a la base de datos'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<p>💡 Este archivo se incluirá en todos los endpoints (<code>tasks.php</code>) para usar la misma conexión a la base de datos.</p>
+<h3 id="explicación">Explicación:</h3>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$host</span> <span class="token operator">=</span> <span class="token string">'localhost'</span><span class="token punctuation">;</span>
+<span class="token variable">$db</span>   <span class="token operator">=</span> <span class="token string">'kanban_board'</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
+<span class="token variable">$pass</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token variable">$charset</span> <span class="token operator">=</span> <span class="token string">'utf8mb4'</span><span class="token punctuation">;</span>
+</span></code></pre>
+<h3 id="️⃣-variables-de-configuración">1️⃣ Variables de configuración</h3>
+<ul>
+<li>
+<p><code>$host</code> → dirección del servidor de base de datos (normalmente <code>localhost</code> en desarrollo).</p>
+</li>
+<li>
+<p><code>$db</code> → nombre de la base de datos que vamos a usar (<code>kanban_board</code>).</p>
+</li>
+<li>
+<p><code>$user</code> → usuario de la base de datos (por defecto <code>root</code> en MySQL).</p>
+</li>
+<li>
+<p><code>$pass</code> → contraseña del usuario (vacía en muchos entornos locales).</p>
+</li>
+<li>
+<p><code>$charset</code> → codificación de caracteres (<code>utf8mb4</code> soporta emojis y todos los caracteres Unicode).</p>
+</li>
+</ul>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$dsn</span> <span class="token operator">=</span> <span class="token string">"mysql:host=$host;
+        dbname=$db;
+        charset=$charset"</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="️⃣-dsn-data-source-name">2️⃣ DSN (Data Source Name)</h3>
+<ul>
+<li>
+<p>Es una <strong>cadena que le dice a PDO cómo conectarse</strong>.</p>
+</li>
+<li>
+<p>Sintaxis para MySQL: <code>mysql:host=&lt;host&gt;;dbname=&lt;db&gt;;charset=&lt;charset&gt;</code></p>
+</li>
+<li>
+<p>Ejemplo resultante: <code>mysql:host=localhost; dbname=kanban_board; charset=utf8mb4</code></p>
+</li>
+</ul>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$options</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_ERRMODE</span><span class="token operator">=</span><span class="token operator">&gt;</span> 
+                  <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ERRMODE_EXCEPTION</span><span class="token punctuation">,</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_DEFAULT_FETCH_MODE</span> <span class="token operator">=</span><span class="token operator">&gt;</span>
+                  <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">FETCH_ASSOC</span><span class="token punctuation">,</span>
+    <span class="token constant">PDO</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">ATTR_EMULATE_PREPARES</span>   <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>3️⃣ Opciones de PDO</p>
+<ul>
+<li>
+<p><code>PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION</code><br>
+→ Si hay un error en la consulta, <strong>lanza una excepción</strong> (mejor que fallar silenciosamente).</p>
+</li>
+<li>
+<p><code>PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC</code><br>
+→ Devuelve los resultados como <strong>arrays asociativos</strong>, por ejemplo: <code>['id' =&gt; 1, 'description' =&gt; 'Tarea']</code>.</p>
+</li>
+<li>
+<p><code>PDO::ATTR_EMULATE_PREPARES =&gt; false</code><br>
+→ Usa <strong>sentencias preparadas nativas</strong>, lo que mejora la seguridad contra SQL Injection.</p>
+</li>
+</ul>
+<pre class=" language-php"><code class="prism  language-php"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token variable">$pdo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PDO</span><span class="token punctuation">(</span><span class="token variable">$dsn</span><span class="token punctuation">,</span> <span class="token variable">$user</span><span class="token punctuation">,</span> <span class="token variable">$pass</span><span class="token punctuation">,</span> <span class="token variable">$options</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error de 
+                  conexión a la base de datos'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="️⃣-crear-la-conexión-y-manejar-errores">4️⃣ Crear la conexión y manejar errores</h3>
+<ul>
+<li>
+<p><code>new PDO(...)</code> → crea la conexión a la base de datos.</p>
+</li>
+<li>
+<p><code>try { ... } catch (PDOException $e)</code> → si hay un error, capturamos la excepción y devolvemos un <strong>mensaje JSON con código HTTP 500</strong>.</p>
+</li>
+<li>
+<p><code>exit;</code> → detiene la ejecución del script si no se puede conectar.</p>
+</li>
+</ul>
+<h3 id="✅-resumen">✅ Resumen</h3>
+<p><code>db.php</code> es <strong>el archivo central de conexión a la base de datos</strong> que puedes incluir en cualquier endpoint para:</p>
+<ul>
+<li>
+<p>Mantener la conexión consistente.</p>
+</li>
+<li>
+<p>Manejar errores de conexión de forma segura.</p>
+</li>
+<li>
+<p>Preparar consultas de forma segura usando PDO.<br>
+<br></p>
+</li>
+</ul>
+<hr>
+<h1 id="configuración-cors-para-acceso-desde-frontend">Configuración CORS para acceso desde frontend</h1>
+<p>Cuando tu API se ejecuta en un servidor diferente al frontend (por ejemplo, API en <code>localhost:8000</code> y React en <code>localhost:3000</code>), los navegadores bloquean las peticiones por seguridad.</p>
+<p><strong>CORS</strong> (Cross-Origin Resource Sharing) permite que tu API sea accesible desde otros dominios.</p>
+<h2 id="🔹-implementación-básica-de-cors">🔹 Implementación básica de CORS</h2>
+<p>Añade estos headers al inicio de <code>tasks.php</code> (antes de cualquier output):</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">// Headers CORS - deben ir ANTES que cualquier otro header</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Origin: *'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Methods: GET, POST, 
+PUT, PATCH, DELETE, OPTIONS'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Headers: Content-Type,
+Authorization'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Manejar peticiones OPTIONS (preflight)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'OPTIONS'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+</span></code></pre>
+<h2 id="🔹-explicación-de-headers-cors">🔹 Explicación de headers CORS</h2>
+
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Access-Control-Allow-Origin: *</code></td>
+<td>Permite acceso desde cualquier dominio. En producción, especifica el dominio exacto: <code>https://miapp.com</code></td>
+</tr>
+<tr>
+<td><code>Access-Control-Allow-Methods</code></td>
+<td>Métodos HTTP permitidos</td>
+</tr>
+<tr>
+<td><code>Access-Control-Allow-Headers</code></td>
+<td>Headers que el cliente puede enviar</td>
+</tr>
+</tbody>
+</table><h2 id="🔹-peticiones-options-preflight">🔹 Peticiones OPTIONS (Preflight)</h2>
+<p>Los navegadores envían una petición <code>OPTIONS</code> antes de <code>POST</code>, <code>PUT</code>, <code>PATCH</code> o <code>DELETE</code> para verificar permisos. Tu API debe responder con código <code>200</code> para estas peticiones.</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token comment">// Manejar peticiones OPTIONS (preflight)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'OPTIONS'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h1 id="métodos-http">Métodos HTTP</h1>
+<h2 id="🔹-2.-get-apitasks.php-—-obtener-todas-las-tareas">🔹 2. GET /api/tasks.php — Obtener todas las tareas</h2>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">'SELECT * FROM tasks 
+                     ORDER BY created_at DESC'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$tasks</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetchAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$tasks</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al obtener las
+    tareas'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<h3 id="explicación-paso-a-paso">Explicación paso a paso</h3>
+<ol>
+<li>
+<p><strong><code>header('Content-Type: application/json');</code></strong></p>
+<ul>
+<li>Informa al navegador o cliente que la respuesta será <strong>JSON</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>require 'db.php';</code></strong></p>
+<ul>
+<li>
+<p>Incluye la conexión PDO a la base de datos definida en <code>db.php</code>.</p>
+</li>
+<li>
+<p>Permite usar <code>$pdo</code> para ejecutar consultas de manera segura.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>$stmt = $pdo-&gt;query(...);</code></strong></p>
+<ul>
+<li>
+<p>Ejecuta la consulta SQL que selecciona <strong>todas las filas de <code>tasks</code></strong>, ordenadas por fecha de creación (más recientes primero).</p>
+</li>
+<li>
+<p>Se usa <code>query</code> porque no hay parámetros externos que requieran preparación.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>$tasks = $stmt-&gt;fetchAll();</code></strong></p>
+<ul>
+<li>Recupera todas las filas como <strong>arrays asociativos</strong>, gracias a <code>PDO::FETCH_ASSOC</code> en <code>db.php</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>echo json_encode($tasks);</code></strong></p>
+<ul>
+<li>Convierte el array de PHP en <strong>JSON</strong> para que la API pueda ser consumida por un cliente frontend (React, Vue, JavaScript, etc.).</li>
+</ul>
+</li>
+<li>
+<p><strong><code>try/catch</code></strong></p>
+<ul>
+<li>Si ocurre un error de conexión o consulta, devuelve un <strong>mensaje JSON de error</strong> con código HTTP 500.</li>
+</ul>
+</li>
+</ol>
+<h2 id="🔹-3.-post-apitasks.php-—-crear-nueva-tarea">🔹 3. POST /api/tasks.php — Crear nueva tarea</h2>
+<p>Este endpoint permite <strong>crear una nueva tarea</strong> en el tablero Kanban.<br>
+Se reciben los datos en <strong>formato JSON</strong> y se insertan en la base de datos usando <strong>sentencias preparadas</strong> para mayor seguridad.</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1️⃣ Leer el cuerpo de la solicitud (JSON)</span>
+<span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span>
+              <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+               <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 2️⃣ Validar que se envíe la descripción</span>
+<span class="token comment">//      (campo obligatorio)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+<span class="token function">empty</span><span class="token punctuation">(</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bad Request</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> 
+               <span class="token string">'La descripción es obligatoria'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 3️⃣ Asignar valores por defecto </span>
+<span class="token comment">// si no se envían</span>
+<span class="token variable">$status</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'Some day'</span><span class="token punctuation">;</span>
+<span class="token variable">$priority</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'medium'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 4️⃣ Preparar la sentencia SQL</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span>
+        <span class="token string">"INSERT INTO 
+        tasks (description, status, priority) 
+       VALUES (:description, :status, :priority)"</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 5️⃣ Ejecutar la sentencia con parámetros</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token string">':description'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">':status'</span>      <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$status</span><span class="token punctuation">,</span>
+        <span class="token string">':priority'</span>    <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$priority</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 6️⃣ Devolver la tarea creada con su ID</span>
+    <span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">lastInsertId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks
+    WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Created</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al crear la
+    tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<h3 id="explicación-paso-a-paso-1">Explicación paso a paso</h3>
+<ol>
+<li><strong>Leer JSON de la solicitud</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$data</span> <span class="token operator">=</span>
+<span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Convierte el cuerpo JSON de la solicitud en un <strong>array asociativo</strong> de PHP.</li>
+</ul>
+<ol start="2">
+<li><strong>Validación de datos</strong></li>
+</ol>
+<ul>
+<li>
+<p>La <strong>descripción</strong> es obligatoria.</p>
+</li>
+<li>
+<p>Si falta, se devuelve <strong>código HTTP 400</strong> con mensaje de error.</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>Valores por defecto</strong></li>
+</ol>
+<ul>
+<li>
+<p><code>status</code> → <code>'Some day'</code> si no se envía.</p>
+</li>
+<li>
+<p><code>priority</code> → <code>'medium'</code> si no se envía.</p>
+</li>
+</ul>
+<ol start="4">
+<li><strong>Preparar la sentencia SQL</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"INSERT INTO tasks ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Se usan <strong>placeholders nombrados</strong> (<code>:description</code>) para proteger contra <strong>SQL Injection</strong>.</li>
+</ul>
+<ol start="5">
+<li><strong>Ejecutar con parámetros</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Asigna los valores recibidos al SQL de manera segura.</li>
+</ul>
+<ol start="6">
+<li><strong>Devolver la tarea creada</strong></li>
+</ol>
+<ul>
+<li>
+<p>Se obtiene la <strong>ID generada automáticamente</strong> con <code>$pdo-&gt;lastInsertId()</code>.</p>
+</li>
+<li>
+<p>Se consulta la fila creada y se devuelve como <strong>JSON</strong> con <strong>código HTTP 201 (Created)</strong>.</p>
+</li>
+</ul>
+<h2 id="🔹-4.-put-apitasks.phpidid-—-actualizar-una-tarea-completa">🔹 4. PUT /api/tasks.php?id={id} — Actualizar una tarea completa</h2>
+<p>Este endpoint permite <strong>modificar todos los campos</strong> de una tarea existente (por ejemplo, descripción, estado y prioridad).<br>
+Se usa cuando se desea <strong>reemplazar completamente</strong> la información de la tarea.</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1️⃣ Obtener el ID desde la URL (por ejemplo: ?id=3)</span>
+<span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bad Request</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Debe especificarse el ID 
+    de la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 2️⃣ Leer el cuerpo JSON de la solicitud</span>
+<span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+<span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 3️⃣ Validar que haya descripción (campo obligatorio)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+<span class="token function">empty</span><span class="token punctuation">(</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'La descripción es
+    obligatoria'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 4️⃣ Asignar valores, con fallback si faltan</span>
+<span class="token variable">$status</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'Some day'</span><span class="token punctuation">;</span>
+<span class="token variable">$priority</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'medium'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 5️⃣ Actualizar la tarea</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span>
+        <span class="token string">"UPDATE tasks 
+         SET description = :description, 
+         status = :status, priority = :priority 
+         WHERE id = :id"</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token string">':description'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">':status'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$status</span><span class="token punctuation">,</span>
+        <span class="token string">':priority'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$priority</span><span class="token punctuation">,</span>
+        <span class="token string">':id'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$id</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 6️⃣ Devolver la tarea actualizada</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks 
+    WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Not Found</span>
+       <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span><span class="token string">'Tarea no encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span>
+     <span class="token string">'Error al actualizar la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<h3 id="explicación-paso-a-paso-2">Explicación paso a paso</h3>
+<ol>
+<li>
+<p><strong>Recibir el parámetro <code>id</code></strong></p>
+<ul>
+<li>
+<p>Viene en la URL (<code>/api/tasks.php?id=3</code>).</p>
+</li>
+<li>
+<p>Si no se envía, se devuelve error <strong>400 (Bad Request)</strong>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Leer el cuerpo JSON de la solicitud</strong></p>
+<ul>
+<li>
+<p>Los datos llegan en formato JSON, no como formulario.</p>
+</li>
+<li>
+<p>Se convierten a array con <code>json_decode(file_get_contents('php://input'), true)</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Validar los datos</strong></p>
+<ul>
+<li>
+<p>La descripción es obligatoria.</p>
+</li>
+<li>
+<p><code>status</code> y <code>priority</code> pueden omitirse, se asignan valores por defecto.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Ejecutar el <code>UPDATE</code></strong></p>
+<ul>
+<li>Usa <strong>sentencia preparada</strong> con <code>execute()</code> para evitar inyección SQL.</li>
+</ul>
+</li>
+<li>
+<p><strong>Devolver la tarea actualizada</strong></p>
+<ul>
+<li>
+<p>Después de modificarla, se vuelve a consultar y se devuelve en formato JSON.</p>
+</li>
+<li>
+<p>Si el <code>id</code> no existe, se responde con <strong>404 (Not Found)</strong>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<h3 id="🔹-notas">🔹 Notas</h3>
+<ul>
+<li>
+<p>El método <code>PUT</code> reemplaza <strong>todos los campos de la tarea</strong>, por lo que si omites alguno (por ejemplo <code>priority</code>), se sobrescribirá con el<br>
+valor por defecto (<code>medium</code>).</p>
+</li>
+<li>
+<p>Si solo deseas actualizar <strong>una parte</strong>, como el estado (<code>status</code>), debes usar el método <strong>PATCH</strong>, que veremos a<br>
+continuación.</p>
+</li>
+</ul>
+</blockquote>
+<br>
+<h2 id="🔹-5.-patch-apitasks.phpidid-—-actualizar-solo-parte-de-la-tarea">🔹 5. PATCH /api/tasks.php?id={id} — Actualizar solo parte de la tarea</h2>
+<p>El método <strong>PATCH</strong> se usa para <strong>actualizar uno o varios campos</strong> de una tarea sin reemplazar toda la fila.<br>
+En nuestro caso, es ideal para cambiar solo el <strong>estado (<code>status</code>)</strong> cuando se mueve una tarjeta entre columnas del tablero Kanban.</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1️⃣ Obtener el ID desde la URL</span>
+<span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Debe especificarse el 
+                                   ID de la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 2️⃣ Leer el cuerpo JSON</span>
+<span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+<span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Datos no válidos'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 3️⃣ Construir la parte dinámica del SQL </span>
+<span class="token comment">//    según los campos recibidos</span>
+<span class="token variable">$fields</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$params</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">':id'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"status = :status"</span><span class="token punctuation">;</span>
+    <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"description = :description"</span><span class="token punctuation">;</span>
+    <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':description'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"priority = :priority"</span><span class="token punctuation">;</span>
+    <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':priority'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 4️⃣ Si no hay campos válidos, devolver error</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token variable">$fields</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'No se ha enviado ningún
+     campo para actualizar'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 5️⃣ Construir la consulta de actualización</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string">"UPDATE tasks SET "</span> <span class="token punctuation">.</span> <span class="token function">implode</span><span class="token punctuation">(</span><span class="token string">', '</span><span class="token punctuation">,</span> <span class="token variable">$fields</span><span class="token punctuation">)</span> 
+<span class="token punctuation">.</span> <span class="token string">" WHERE id = :id"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token variable">$params</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al actualizar la
+    tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 6️⃣ Devolver la tarea actualizada</span>
+<span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea no encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<h3 id="explicación-paso-a-paso-3">Explicación paso a paso</h3>
+<ol>
+<li>
+<p><strong>Leer el parámetro <code>id</code></strong><br>
+El identificador de la tarea llega como parámetro de URL (<code>?id=5</code>).</p>
+</li>
+<li>
+<p><strong>Leer el cuerpo JSON</strong><br>
+Los datos a modificar se envían en el cuerpo de la solicitud.</p>
+</li>
+<li>
+<p><strong>Construcción dinámica del <code>UPDATE</code></strong><br>
+Solo se incluyen en el <code>SET</code> los campos enviados (por ejemplo, <code>status</code> o <code>priority</code>).</p>
+</li>
+<li>
+<p><strong>Validación</strong><br>
+Si no se envía ningún campo, se responde con error <strong>400 (Bad Request)</strong>.</p>
+</li>
+<li>
+<p><strong>Ejecución segura con sentencias preparadas</strong><br>
+Se evitan riesgos de <strong>SQL Injection</strong> y se actualizan solo los campos recibidos.</p>
+</li>
+<li>
+<p><strong>Devolver la tarea modificada</strong><br>
+Se consulta nuevamente la fila y se devuelve como JSON actualizado.</p>
+</li>
+</ol>
+<blockquote>
+<h3 id="nota-buenas-prácticas-al-devolver-datos">Nota: Buenas prácticas al devolver datos</h3>
+<p>Después de operaciones como <strong>POST</strong>, <strong>PUT</strong> o <strong>PATCH</strong>, es<br>
+recomendable <strong>devolver el recurso modificado o creado</strong> en formato<br>
+JSON.   Esto permite que el cliente:</p>
+<ul>
+<li>✅ Confirme que los cambios se guardaron correctamente.</li>
+<li>🔄 Actualice la interfaz sin hacer una segunda solicitud <code>GET</code>.</li>
+<li>🧠 Mantenga consistencia con las recomendaciones RESTful.</li>
+</ul>
+<p>Ejemplo de respuesta:</p>
+<pre class=" language-php"><code class="prism  language-php">json <span class="token punctuation">{</span>   
+     <span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token punctuation">,</span>   <span class="token string">"description"</span><span class="token punctuation">:</span>
+     <span class="token string">"Implementar endpoint PATCH"</span><span class="token punctuation">,</span>   
+     <span class="token string">"status"</span><span class="token punctuation">:</span> <span class="token string">"In progress"</span><span class="token punctuation">,</span>   
+     <span class="token string">"priority"</span><span class="token punctuation">:</span> <span class="token string">"high"</span><span class="token punctuation">,</span>  
+     <span class="token string">"updated_at"</span><span class="token punctuation">:</span> <span class="token string">"2025-10-22 18:10:00"</span> 
+     <span class="token punctuation">}</span> 
+</code></pre>
+</blockquote>
+<h2 id="🔹-6.-delete-apitasks.phpidid-—-eliminar-una-tarea">🔹 6. DELETE /api/tasks.php?id={id} — Eliminar una tarea</h2>
+<p>Este endpoint permite <strong>eliminar una tarea existente</strong> de la base de datos, usando su identificador (<code>id</code>).<br>
+Es útil cuando una tarjeta se borra del tablero Kanban.</p>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1️⃣ Obtener el ID desde la URL</span>
+<span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Bad Request</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Debe especificarse 
+                                 el ID de la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 2️⃣ Comprobar si la tarea existe</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks 
+                                 WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Not Found</span>
+        <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea no
+        encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        exit<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3️⃣ Eliminar la tarea</span>
+    <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"DELETE FROM tasks 
+    WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4️⃣ Devolver confirmación</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token string">'message'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea eliminada correctamente'</span><span class="token punctuation">,</span>
+        <span class="token string">'deleted_task'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$task</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al eliminar 
+                                         la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+<h3 id="explicación-paso-a-paso-4">Explicación paso a paso</h3>
+<ol>
+<li>
+<p><strong>Leer el parámetro <code>id</code></strong></p>
+<ul>
+<li>
+<p>El ID se envía en la URL: <code>/api/tasks.php?id=7</code>.</p>
+</li>
+<li>
+<p>Si no se proporciona, se devuelve un error <strong>400 (Bad Request)</strong>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Comprobar si la tarea existe</strong></p>
+<ul>
+<li>
+<p>Se consulta primero para evitar borrar un registro inexistente.</p>
+</li>
+<li>
+<p>Si no se encuentra, se devuelve <strong>404 (Not Found)</strong>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Ejecutar el <code>DELETE</code></strong></p>
+<ul>
+<li>Se usa una <strong>sentencia preparada</strong> para evitar inyecciones SQL.</li>
+</ul>
+</li>
+<li>
+<p><strong>Devolver confirmación</strong></p>
+<ul>
+<li>La respuesta incluye un mensaje y, opcionalmente, los datos de la tarea eliminada (útil para mostrar feedback en la UI).</li>
+</ul>
+</li>
+</ol>
+<h2 id="brbr"><br><br></h2>
+<h2 id="🛠️-tasks.php-—-api-restful-completa-para-la-tabla-tasks">🛠️ tasks.php — API RESTful completa para la tabla <code>tasks</code></h2>
+<p>Este archivo maneja <strong>todos los métodos HTTP</strong>:</p>
+<ul>
+<li><code>GET</code> → obtener todas las tareas</li>
+<li><code>POST</code> → crear nueva tarea</li>
+<li><code>PUT</code> → actualizar toda una tarea</li>
+<li><code>PATCH</code> → actualizar solo el estado</li>
+<li><code>DELETE</code> → eliminar una tarea</li>
+</ul>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">// Headers CORS - IMPORTANTE: deben ir al inicio</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Origin: *'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Methods: GET, POST, PUT, 
+PATCH, DELETE, OPTIONS'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Access-Control-Allow-Headers: 
+Content-Type, Authorization'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Manejar peticiones OPTIONS (preflight)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'OPTIONS'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">header</span><span class="token punctuation">(</span><span class="token string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span> <span class="token string">'db.php'</span><span class="token punctuation">;</span>
+
+<span class="token variable">$method</span> <span class="token operator">=</span> <span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">$method</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 1️⃣ GET — obtener todas las tareas</span>
+    <span class="token keyword">case</span> <span class="token string">'GET'</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">'SELECT * FROM tasks ORDER
+            BY created_at DESC'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$tasks</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetchAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$tasks</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al obtener
+            las tareas'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 2️⃣ POST — crear nueva tarea</span>
+    <span class="token keyword">case</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+        <span class="token variable">$data</span> <span class="token operator">=</span>
+        <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+        <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'La descripción es
+            obligatoria'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exit<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$status</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'Some day'</span><span class="token punctuation">;</span>
+        <span class="token variable">$priority</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'medium'</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"INSERT INTO tasks
+            (description, status, priority) 
+            VALUES (:description, :status, :priority)"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+                <span class="token string">':description'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token string">':status'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$status</span><span class="token punctuation">,</span>
+                <span class="token string">':priority'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$priority</span>
+            <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token variable">$newId</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">lastInsertId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks 
+            WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$newId</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al crear la
+            tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3️⃣ PUT — actualizar tarea completa</span>
+    <span class="token keyword">case</span> <span class="token string">'PUT'</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'ID de tarea
+            requerido'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exit<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$data</span> <span class="token operator">=</span>
+        <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+         <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"UPDATE tasks SET
+            description = :description,
+            status = :status, 
+            priority = :priority 
+            WHERE id = :id"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token string">':description'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">''</span><span class="token punctuation">,</span>
+            <span class="token string">':status'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+            <span class="token string">':priority'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token string">'medium'</span><span class="token punctuation">,</span>
+            <span class="token string">':id'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$id</span>
+            <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks
+             WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea no
+                encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al
+            actualizar la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4️⃣ PATCH — actualizar campos específicos</span>
+    <span class="token keyword">case</span> <span class="token string">'PATCH'</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'ID de tarea
+            requerido'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exit<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$data</span> <span class="token operator">=</span>
+        <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token string">'php://input'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+         <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// Construir actualización dinámica</span>
+        <span class="token variable">$fields</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">$params</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">':id'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"status = :status"</span><span class="token punctuation">;</span>
+            <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':status'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'status'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"description = :description"</span><span class="token punctuation">;</span>
+            <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':description'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'description'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$fields</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"priority = :priority"</span><span class="token punctuation">;</span>
+            <span class="token variable">$params</span><span class="token punctuation">[</span><span class="token string">':priority'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$data</span><span class="token punctuation">[</span><span class="token string">'priority'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token variable">$fields</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'No hay campos
+             para actualizar'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exit<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string">"UPDATE tasks SET "</span> 
+            <span class="token punctuation">.</span> <span class="token function">implode</span><span class="token punctuation">(</span><span class="token string">', '</span><span class="token punctuation">,</span> <span class="token variable">$fields</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">" WHERE id = :id"</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token variable">$params</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks
+             WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$task</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea no
+                encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al
+            actualizar la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 5️⃣ DELETE — eliminar tarea</span>
+    <span class="token keyword">case</span> <span class="token string">'DELETE'</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'ID de tarea
+            requerido'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exit<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM tasks 
+            WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$task</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$task</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea no
+                encontrada'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                exit<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$pdo</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"DELETE FROM tasks 
+            WHERE id = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token variable">$id</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+                <span class="token string">'message'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Tarea eliminada
+                correctamente'</span><span class="token punctuation">,</span>
+                <span class="token string">'deleted_task'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$task</span>
+            <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token punctuation">\</span>PDOException</span> <span class="token variable">$e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Error al eliminar
+            la tarea'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Método no permitido</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+        <span class="token function">http_response_code</span><span class="token punctuation">(</span><span class="token number">405</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'error'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'Método no
+        permitido'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></code></pre>
+</div>
+</body>
+
+</html>

@@ -10,23 +10,16 @@
             font-family: Arial, sans-serif;
         }
 
-        .wrapper::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-
         .wrapper {
-            width: 100%;
             display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            min-height: 100vh;
         }
 
         .sidebar {
-            float: left;
-            width: 200px;
+            flex: 0 0 200px;
             background: #333;
-            height: 100vh;
             color: white;
             padding: 20px;
         }
@@ -34,6 +27,7 @@
         .sidebar ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .sidebar li {
@@ -46,7 +40,9 @@
         }
 
         .content {
-            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .hero {
@@ -57,6 +53,7 @@
             align-items: center;
             justify-content: center;
             color: white;
+            text-align: center;
         }
 
         .hero h1 {
@@ -67,9 +64,8 @@
         .cta {
             position: absolute;
             bottom: 20px;
-            right: 50%;
-            transform: translateX(50%);
-            z-index: 999;
+            left: 50%;
+            transform: translateX(-50%);
             background: #ff6b6b;
             color: white;
             border: none;
@@ -86,7 +82,9 @@
 </head>
 <body>
     <h1 style="padding: 20px; margin: 0; background: #f8f9fa;">Ejercicio 8: Debugging Challenge</h1>
-    <p style="padding: 0 20px; background: #f8f9fa; margin: 0; padding-bottom: 20px;"><strong>Problema:</strong> Este código tiene múltiples problemas. Encuentra y corrige todos.</p>
+    <p style="padding: 0 20px; background: #f8f9fa; margin: 0; padding-bottom: 20px;">
+        <strong>Problema:</strong> Este código tiene múltiples problemas. Encuentra y corrige todos.
+    </p>
 
     <div class="wrapper">
         <nav class="sidebar">
@@ -115,13 +113,13 @@
     </div>
 
     <div style="background: #f8f9fa; padding: 20px; margin-top: 20px;">
-        <h3>Problemas a encontrar:</h3>
+        <h3>Problemas solucionados:</h3>
         <ol>
-            <li>El wrapper colapsa</li>
-            <li>El botón CTA no se posiciona correctamente</li>
-            <li>Uso inadecuado de z-index</li>
-            <li>Falta de clearfix o alternativa moderna</li>
-            <li>Problemas de responsive</li>
+            <li>El wrapper ya no colapsa (usa flex correctamente).</li>
+            <li>El botón CTA está centrado correctamente.</li>
+            <li>Se eliminó el uso innecesario de z-index.</li>
+            <li>Se eliminó clearfix (ya no es necesario con flex).</li>
+            <li>Se añadieron reglas responsive para pantallas pequeñas.</li>
         </ol>
     </div>
 </body>

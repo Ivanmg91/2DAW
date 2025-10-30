@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios CSS - Taller 10</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f8f9fa; }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        h1 { color: #34495e; margin-bottom: 2rem; font-weight: 300; }
+        h2 { color: #3498db; margin: 2rem 0 1rem; font-weight: 400; border-left: 4px solid #3498db; padding-left: 1rem; }
+        p { margin-bottom: 1rem; }
+        ol { margin-left: 1.5rem; margin-bottom: 1.5rem; }
+        li { margin-bottom: 1rem; }
+        pre { background: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; border-left: 4px solid #95a5a6; }
+        code { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 0.9em; }
+        .exercise { background: white; padding: 1.5rem; margin-bottom: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WORKSHOP 10 - FLOATING AND POSITIONING -</h1>
+
+        <div class="exercise">
+            <h2>Exercise 10-1: Floating images</h2>
+            <ol>
+                <li>Open the CSS file bakery-styles.css in a text or code editor, and open bakery.html in a browser. We'll start by removing wasted vertical space next to the baked good images by floating those images to the left. Create a new style rule with a contextual selector to target only the images in the main section:
+                    <pre><code>main img {
+    float: left;
+}</code></pre>
+                </li>
+                <li>We want the "Learn more" links to always appear below the images so they are clearly visible and consistently on the left side of the page. Fortunately, the paragraphs with those links are marked up with the class "more", and there is already a style rule for them using a class selector. Make those paragraphs clear any floats on the left edge:
+                    <pre><code>p.more {
+    ...
+    clear: left;
+}</code></pre>
+                </li>
+                <li>Lastly, we'll adjust the spacing around the floated images. Give both images on the right and bottom sides by using the shorthand margin property:
+                    <pre><code>main img {
+    float: left;
+    margin: 0 16px 16px 0;
+}</code></pre>
+                    <p>The muffin image could use extra space on the left side so it lines up better with the bread. Use this nifty attribute selector to grab any image whose src attribute contains the word muffin (there's only one):</p>
+                    <pre><code>img[src*="muffin"] {
+    margin-left: 50px;
+}</code></pre>
+                </li>
+            </ol>
+        </div>
+
+        <div class="exercise">
+            <h2>Exercise10-2: Adding shapes around floats</h2>
+            <ol>
+                <li>Target each image individually using an attribute selector (there is one set up for "muffin" already). Start out simply and make the text wrap around a circle. Set the radius of the circle to 125px for the bread image and 110px for the muffin:
+                    <pre><code>img[src*="bread"] {
+    shape-outside: circle(125px);
+}
+img[src*="muffin"] {
+    margin-left: 50px;
+    shape-outside: circle(110px);
+}</code></pre>
+                </li>
+                <li>Save the styles and take a look at the bakery.html page in a supporting browser. The circles look pretty good, but we could improve the wrap around the bread image by making it an ellipse. Add the new ellipse declaration after the circle declaration, so it overrides the previous style (or delete and replace the circle declaration):
+                    <pre><code>img[src*="bread"] {
+    shape-outside: circle(125px);
+    shape-outside: ellipse(130px 105px at 50% 50%);
+}</code></pre>
+                </li>
+                <li>If you're feeling ambitious, try adding a polygon wrap shape around the muffin image instead of the circle (if not, don't worry about it, nobody will judge you!). You'll need to copy these coordinates manually, or copy and paste them from the materials for this chapter:
+                    <pre><code>img[src*="muffin"] {
+    ...
+    shape-outside: polygon(0px 0px, 197px 0px, 241px 31px, 241px 68px, 226px 82px, 219px 131px, 250px 142px, 250px 158px, 0px 158px);
+}</code></pre>
+                </li>
+            </ol>
+        </div>
+
+        <div class="exercise">
+            <h2>Exercise10-3: Absolute positioning</h2>
+            <ol>
+                <li>Good news! Black Goose Bakery won the Farmers' Market Award, and we have the privilege of displaying an award medal on the home page. Because this is new content, we'll need to add it to the markup in bakery.html. Because it is nonessential information, we'll add the image in a new div in the footer of the document:
+                    <pre><code>&lt;footer&gt;
+    &lt;p&gt;All content &amp;copy; 2024, Black Goose Bistro.&lt;/p&gt;
+    &lt;div id="award"&gt;&lt;img src="images/award.png" alt="Farmers' Market Award"&gt;&lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+                </li>
+                <li>Just because the award image is at the end of the source document doesn't mean it needs to display there. We can use absolute positioning to place the award in the top-left corner of the viewport by adding a new rule to the bakery-styles.css style sheet that positions the div like so (I put mine in the /* misc styles */ section):
+                    <pre><code>#award {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+}</code></pre>
+                    <p>Save both files and load the HTML document in your browser. Resize the browser window very narrow, and you will see that the positioned award image overlaps the header content. Notice also that when you scroll the document, the image scrolls with the rest of the page. Try playing around with other offset properties to get a feel for positioning in the viewport (or the initial containing block, to be precise).</p>
+                    <p>PS: I know that the navigation list still looks bad, but we'll fix it up later.</p>
+                </li>
+            </ol>
+        </div>
+
+        <div class="exercise">
+            <h2>Exercise10-4: Fixed positioning</h2>
+            <p>This should be simple. Open the style sheet as you left it in EXERCISE10-3 and edit the style rule for the #award div to make its position fixed rather than absolute:</p>
+            <pre><code>#award {
+    position: fixed;
+    top: 30px;
+    left: 50px;
+}</code></pre>
+            <p>Save the styles and open the page in a browser. When you scroll the page, you will see that the award graphic now stays put where you positioned it in the browser window. You can see that fixed positioned elements have the potential to hide content as the page scrolls. Test well to see the potential pitfalls and weigh them against the benefits.</p>
+        </div>
+    </div>
+</body>
+</html>

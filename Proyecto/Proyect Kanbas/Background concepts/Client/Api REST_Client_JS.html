@@ -1,0 +1,561 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WD26</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="ajax-y-comunicación-con-apis-rest-utilizando-javascript-moderno">AJAX y comunicación con APIs REST utilizando JavaScript moderno</h1>
+<h2 id="¿qué-es-ajax">¿Qué es AJAX?</h2>
+<p>AJAX son las siglas de:</p>
+<blockquote>
+<p><strong>A</strong>synchronous<br>
+<strong>J</strong>avaScript<br>
+<strong>A</strong>nd<br>
+<strong>X</strong>ML</p>
+</blockquote>
+<p>Aunque hoy casi no se use XML, el término sigue utilizándose.</p>
+<h3 id="definición-clara">Definición clara</h3>
+<blockquote>
+<p><strong>AJAX es una técnica</strong> que permite que una página web se comunique con un servidor <strong>sin necesidad de recargar toda la página</strong>.</p>
+</blockquote>
+<p>Esto permite:</p>
+<ul>
+<li>
+<p>Interfaces más rápidas y fluidas</p>
+</li>
+<li>
+<p>Actualizar solo partes de la interfaz (por ejemplo un listado)</p>
+</li>
+<li>
+<p>Enviar datos en segundo plano sin interrumpir al usuario</p>
+</li>
+<li>
+<p>Mejor experiencia en aplicaciones web modernas (SPA, dashboards, juegos, etc.)</p>
+</li>
+</ul>
+<h3 id="ejemplo-visual">Ejemplo visual</h3>
+<pre><code>Página Web → Petición AJAX → Servidor
+Página Web ← Respuesta JSON ← Servidor
+(pantalla NO se recarga)
+</code></pre>
+<h2 id="ajax-en-la-práctica-¿cómo-se-implementa">AJAX en la práctica: ¿cómo se implementa?</h2>
+<p>Históricamente se usó:</p>
+<h3 id="🔹-xmlhttprequest-xhr">🔹 <code>XMLHttpRequest</code> (XHR)</h3>
+<ul>
+<li>
+<p>API antigua (años 2000)</p>
+</li>
+<li>
+<p>Usa callbacks y estados (<code>readyState</code>)</p>
+</li>
+<li>
+<p>Sintaxis compleja y más propensa a errores</p>
+</li>
+<li>
+<p>Aún funciona en todos los navegadores</p>
+</li>
+</ul>
+<p>Hoy, estándar moderno:</p>
+<h3 id="🔹-fetch">🔹 <code>fetch()</code></h3>
+<ul>
+<li>
+<p>API nativa del navegador</p>
+</li>
+<li>
+<p>Funciona con <strong>promesas</strong> y <code>async/await</code></p>
+</li>
+<li>
+<p>Más fácil de leer y mantener</p>
+</li>
+<li>
+<p>Soporta streaming, abortos, etc.</p>
+</li>
+</ul>
+<hr>
+<h2 id="comparativa-clara-xhr-vs-fetch">Comparativa clara: XHR vs Fetch</h2>
+
+<table>
+<thead>
+<tr>
+<th>Característica</th>
+<th><code>XMLHttpRequest</code></th>
+<th><code>fetch()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asíncrono sin recargar</td>
+<td>✅ Sí</td>
+<td>✅ Sí</td>
+</tr>
+<tr>
+<td>Sintaxis</td>
+<td>Compleja, verbosa</td>
+<td>Clara, moderna</td>
+</tr>
+<tr>
+<td>JSON automático</td>
+<td>❌ No</td>
+<td>❌ No, pero más fácil</td>
+</tr>
+<tr>
+<td>Manejo de errores de red</td>
+<td>✅ Sí</td>
+<td>✅ Sí</td>
+</tr>
+<tr>
+<td>Manejo de errores HTTP</td>
+<td>✅ Sí</td>
+<td>⚠️ No automático</td>
+</tr>
+<tr>
+<td>Compatibilidad antigua</td>
+<td>✅ Total</td>
+<td>✅ Alta (pero no IE)</td>
+</tr>
+</tbody>
+</table><blockquote>
+<p>Importante: <strong>fetch NO lanza error automático con errores HTTP</strong><br>
+Debemos comprobar <code>response.ok</code></p>
+</blockquote>
+<h3 id="ejemplo-xhr-get">Ejemplo XHR (GET)</h3>
+<pre class=" language-css"><code class="prism  language-css">const xhr = new <span class="token function">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token number">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'GET'</span>, <span class="token string">'/api/tasks'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token number">.</span>onload = <span class="token punctuation">(</span><span class="token punctuation">)</span> =&gt;
+console<span class="token number">.</span><span class="token function">log</span><span class="token punctuation">(</span>JSON<span class="token number">.</span><span class="token function">parse</span><span class="token punctuation">(</span>xhr<span class="token number">.</span>responseText<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token number">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="ejemplo-fetch-get">Ejemplo Fetch (GET)</h3>
+<pre class=" language-css"><code class="prism  language-css">const res = await <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/api/tasks'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+const tasks = await res<span class="token number">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token number">.</span><span class="token function">log</span><span class="token punctuation">(</span>tasks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>✔️ Mucho más limpio<br>
+✔️ Pensado para el JavaScript moderno</p>
+<h2 id="ajax--apis-rest">AJAX + APIs REST</h2>
+<p>Hoy en día, AJAX se usa <strong>principalmente</strong> para consumir APIs REST que exponen:</p>
+
+<table>
+<thead>
+<tr>
+<th>Acción</th>
+<th>Método HTTP</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Obtener datos</td>
+<td>GET</td>
+<td><code>/tasks</code></td>
+</tr>
+<tr>
+<td>Crear tarea</td>
+<td>POST</td>
+<td><code>/tasks</code></td>
+</tr>
+<tr>
+<td>Actualizar tarea</td>
+<td>PUT/PATCH</td>
+<td><code>/tasks/10</code></td>
+</tr>
+<tr>
+<td>Borrar tarea</td>
+<td>DELETE</td>
+<td><code>/tasks/10</code></td>
+</tr>
+</tbody>
+</table><h3 id="las-respuestas-van-en-json">Las respuestas van en JSON:</h3>
+<pre class=" language-json"><code class="prism  language-json">json <span class="token punctuation">{</span>  
+   <span class="token string">"id"</span><span class="token punctuation">:</span>  <span class="token number">10</span><span class="token punctuation">,</span>  
+   <span class="token string">"description"</span><span class="token punctuation">:</span>  
+   <span class="token string">"Comprar pan"</span><span class="token punctuation">,</span>  
+   <span class="token string">"status"</span><span class="token punctuation">:</span>  <span class="token string">"To do"</span>  
+<span class="token punctuation">}</span>` 
+</code></pre>
+<h1 id="cliente-rest-para-gestionar-tareas">Cliente REST para gestionar tareas</h1>
+<p>Disponemos de una API en el servidor:</p>
+<p>📌 <code>tasks.php</code><br>
+👉 Gestiona tareas almacenadas en base de datos o archivo</p>
+<p>Necesitamos un cliente JavaScript para comunicarnos con ella desde la web.</p>
+<p>Ese cliente es: <strong>tasks.js</strong></p>
+<p>Lo analizamos paso a paso 👇</p>
+<hr>
+<h2 id="🧠-diseño-del-cliente-clase-taskapi-tasks.js">🧠 Diseño del cliente: clase <code>TaskAPI</code> (tasks.js)</h2>
+<p>Organizamos las peticiones dentro de una clase para llamarlas fácilmente así:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> API_URL <span class="token operator">=</span> <span class="token string">'http://localhost/tasks.php'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">TaskAPI</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// ✅ Validación básica del contenido de una tarea</span>
+    <span class="token keyword">static</span> <span class="token function">validateTask</span><span class="token punctuation">(</span>description<span class="token punctuation">,</span> status<span class="token punctuation">,</span> priority<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>description <span class="token operator">||</span> <span class="token keyword">typeof</span> description <span class="token operator">!==</span> <span class="token string">'string'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span>'La descripción debe ser un texto
+            válido<span class="token punctuation">.</span>'<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">const</span> validStatus <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Some day'</span><span class="token punctuation">,</span> <span class="token string">'To do'</span><span class="token punctuation">,</span> 'In
+        progress<span class="token string">', '</span>Done'<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>status <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>validStatus<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Estado inválido. Valores
+            permitidos: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>validStatus<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">', '</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">const</span> validPriority <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'low'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">,</span> <span class="token string">'high'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>priority <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>validPriority<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>priority<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Prioridad inválida. Valores
+            permitidos: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>validPriority<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">', '</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// ✅ Función común para manejar errores de Fetch y HTTP</span>
+    <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>response<span class="token punctuation">.</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// Intentamos obtener JSON con error del backend</span>
+            <span class="token keyword">const</span> errorText <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Error HTTP </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>response<span class="token punctuation">.</span>status<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">:
+            </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>errorText <span class="token operator">||</span> <span class="token string">'Respuesta no válida'</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span>'La respuesta del servidor no es
+            JSON válido<span class="token punctuation">.</span>'<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">getTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span>API_URL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error al obtener tareas:'</span><span class="token punctuation">,</span>
+            err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">createTask</span><span class="token punctuation">(</span>description<span class="token punctuation">,</span> status <span class="token operator">=</span> <span class="token string">'Some day'</span><span class="token punctuation">,</span>
+    priority <span class="token operator">=</span> <span class="token string">'medium'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">validateTask</span><span class="token punctuation">(</span>description<span class="token punctuation">,</span> status<span class="token punctuation">,</span> priority<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span>API_URL<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                method<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+                headers<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                body<span class="token punctuation">:</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> description<span class="token punctuation">,</span> status<span class="token punctuation">,</span>
+                priority <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error al crear tarea:'</span><span class="token punctuation">,</span>
+            err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+   <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">updateTask</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> description<span class="token punctuation">,</span> status<span class="token punctuation">,</span> priority<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">validateTask</span><span class="token punctuation">(</span>description<span class="token punctuation">,</span> status<span class="token punctuation">,</span> priority<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>API_URL<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">?id=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                method<span class="token punctuation">:</span> <span class="token string">'PUT'</span><span class="token punctuation">,</span>
+                headers<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                body<span class="token punctuation">:</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> description<span class="token punctuation">,</span> status<span class="token punctuation">,</span>
+                priority <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Error al actualizar tarea </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">:`</span></span><span class="token punctuation">,</span>
+            err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">patchTask</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> fields<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>API_URL<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">?id=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                method<span class="token punctuation">:</span> <span class="token string">'PATCH'</span><span class="token punctuation">,</span>
+                headers<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token string">'Content-Type'</span><span class="token punctuation">:</span> <span class="token string">'application/json'</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                body<span class="token punctuation">:</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>fields<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Error al actualizar parcialmente
+            tarea </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">:`</span></span><span class="token punctuation">,</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token function">deleteTask</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>API_URL<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">?id=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                method<span class="token punctuation">:</span> <span class="token string">'DELETE'</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Error al eliminar tarea </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">:`</span></span><span class="token punctuation">,</span>
+            err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="vista-general-del-archivo-tasks.js">1 - Vista general del archivo <code>tasks.js</code></h2>
+<p>La clase <code>TaskAPI</code> es una <strong>pequeña capa (wrapper)</strong> alrededor de <code>fetch()</code> que organiza las operaciones con la API de tareas:</p>
+<ul>
+<li>
+<p>valida los datos que el usuario quiere enviar,</p>
+</li>
+<li>
+<p>pide al servidor que haga operaciones (GET/POST/PUT/PATCH/DELETE),</p>
+</li>
+<li>
+<p>y maneja errores de una forma más útil que dejar pasar cualquier excepción.</p>
+</li>
+</ul>
+<h2 id="explicación-detallada-por-partes">2 - Explicación detallada por partes</h2>
+<h3 id="const-api_url--httplocalhosttasks.php">2.1 <code>const API_URL = 'http://localhost/tasks.php';</code></h3>
+<ul>
+<li>
+<p><strong>Qué es</strong>: la dirección donde está tu servidor de tareas (backend).</p>
+</li>
+<li>
+<p><strong>Para qué sirve</strong>: todas las peticiones usan esta URL como punto de entrada.</p>
+</li>
+<li>
+<p><strong>Nota práctica</strong>: en producción cambiarías <code>localhost</code> por la URL real (o usarías variables de entorno).</p>
+</li>
+</ul>
+<hr>
+<h3 id="class-taskapi--...-">2.2 <code>class TaskAPI { ... }</code></h3>
+<ul>
+<li>
+<p>Definimos una <strong>clase</strong> llamada <code>TaskAPI</code>.</p>
+</li>
+<li>
+<p>Dentro hay <strong>métodos estáticos</strong> (<code>static</code>) que permiten llamar <code>TaskAPI.getTasks()</code> sin crear una instancia.</p>
+</li>
+</ul>
+<hr>
+<h3 id="validatetaskdescription-status-priority">2.3 <code>validateTask(description, status, priority)</code></h3>
+<ul>
+<li>
+<p><strong>Propósito</strong>: comprobar que los datos que vas a enviar tienen sentido.</p>
+</li>
+<li>
+<p><strong>Qué comprueba</strong>:</p>
+<ul>
+<li>
+<p><code>description</code> existe y es texto.</p>
+</li>
+<li>
+<p><code>status</code> (si se envía) es uno de los estados permitidos (<code>Some day</code>, <code>To do</code>, <code>In progress</code>, <code>Done</code>).</p>
+</li>
+<li>
+<p><code>priority</code> (si se envía) es <code>low</code>, <code>medium</code> o <code>high</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Qué hace si falla</strong>: lanza (<code>throw</code>) un <code>Error</code> con un mensaje claro.</p>
+</li>
+<li>
+<p><strong>Por qué es útil</strong>: evita enviar peticiones al servidor con datos inválidos; mejora experiencia y evita errores en el backend.</p>
+</li>
+</ul>
+<h3 id="handleresponseresponse">2.4 <code>handleResponse(response)</code></h3>
+<ul>
+<li>
+<p><strong>Propósito</strong>: centralizar cómo interpretamos la respuesta del servidor.</p>
+</li>
+<li>
+<p><strong>Qué hace exactamente</strong>:</p>
+<ol>
+<li>
+<p>Si <code>response.ok</code> es <code>false</code> (status 4xx/5xx), intenta leer el cuerpo como texto y lanza un <code>Error</code> con el código HTTP y ese texto.</p>
+</li>
+<li>
+<p>Si <code>response.ok</code> es <code>true</code>, intenta convertir la respuesta en JSON (<code>response.json()</code>).</p>
+</li>
+<li>
+<p>Si la conversión a JSON falla (por ejemplo el servidor devolvió HTML o texto), lanza un <code>Error</code> indicando que no es JSON válido.</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Por qué</strong>: así no repites el mismo tratamiento de errores en cada método; todos usan esta función.</p>
+</li>
+</ul>
+<p><strong>Ejemplo de uso interno</strong>:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span>API_URL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">handleResponse</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token comment">// data es el JSON parseado</span>
+</code></pre>
+<hr>
+<h3 id="gettasks">2.5 <code>getTasks()</code></h3>
+<ul>
+<li>
+<p><strong>Qué hace</strong>: hace <code>fetch(API_URL)</code> (GET por defecto) para obtener la lista de tareas.</p>
+</li>
+<li>
+<p><strong>Flujo</strong>:</p>
+<ol>
+<li>
+<p>Llama a <code>fetch</code>.</p>
+</li>
+<li>
+<p>Pasa la <code>response</code> a <code>handleResponse</code>.</p>
+</li>
+<li>
+<p>Devuelve el JSON parseado.</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Manejo de errores</strong>: envuelve la operación en <code>try/catch</code>. Si hay error, lo muestra en la consola y lo relanza (<code>throw err</code>) para que quien llame sepa que falló.</p>
+</li>
+</ul>
+<p><strong>Cómo usarlo</strong>:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> tasks <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">getTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>tasks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'No se pudieron cargar las tareas: '</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h3 id="createtaskdescription-status--some-day-priority--medium">2.6 <code>createTask(description, status = 'Some day', priority = 'medium')</code></h3>
+<ul>
+<li>
+<p><strong>Qué hace</strong>: crea una nueva tarea en el servidor (POST).</p>
+</li>
+<li>
+<p><strong>Pasos</strong>:</p>
+<ol>
+<li>
+<p>Valida datos con <code>validateTask</code>.</p>
+</li>
+<li>
+<p>Ejecuta <code>fetch(API_URL, { method: 'POST', headers, body })</code>.</p>
+</li>
+<li>
+<p>Pasa respuesta a <code>handleResponse</code>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Default values</strong>: si no pasas <code>status</code> o <code>priority</code>, usa <code>'Some day'</code> y <code>'medium'</code>.</p>
+</li>
+<li>
+<p><strong>Errores</strong>:</p>
+<ul>
+<li>
+<p>Si <code>validateTask</code> falla, lanza un error sin llamar al servidor.</p>
+</li>
+<li>
+<p>Si <code>fetch</code> o la respuesta dan error, lo registra y lo relanza.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ejemplo</strong>:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> newTask <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">createTask</span><span class="token punctuation">(</span>
+    <span class="token string">'Aprender Fetch API'</span><span class="token punctuation">,</span>
+    <span class="token string">'To do'</span><span class="token punctuation">,</span>
+    <span class="token string">'high'</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Tarea creada:'</span><span class="token punctuation">,</span> newTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Error al crear tarea: '</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="updatetaskid-description-status-priority">2.7 <code>updateTask(id, description, status, priority)</code></h3>
+<ul>
+<li>
+<p><strong>Qué hace</strong>: actualiza por completo la tarea <code>id</code> usando <code>PUT</code>.</p>
+</li>
+<li>
+<p><strong>Notas</strong>:</p>
+<ul>
+<li>
+<p>Valida los campos (como <code>createTask</code>).</p>
+</li>
+<li>
+<p>Envía JSON con los nuevos valores.</p>
+</li>
+<li>
+<p>URL se forma con <code>?id=${id}</code> (esto depende de cómo tu <code>tasks.php</code> espera el ID).</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+<span class="token keyword">const</span> updated <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">updateTask</span><span class="token punctuation">(</span>
+ <span class="token number">1</span><span class="token punctuation">,</span>                    <span class="token comment">// ID de la tarea</span>
+ <span class="token string">'Repasar conceptos'</span><span class="token punctuation">,</span>  <span class="token comment">// Nueva descripción</span>
+ <span class="token string">'In progress'</span><span class="token punctuation">,</span>        <span class="token comment">// Nuevo estado</span>
+ <span class="token string">'medium'</span>              <span class="token comment">// Nueva prioridad</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Tarea actualizada:'</span><span class="token punctuation">,</span> updated<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Error al actualizar tarea: '</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h3 id="patchtaskid-fields">2.8 <code>patchTask(id, fields)</code></h3>
+<ul>
+<li>
+<p><strong>Qué hace</strong>: actualiza solo campos puntuales de la tarea usando <code>PATCH</code>.</p>
+</li>
+<li>
+<p><strong><code>fields</code></strong> es un objeto con solo los campos que quieres cambiar: e.g. <code>{ status: 'Done' }</code>.</p>
+</li>
+<li>
+<p><strong>No valida</strong> <code>fields</code> en esta versión (por simplicidad) — podrías añadir validación similar a <code>validateTask</code> si lo deseas.</p>
+</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> patched <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">patchTask</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    status<span class="token punctuation">:</span> <span class="token string">'Done'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Cambio parcial aplicado:'</span><span class="token punctuation">,</span> patched<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Error en actualización parcial: '</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h3 id="deletetaskid">2.9 <code>deleteTask(id)</code></h3>
+<ul>
+<li>
+<p><strong>Qué hace</strong>: borra la tarea con <code>DELETE</code> en la URL <code>?id=${id}</code>.</p>
+</li>
+<li>
+<p><strong>Manejo</strong>: usa <code>handleResponse</code> y <code>try/catch</code> igual que los otros métodos.</p>
+</li>
+</ul>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> TaskAPI<span class="token punctuation">.</span><span class="token function">deleteTask</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Tarea eliminada:'</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Error al eliminar tarea: '</span> <span class="token operator">+</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</div>
+</body>
+
+</html>
