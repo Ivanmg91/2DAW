@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Horario</title>
+</head>
+<body>
+
+
+<form action="Ejer7.php" method="POST">
+    <label for="curso">Selecciona el curso:</label><br>
+    <input type="radio" id="curso1" name="curso" value="Curso 1" required> Curso 1
+    <input type="radio" id="curso2" name="curso" value="Curso 2"> Curso 2
+    <br><br>
+
+    <label for="modulo">Selecciona el módulo:</label><br>
+    <select name="modulo" id="modulo" required>
+        <option value="">Selecciona un módulo</option>
+        <option value="Módulo 1">Módulo 1</option>
+        <option value="Módulo 2">Módulo 2</option>
+        <option value="Módulo 3">Módulo 3</option>
+        <option value="Módulo 4">Módulo 4</option>
+    </select>
+    <br><br>
+
+    <label for="horas">Selecciona las horas:</label><br>
+    <input type="checkbox" name="horas[]" value="9:00 - 10:00"> 9:00 - 10:00
+    <input type="checkbox" name="horas[]" value="10:00 - 11:00"> 10:00 - 11:00
+    <input type="checkbox" name="horas[]" value="11:00 - 12:00"> 11:00 - 12:00
+    <input type="checkbox" name="horas[]" value="12:00 - 13:00"> 12:00 - 13:00
+    <br><br>
+
+    <button type="submit">Generar Horario</button>
+</form>
+
+</body>
+</html>

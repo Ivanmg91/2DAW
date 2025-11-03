@@ -16,7 +16,15 @@
         echo $idioma . " ";
     }
 
-    echo $imagen;
+    echo "<br>";
+
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $imagenTmp = $_FILES['imagen']['tmp_name'];
+        $imagenData = file_get_contents($imagenTmp);
+        $imagenBase64 = base64_encode($imagenData);
+
+        echo "<img src='data:image/jpeg;base64,$imagenBase64' width='200'>";
+    }
 ?>
 
 
@@ -25,7 +33,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejer10</title>
+    <title>Ejer11</title>
 </head>
 <body>
     <p><a href="index.html"><?php echo "Volver"; ?></a></p>

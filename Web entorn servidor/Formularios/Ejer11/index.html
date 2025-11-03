@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>Ejer8</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Ejer11</title>
+</head>
 <body>
-    <form action="Ejer11.php" id="formulario" method="POST">
-        <label>Nombre: <input type="text" name="nombre" required></label>
-        
+    <form action="Ejer11.php" id="formulario" method="POST" enctype="multipart/form-data">
+        <label>Nombre completo: <input type="text" name="nombre" required></label><br>
 
-        <br>
+        <label>Apellidos: <input type="text" name="apellidos" required></label><br>
 
-        <label>Apellidos: <input type="text" name="apellidos" required></label>
-
-        <br>
-
-        <label>Contraseña: <input type="password" name="contrasena" minlength="6" required></label>
-
-        <br><br>
+        <label>Contraseña: <input type="password" name="contrasena" minlength="6" required></label><br><br>
 
         <label>Nivel de estudio:</label><br>
         <select name="nivel-estudio" id="nivel-estudio" required>
@@ -24,41 +20,33 @@
             <option value="Formación Profesional">Formación Profesional</option>
             <option value="Estudios Universitarios">Estudios Universitarios</option>
         </select>
-
+        
         <br><br>
 
-        <label>nacionalidad:</label><br>
+        <label>Nacionalidad:</label><br>
         <input type="radio" id="espanola" name="nacionalidad" value="Española" required>
         <label for="espanola">Española</label>
         <input type="radio" id="otro" name="nacionalidad" value="Otro">
         <label for="otro">Otro</label>
-        <input type="text" name="nacionalidad-otra">
-
-        <br><br>
+        <input type="text" name="nacionalidad-otra"><br><br>
 
         <label>Idiomas:</label><br>
         <input type="checkbox" name="idiomas[]" value="Español"> Español
         <input type="checkbox" name="idiomas[]" value="Inglés"> Inglés
         <input type="checkbox" name="idiomas[]" value="Francés"> Francés
         <input type="checkbox" name="idiomas[]" value="Alemán"> Alemán
-        <input type="checkbox" name="idiomas[]" value="Italiano"> Italiano
-        <input type="checkbox" name="idiomas[]" value="Series"> Series
-        <input type="checkbox" name="idiomas[]" value="Videojuegos"> Videojuegos
+        <input type="checkbox" name="idiomas[]" value="Italiano"> Italiano<br><br>
 
-        <br><br>
-
-        <label>Email</label>
+        <label>Email:</label>
         <input type="email" name="email" required>
+        
+        <br>
 
-        <br>    
+        <label>Imágen (solo jpg, gif, png - max 50 KB):</label>
+        <input type="file" name="imagen" accept="image/jpeg, image/gif, image/png" required><br><br>
 
-        <label>Imágen</label>
-        <input type="file" accept="image/*" name="imagen" required>
-
-        <br><br>
-
-        <input type="submit" value="Validar">
-        <input type="submit" value="Enviar">
+        <input type="submit" name="validar" value="Validar">
+        <input type="submit" name="enviar" value="Enviar">
         <button type="button" onclick="document.getElementById('formulario').reset()">Borrar</button>
     </form>
 </body>
