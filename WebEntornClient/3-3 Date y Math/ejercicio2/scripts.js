@@ -38,36 +38,35 @@ class Punto {
         punto2.x = punto1.x;
         punto2.y = punto1.y;
     }
-    
-    cambiar (x, y) {
+
+    cambiar(x, y) {
         this._x = x;
         this._y = y;
     }
 
     static iguales(punto1, punto2) {
-        if (punto1.x == punto2.x && punto1.y == punto2.y) {
-            return true;
-        } else {
-            return false;
-        }
+        return punto1.x === punto2.x && punto1.y === punto2.y;
     }
 
-    // esta funcion permite crear un objeto de tipo Punto 
-    // cuyas coordenadas serán las de otro objeto más un valor determinado
-    sumar (punto, valor) {
-        const nuevoPunto = new Punto(punto.x + valor.x, punto.y + valor.y);
-        
+    sumar(valor, nombre = "PuntoNuevo") {
+        const nuevoPunto = new Punto(
+            nombre,
+            this._x + valor.x,
+            this._y + valor.y
+        );
         return nuevoPunto;
     }
 
-    obtenerDistancia(punto) {
-        const distancia = Math.sqrt(Math.pow(punto.x - this._x) + Math.pow(punto.y - this._y));
 
+    obtenerDistancia(punto) {
+        const distancia = Math.sqrt(
+            Math.pow(punto.x - this._x, 2) + Math.pow(punto.y - this._y, 2)
+        );
         return distancia;
     }
 
     toString() {
-        return `${this._nombre} son (${this._x}, ${this._y})`;
+        return `${this._nombre} (${this._x}, ${this._y})`;
     }
 }
 
@@ -77,20 +76,19 @@ function pedirCoordenada(nombre, eje, rangoMin, rangoMax) {
         valor = prompt(`Escribe la coordenada ${eje} del punto "${nombre}" (Entre ${rangoMin} y ${rangoMax}):`, "0");
 
         if (valor === null) {
-            console.log("El usuario ha cancelado la operación. Terminando el programa.");
             return null;
         }
 
         valor = parseFloat(valor);
         if (isNaN(valor)) {
-            console.log("Valor no válido. Intente nuevamente.");
+            alert("Valor no válido. Intente nuevamente.");
             continue;
         }
 
         valor = Math.trunc(valor);
 
         if (valor < rangoMin || valor > rangoMax) {
-            console.log(`El valor tiene que estar en el rango de ${rangoMin} a ${rangoMax}.`, "0");
+            alert(`El valor tiene que estar en el rango de ${rangoMin} a ${rangoMax}.`);
         } else {
             return valor;
         }
@@ -98,26 +96,69 @@ function pedirCoordenada(nombre, eje, rangoMin, rangoMax) {
 }
 
 // INICIO
-const rangoMin = -5;
-const rangoMax = 5;
+const rangoMin = -6;
+const rangoMax = 6;
 
 let punto1 = new Punto();
 let x = pedirCoordenada("Punto1", "x", rangoMin, rangoMax);
 
 if (x === null) {
 
-    console.log("Fin del programa");
+    alert("Ha cancelado, el programa NO seguirá");
 
 } else {
-
     let y = pedirCoordenada("Punto1", "y", rangoMin, rangoMax);
 
     if (y === null) {
         console.log("Fin del programa");
     } else {
+        
         punto1 = new Punto("Punto1", x, y);
+        alert(`Las coordenadas de ${punto1.toString()}`);
+
+        // copiar punto1
+        let punto2 = new Punto("Punto2", punto1.x, punto1.y);
+        alert(`Las coordenadas de ${punto2.toString()}`);
+
+
+        let confirmar = confirm("¿Desea modificar las coordenadas del segundo punto (Punto2)?");
+        if (confirmar) {
+            let nuevoX = pedirCoordenada("Punto2", "x", rangoMin, rangoMax);
+            let nuevoY = pedirCoordenada("Punto2", "y", rangoMin, rangoMax);
+
+            if (nuevoX === null || nuevoY === null) {
+                alert("Fin del programa");
+            } else {
+                punto2.cambiar(Math.round(nuevoX), Math.round(nuevoY));
+                alert(`Las coordenadas de ${punto2.toString()}`);
+            }
+
+            if (Punto.iguales(punto1, punto2)) {
+                const valorAleatorio = {
+                    x: Math.floor(Math.random() * (rangoMax - rangoMin + 1)) + rangoMin, // redondeo hacia abajo
+                    y: Math.ceil(Math.random() * (rangoMax - rangoMin + 1)) + rangoMin  // redondeo hacia arriba
+                };
+
+                const punto3 = punto1.sumar(valorAleatorio, "Punto3");
+                const distancia = punto1.obtenerDistancia(punto3);
+                alert(`La distancia entre ${punto1} y ${punto3} es: ${distancia.toFixed(2)}`);
+
+            } else {
+                const distancia = punto1.obtenerDistancia(punto2);
+                alert(`La distancia entre ${punto1} y ${punto2} es: ${distancia.toFixed(2)}`);
+            }
+
+        } else {
+
+            const valorAleatorio = {
+                x: Math.floor(Math.random() * (rangoMax - rangoMin + 1)) + rangoMin,
+                y: Math.ceil(Math.random() * (rangoMax - rangoMin + 1)) + rangoMin
+            };
+
+            const punto3 = punto1.sumar(valorAleatorio, "Punto3");
+
+            const distancia = punto1.obtenerDistancia(punto3);
+            alert(`La distancia entre ${punto1} y ${punto3} es: ${distancia.toFixed(2)}`);
+        }
     }
 }
-
-console.log(`Las coordenadas de ${punto1.toString()}`);
-
