@@ -1,26 +1,29 @@
-<!-- Crea un formulario sencillo donde el usuario indique su 
-nombre y seleccione si quiere un
-saludo o despedida. Se debe almacenar en 
-una Cookie el usuario y el saludo y al pulsar Enviar,
-se debe indicar los valores actuales (usuario y 
-saludo o despedida elegidos) y los valores del
-usuario anterior y acción elegida almacenadas en la Cookie -->
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejer1</title>
+    <title>Ejer2</title>
 </head>
 <body>
-    <form action="Ejer1.php" method="post">
+    <form action="Ejer2.php" method="post">
         <label>Nombre: </label>
         <input type="text" id="nombre" name="nombre" required><br><br>
 
-        <input type="radio" name="accion" value="Saludo" required> Saludo
-        <input type="radio" name="accion" value="Despedida" required> Despedida
+        <label>Idioma: </label><br>
+        <input type="radio" id="espaniol" name="idioma" value="Español" required>
+        <label for="espaniol">Español</label>
+        <input type="radio" id="ingles" name="idioma" value="Inglés">
+        <label for="ingles">Inglés</label>
+        <input type="radio" id="otro" name="idioma" value="Otro">
+        <label for="otro">Otro</label>
+        <input type="text" name="idioma-otro"><br><br>
+
+        <label>Color: </label>
+        <input type="text" id="color" name="color" required><br><br>
+
+        <label>Ciudad: </label>
+        <input type="text" id="ciudad" name="ciudad" required><br><br>
 
         <input type="submit" value="Enviar">
     </form>
