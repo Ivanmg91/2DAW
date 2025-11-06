@@ -1,7 +1,7 @@
 // app.js
 
 // URL de la API que obtendrá las tareas
-const apiUrl = 'http://127.0.0.1/php/api/tasks.php'; // Cambia esta URL si es necesario
+const apiUrl = 'http://192.168.1.106/php/api/tasks.php'; // Cambia esta URL si es necesario
 
 // Función para obtener las tareas y mostrarlas en el HTML
 function fetchTasks() {
