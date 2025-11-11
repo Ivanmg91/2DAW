@@ -1,30 +1,40 @@
 <?php
+    $valorConvertir = 166.386;
+    $cantidad = $_POST["cantidad"];
+    $convertir = $_POST["convertir"];
+    $resultado = null;
 
-    $dia = isset($_POST['dia']) ? $_POST['dia'] : null;
-    $quincena;
+    $ca_anterior = $_COOKIE["cantidad"] ?? null;
+    $co_anterior = $_COOKIE["convertir"] ?? null;
+    $r_anterior = $_COOKIE["resultado"] ?? null;
 
-    $d_anterior = $_COOKIE["dia"] ?? null;
-    $q_anterior = $_COOKIE["quincena"] ?? null;
+    if ($convertir == "pesetas") {
 
+        $resultado = $cantidad * $valorConvertir;
+        echo "ACTUAL<br>";
+        echo "$cantidad" . "€ " . " son $resultado $convertir. <br><br>";
 
-    $fecha = new DateTime($dia);
-    $dia_numero = (int)$fecha->format("d");
+        echo "ANTERIOR<br>";
+        if ($r_anterior !== null) {
+            echo "$ca_anterior" . "€ " . " son $r_anterior $co_anterior. <br>";
+        } else {
+            echo "No hay un resultado anterior.<br>";
+        }
+    } elseif ($convertir == "euros") {
 
-    if ($dia_numero <= 15) {
-        $quincena = "primera";
-    } else {
-        $quincena = "segunda";
+        $resultado = $cantidad / $valorConvertir;
+        echo "ACTUAL<br>";
+        echo "$cantidad" . " pesetas " . " son $resultado $convertir. <br><br>";
+
+        echo "ANTERIOR<br>";
+        if ($r_anterior !== null) {
+            echo "$ca_anterior" . " pesetas " . " son $r_anterior $co_anterior. <br>";
+        } else {
+            echo "No hay un resultado anterior.<br>";
+        }
     }
 
-
-    echo "Valores actuales: <br>";
-    echo "Día " . $dia . " " . $quincena . " quincena.<br><br>" ;
-
-    echo "Valores anteriores: <br>";
-    echo "Día " . $d_anterior . " " . $q_anterior . " quincena.<br><br>" ;
-
-
-    setcookie("dia", $dia, time() + (60*60*24 * 30), "/");
-    setcookie("quincena", $quincena, time() + (60*60*24 * 30), "/");
-
+    setcookie("cantidad", $cantidad, time() + (60*60*24 * 30), "/");
+    setcookie("convertir", $convertir, time() + (60*60*24 * 30), "/");
+    setcookie("resultado", $resultado, time() + (60*60*24 * 30), "/");
 ?>

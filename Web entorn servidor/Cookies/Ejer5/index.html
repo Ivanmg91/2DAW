@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejer2</title>
+    <title>Conversor</title>
 </head>
 <body>
-    <form action="Ejer5.php" method="post">
+    <h1>Conversor Euros - Pesetas</h1>
 
-        <label>Día del mes: </label>
-        <input type="date" id="dia" name="dia" required><br><br>
+    <form action="Ejer5.php" method="POST">
+        <label>Cantidad:</label>
+        <input type="text" name="cantidad" id="cantidad" placeholder="" required>
 
+        <label>Convertir a:</label>
+        <select name="convertir" id="convertir">
+            <option value="pesetas">Pesetas</option>
+            <option value="euros">Euros</option>
+        </select>
 
-        <input type="submit" value="Enviar">
-
+        <input type="submit" id="" value="Convertir">
     </form>
 </body>
 </html>
