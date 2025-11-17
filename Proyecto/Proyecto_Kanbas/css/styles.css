@@ -1,40 +1,459 @@
-/* styles.css */
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(84, 109, 254, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
+  width: 100%;
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-#task-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
+h1 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 4px 20px rgba(84, 109, 254, 0.4);
+  letter-spacing: -0.5px;
+}
+
+/* Estructura del tablero */
+.kanban-board {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+/* Columnas */
+.kanban-column {
+  flex: 1 1 0;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kanban-column:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.kanban-column h2 {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.9) 0%, rgba(120, 119, 198, 0.9) 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 
+    0 4px 16px rgba(84, 109, 254, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.kanban-column .button-container {
+  text-align: right;
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
+
+.kanban-column button {
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a8b3ff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.kanban-column button:hover {
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.8) 0%, rgba(120, 119, 198, 0.8) 100%);
+  color: #ffffff;
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(84, 109, 254, 0.4);
+}
+
+.kanban-column button:active {
+  transform: scale(0.95);
+}
+
+.kanban-items {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 50px;
 }
 
 .task {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 15px;
-    width: 250px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 3px solid rgba(84, 109, 254, 0.8);
+  color: #e8eaff;
 }
 
-.task h3 {
-    font-size: 1.2em;
-    color: #333;
+.task:hover {
+  transform: translateX(4px) scale(1.02);
+  background: rgba(255, 255, 255, 0.12);
+  border-left-color: #546dfe;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 8px 32px rgba(84, 109, 254, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.task p {
-    font-size: 1em;
-    color: #666;
+.task:active {
+  transform: translateX(2px) scale(1);
+}
+
+/* Menú de tarea */
+.menu-tarea {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  padding: 2rem;
+  border: none;
+  width: 380px;
+  border-radius: 20px;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: 
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menu-tarea.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.menu-tarea h3 {
+  margin: 0 0 1.5rem 0;
+  background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.menu-tarea input,
+.menu-tarea textarea,
+.menu-tarea select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: #e8eaff;
+}
+
+.menu-tarea input::placeholder,
+.menu-tarea textarea::placeholder {
+  color: rgba(232, 234, 255, 0.5);
+}
+
+.menu-tarea input:focus,
+.menu-tarea textarea:focus,
+.menu-tarea select:focus {
+  outline: none;
+  border-color: #546dfe;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 0 0 3px rgba(84, 109, 254, 0.2),
+    0 4px 16px rgba(84, 109, 254, 0.2);
+}
+
+.menu-tarea button:not(.close-button) {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.9) 0%, rgba(120, 119, 198, 0.9) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 16px rgba(84, 109, 254, 0.3);
+}
+
+.menu-tarea button:not(.close-button):hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
+  box-shadow: 0 8px 24px rgba(84, 109, 254, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-tarea button:not(.close-button):active {
+  transform: translateY(0);
+}
+
+.close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: #e8eaff;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.8) 0%, rgba(120, 119, 198, 0.8) 100%);
+  color: #ffffff;
+  transform: rotate(90deg);
+  box-shadow: 0 4px 16px rgba(84, 109, 254, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.close-button:active {
+  transform: rotate(90deg) scale(0.9);
+}
+
+/* === MENÚ EDITAR / BORRAR (MISMO ESTILO QUE menu-tarea) =========================== */
+
+.edit-delete-tarea {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  padding: 2rem;
+  width: 380px;
+  border-radius: 20px;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(40px) saturate(180%);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.edit-delete-tarea.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Título */
+.edit-delete-tarea p#menu-title {
+  margin: 0 0 1.5rem 0;
+  background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Inputs y selects */
+.edit-delete-tarea input,
+.edit-delete-tarea select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #e8eaff;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.edit-delete-tarea input::placeholder {
+  color: rgba(232, 234, 255, 0.5);
+}
+
+.edit-delete-tarea input:focus,
+.edit-delete-tarea select:focus {
+  outline: none;
+  border-color: #546dfe;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(84, 109, 254, 0.2),
+    0 4px 16px rgba(84, 109, 254, 0.2);
+}
+
+/* Botones */
+.edit-delete-tarea .buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.edit-delete-tarea .buttons button {
+  flex: 1;
+  padding: 0.75rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(84, 109, 254, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Botón Editar (azul igual que crear) */
+#edit-task {
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.9) 0%, rgba(120, 119, 198, 0.9) 100%);
+  color: #ffffff;
+}
+
+#edit-task:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
+  box-shadow: 0 8px 24px rgba(84, 109, 254, 0.5);
+}
+
+/* Botón Borrar (rojo elegante) */
+#delete-task {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.9) 0%, rgba(200, 40, 40, 0.9) 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+#delete-task:hover {
+  background: linear-gradient(135deg, #ff4a4a, #d83030);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 80, 80, 0.5);
+}
+
+/* Botón cerrar (igual que el otro menú) */
+.edit-delete-tarea .close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #e8eaff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.edit-delete-tarea .close-button:hover {
+  background: linear-gradient(135deg, rgba(84, 109, 254, 0.8), rgba(120, 119, 198, 0.8));
+  transform: rotate(90deg);
+  color: white;
+}
+
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .kanban-board {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .kanban-column {
+    min-width: 100%;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .menu-tarea {
+    width: 90%;
+    max-width: 320px;
+  }
 }

@@ -188,24 +188,23 @@ switch ($method) {
         }
         
         try {
-            $stmt = $pdo->prepare("SELECT * FROM tasks 
-            WHERE id = ?");
+            // Antes de borrar
+            $stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = ?");
             $stmt->execute([$id]);
             $task = $stmt->fetch();
 
+            // Si no existe, devolvemos mensaje OK
             if (!$task) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Tarea no
-                encontrada']);
+                echo json_encode(['message' => 'La tarea ya no existía']);
                 exit;
             }
 
-            $stmt = $pdo->prepare("DELETE FROM tasks 
-            WHERE id = ?");
+            // Borrar
+            $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ?");
             $stmt->execute([$id]);
+
             echo json_encode([
-                'message' => 'Tarea eliminada
-                correctamente',
+                'message' => 'Tarea eliminada correctamente',
                 'deleted_task' => $task
             ]);
         } catch (\PDOException $e) {
