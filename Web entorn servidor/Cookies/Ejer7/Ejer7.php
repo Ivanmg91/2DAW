@@ -1,35 +1,35 @@
 <?php
-$contrasena = 1111;
-$maxIntentos = 4;
+    $contrasena = 1111;
+    $maxIntentos = 4;
 
-$intentos = isset($_COOKIE['intentos']) ? $_COOKIE['intentos'] : 0;
+    $intentos = isset($_COOKIE['intentos']) ? $_COOKIE['intentos'] : 0;
 
-$contraseñasIntroducidas = isset($_COOKIE['contraseñasIntroducidas']) ? unserialize($_COOKIE['contraseñasIntroducidas']) : [];
+    $contraseñasIntroducidas = isset($_COOKIE['contraseñasIntroducidas']) ? unserialize($_COOKIE['contraseñasIntroducidas']) : [];
 
-$contrasenaUsuario = isset($_POST['contrasena']) ? $_POST['contrasena'] : null;
-$mensaje = '';
+    $contrasenaUsuario = isset($_POST['contrasena']) ? $_POST['contrasena'] : null;
+    $mensaje = '';
 
-if ($contrasenaUsuario !== null) {
+    if ($contrasenaUsuario !== null) {
 
-    if ($contrasenaUsuario == $contrasena) {
-        $intentos = 0;
-        $mensaje = '<span style="color: green;">La caja fuerte se ha abierto satisfactoriamente</span>';
-        
-    } else {
-        $intentos++;
-        
-        $contraseñasIntroducidas[] = $contrasenaUsuario;
-
-        setcookie("intentos", $intentos, time() + (60 * 60 * 24 * 30), "/");
-        setcookie("contraseñasIntroducidas", serialize($contraseñasIntroducidas), time() + (60 * 60 * 24 * 30), "/");
-
-        if ($intentos >= $maxIntentos) {
-            $mensaje = '<span style="color: red;">Has alcanzado el límite de intentos.</span>';
+        if ($contrasenaUsuario == $contrasena) {
+            $intentos = 0;
+            $mensaje = '<span style="color: green;">La caja fuerte se ha abierto satisfactoriamente</span>';
+            
         } else {
-            $mensaje = '<span style="color: red;">Contraseña incorrecta.</span>';
+            $intentos++;
+            
+            $contraseñasIntroducidas[] = $contrasenaUsuario;
+
+            setcookie("intentos", $intentos, time() + (60 * 60 * 24 * 30), "/");
+            setcookie("contraseñasIntroducidas", serialize($contraseñasIntroducidas), time() + (60 * 60 * 24 * 30), "/");
+
+            if ($intentos >= $maxIntentos) {
+                $mensaje = '<span style="color: red;">Has alcanzado el límite de intentos.</span>';
+            } else {
+                $mensaje = '<span style="color: red;">Contraseña incorrecta.</span>';
+            }
         }
     }
-}
 ?>
 
 <!DOCTYPE html>
