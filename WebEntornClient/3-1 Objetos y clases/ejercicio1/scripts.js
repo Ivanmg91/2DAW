@@ -11,7 +11,7 @@ const intervalo = {
     },
 
     set maxMin(arrayRandoms) {
-        arrayRandoms.sort((a, b) => a - b);
+        arrayRandoms.sort((a, b) => a - b); // SE PODRÍA HACER CON min() y max()
         this.minimo = arrayRandoms[0];
         this.maximo = arrayRandoms[4];
     }
