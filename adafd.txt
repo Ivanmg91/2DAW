@@ -1,0 +1,12 @@
+Program a web shop. It has to provide a login system to enter or, instead, register as a new user. Once the user is logged in, the system has to show the list of items to be sold, with its price and a dropdown control to choose the number of units to be purchased. Once the user has chosen the number of items of each kind to be purchased, he has to press a 'purchase' button; the system has to return the list of items, the number of units and the total price. Besides, the webpage has to show the shipping costs: 2€+1€ per item. The webpage has to show also the addition of the total and the shipping costs. From this webpage, the user should be able to go back to the shop to add new items to the purchasing list. If the customer presses on 'confirm purchase', a thank you message has to show up.
+
+ The purchase data have to be inserted in the database at this moment. Up to now, all information should have been stored in a session. Each purchase has to assigned a single tracking number (you can query the database the last number, and increase it). The system has to use web forms. You have to create the right database structure to support the system. Don't forget to start with a E/R model.
+
+Develop a seller webpage too, to see the list of purchases. The seller will access its webpage after a login system.
+
+The customer should see his list of purchases in the future, without loggin in. To do so, save the customer identification in a cookie (this cookie is not a session cookie).
+
+Upload a document with screenshots and code with comments in English, explained.
+
+
+Record a small video (minimum 3 min.,- máx., 10 min) explaining the way it works in English; explain the code; don't forget to add comments to the code in English.
