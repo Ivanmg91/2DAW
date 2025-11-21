@@ -150,5 +150,3 @@ sudo /opt/lampp/lampp restart
 - Eliminadas: `#ff5050` (rojo)
 
 ---
-
-Desarrollado con ❤️ usando tecnologías web modernas
