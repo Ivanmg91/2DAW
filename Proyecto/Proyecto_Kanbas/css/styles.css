@@ -49,7 +49,8 @@ h1 {
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: nowrap;
-  overflow-x: hidden;
+  overflow-x: auto;
+  padding-bottom: 1rem;
 }
 
 /* Columnas */
@@ -127,7 +128,8 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  min-height: 50px;
+  min-height: 100px;
+  transition: background-color 0.2s ease;
 }
 
 .task {
@@ -139,8 +141,8 @@ h1 {
   box-shadow: 
     0 4px 16px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   border-left: 3px solid rgba(84, 109, 254, 0.8);
   color: #e8eaff;
 }
@@ -156,7 +158,20 @@ h1 {
 }
 
 .task:active {
+  cursor: grabbing;
   transform: translateX(2px) scale(1);
+}
+
+.task h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.task p {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
 }
 
 /* Menú de tarea */
@@ -188,7 +203,8 @@ h1 {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.menu-tarea h3 {
+.menu-tarea h3, 
+.menu-tarea p {
   margin: 0 0 1.5rem 0;
   background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
   -webkit-background-clip: text;
@@ -213,6 +229,7 @@ h1 {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   color: #e8eaff;
+  box-sizing: border-box;
 }
 
 .menu-tarea input::placeholder,
@@ -229,6 +246,14 @@ h1 {
   box-shadow: 
     0 0 0 3px rgba(84, 109, 254, 0.2),
     0 4px 16px rgba(84, 109, 254, 0.2);
+}
+
+.menu-tarea label {
+  color: #e8eaff;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .menu-tarea button:not(.close-button) {
@@ -289,8 +314,7 @@ h1 {
   transform: rotate(90deg) scale(0.9);
 }
 
-/* === MENÚ EDITAR / BORRAR (MISMO ESTILO QUE menu-tarea) =========================== */
-
+/* MENÚ EDITAR / BORRAR */
 .edit-delete-tarea {
   position: fixed;
   visibility: hidden;
@@ -318,7 +342,6 @@ h1 {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Título */
 .edit-delete-tarea p#menu-title {
   margin: 0 0 1.5rem 0;
   background: linear-gradient(135deg, #546dfe 0%, #7877c6 100%);
@@ -329,7 +352,6 @@ h1 {
   text-align: center;
 }
 
-/* Inputs y selects */
 .edit-delete-tarea input,
 .edit-delete-tarea select {
   width: 100%;
@@ -343,6 +365,7 @@ h1 {
   color: #e8eaff;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .edit-delete-tarea input::placeholder {
@@ -359,7 +382,14 @@ h1 {
     0 4px 16px rgba(84, 109, 254, 0.2);
 }
 
-/* Botones */
+.edit-delete-tarea label {
+  color: #e8eaff;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .edit-delete-tarea .buttons {
   display: flex;
   gap: 1rem;
@@ -379,7 +409,6 @@ h1 {
   backdrop-filter: blur(10px);
 }
 
-/* Botón Editar (azul igual que crear) */
 #edit-task {
   background: linear-gradient(135deg, rgba(84, 109, 254, 0.9) 0%, rgba(120, 119, 198, 0.9) 100%);
   color: #ffffff;
@@ -391,7 +420,6 @@ h1 {
   box-shadow: 0 8px 24px rgba(84, 109, 254, 0.5);
 }
 
-/* Botón Borrar (rojo elegante) */
 #delete-task {
   background: linear-gradient(135deg, rgba(255, 80, 80, 0.9) 0%, rgba(200, 40, 40, 0.9) 100%);
   color: #fff;
@@ -404,7 +432,6 @@ h1 {
   box-shadow: 0 8px 24px rgba(255, 80, 80, 0.5);
 }
 
-/* Botón cerrar (igual que el otro menú) */
 .edit-delete-tarea .close-button {
   position: absolute;
   top: 0.75rem;
@@ -430,30 +457,242 @@ h1 {
   color: white;
 }
 
+/* Drag and drop */
+.task.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+  cursor: grabbing !important;
+  box-shadow: 0 8px 32px rgba(84, 109, 254, 0.5);
+}
 
-/* Responsivo */
-@media (max-width: 900px) {
+.kanban-column.drag-over {
+  background: rgba(84, 109, 254, 0.15);
+  border-color: rgba(84, 109, 254, 0.5);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 12px 48px rgba(84, 109, 254, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.drag-over .kanban-items {
+  background: rgba(84, 109, 254, 0.08);
+  border-radius: 8px;
+}
+
+/* Badge eliminadas */
+.deleted-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.2) 0%, rgba(200, 40, 40, 0.2) 100%);
+  color: #ff9999;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  font-weight: 600;
+}
+
+#deleted {
+  border-color: rgba(255, 80, 80, 0.3);
+}
+
+#deleted h2 {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.9) 0%, rgba(200, 40, 40, 0.9) 100%);
+}
+
+#deleted .task {
+  border-left-color: rgba(255, 80, 80, 0.8);
+  opacity: 0.85;
+}
+
+#deleted .task:hover {
+  border-left-color: #ff5050;
+  opacity: 1;
+}
+
+/* ============================================
+   RESPONSIVE - TABLETS
+   ============================================ */
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .kanban-board {
+    gap: 0.75rem;
+  }
+  
+  .kanban-column {
+    min-width: 220px;
+  }
+  
+  .kanban-column h2 {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL (TABLETS PEQUEÑOS)
+   ============================================ */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
   .kanban-board {
     flex-direction: column;
     align-items: stretch;
+    overflow-x: visible;
+    gap: 1rem;
   }
   
   .kanban-column {
     min-width: 100%;
+    width: 100%;
   }
   
-  h1 {
-    font-size: 2rem;
+  .kanban-column:hover {
+    transform: none;
+  }
+  
+  .task:hover {
+    transform: scale(1.01);
+  }
+  
+  .menu-tarea,
+  .edit-delete-tarea {
+    width: 90%;
+    max-width: 400px;
+    padding: 1.5rem;
+  }
+  
+  .menu-tarea h3,
+  .menu-tarea p,
+  .edit-delete-tarea p#menu-title {
+    font-size: 1.3rem;
   }
 }
 
-@media (max-width: 600px) {
+/* ============================================
+   RESPONSIVE - MÓVIL PEQUEÑO
+   ============================================ */
+@media (max-width: 480px) {
   .container {
     padding: 1rem 0.5rem;
   }
   
-  .menu-tarea {
-    width: 90%;
-    max-width: 320px;
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .kanban-column {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .kanban-column h2 {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .kanban-column button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .task {
+    padding: 0.75rem;
+  }
+  
+  .task h3 {
+    font-size: 0.95rem;
+  }
+  
+  .task p {
+    font-size: 0.8rem;
+  }
+  
+  .menu-tarea,
+  .edit-delete-tarea {
+    width: 95%;
+    max-width: none;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+  
+  .menu-tarea h3,
+  .menu-tarea p,
+  .edit-delete-tarea p#menu-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .menu-tarea input,
+  .menu-tarea select,
+  .edit-delete-tarea input,
+  .edit-delete-tarea select {
+    padding: 0.65rem;
+    font-size: 0.9rem;
+  }
+  
+  .menu-tarea button:not(.close-button),
+  .edit-delete-tarea .buttons button {
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .deleted-badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .edit-delete-tarea .buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .edit-delete-tarea .buttons button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL MUY PEQUEÑO
+   ============================================ */
+@media (max-width: 360px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+  
+  .kanban-column h2 {
+    font-size: 0.85rem;
+  }
+  
+  .kanban-column button {
+    font-size: 0.85rem;
+  }
+  
+  .task h3 {
+    font-size: 0.9rem;
+  }
+  
+  .task p {
+    font-size: 0.75rem;
   }
 }

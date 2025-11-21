@@ -1,0 +1,261 @@
+body {
+    flex-direction: column;
+    margin: 0;
+    height: 100%;             
+    overflow: hidden;
+    box-sizing: content-box;
+    background-color: rgb(221, 221, 221);
+    overflow: scroll;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+
+#main-header {
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    color: white;
+    background-color: rgb(36, 54, 94);
+    height: 10%;
+    z-index: 10;
+    align-items: center;
+    justify-content: space-between;
+    margin:auto;
+    position: sticky;
+}
+
+#main-header h1 {
+    margin-left: 20px;
+}
+
+
+#main-header ul {
+    width: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+#main-header ul li {
+    color: white;
+    list-style: none;
+}
+
+#main-header ul li a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#main-header ul li a:hover {
+    color: rgb(177, 177, 177);
+}
+
+#main-header ul li a:focus {
+    outline-style: auto;
+}
+
+a[href="#contacto"] {
+    background-color: red;
+}
+
+
+.container {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+@media (max-width: 500px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 1300px;
+    }
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar {
+    float: left;
+    width: 29%;
+    text-align: center;
+}
+
+.profile-card {
+    background-color: white;
+    border: 1px solid grey;
+}
+
+.profile-title {
+    font-style: italic;
+}
+
+.skills {
+    background-color: white;
+    border: 1px solid grey;
+    margin-top: 10px;
+}
+
+.skills h3 {
+    border-bottom: 3px solid blue;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.skills ul {
+    margin-top: 0;
+    text-align: left;
+    padding: 10px;
+}
+
+.skills ul li {
+    color: rgb(0, 0, 0);
+    list-style: none;
+    margin-bottom: 4px;
+    padding: 4px;
+    height: 30px;
+}
+
+li[data-level="advanced"] {
+    background-color: green;
+    border-left: 3px solid rgb(0, 75, 0);
+}
+
+li[data-level="intermediate"] {
+    background-color: yellow;
+    border-left: 3px solid rgb(155, 155, 1);
+}
+
+li[data-level="beginner"] {
+    background-color: red;
+    border-left: 3px solid rgb(146, 0, 0);
+}
+
+img[alt="Twitter"] {
+    color: aqua;
+}
+
+img[alt="Twitter"]:hover {
+    color: gray;
+}
+
+img[alt="LinkedIn"] {
+    color: rgb(0, 92, 230);
+}
+
+img[alt="LinkedIn"]:hover {
+    color: gray;
+}
+
+img[alt="GitHub"] {
+    color: rgb(44, 44, 44);
+}
+
+img[alt="GitHub"]:hover {
+    color: gray;
+}
+
+.social-links {
+    margin-bottom: 15px;
+}
+
+/* LADO DERECHO */
+.content {
+    float: right;
+    width: 69%;
+}
+
+#inicio {
+    background-color: white;
+    padding: 8px;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+}
+
+#inicio h2 {
+    margin-top: 10px;
+    color: rgb(36, 54, 94);
+    border-bottom: 3px solid rgb(185, 185, 185);
+    font-weight: bold;
+}
+
+.quote {
+    background-color: rgb(221, 221, 221);
+    padding: 8px;
+    font-style: italic;
+    border-left: 2px solid blue;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+#proyectos {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid grey;
+}
+
+#proyectos h2 {
+    margin-top: 0px;
+    color: rgb(36, 54, 94);
+    font-weight: bold;
+    border-bottom: 3px solid rgb(185, 185, 185);
+}
+
+.project-card {
+    background-color: rgb(221, 221, 221);
+    padding: 8px;
+    font-style: italic;
+    border: 1px solid gray;
+    border-left: 2px solid blue;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.project-card h3 {
+    font-weight: bold;
+    font-style: normal;
+}
+
+.project-card p {
+    font-style: normal;
+}
+
+.project-btn {
+    background-color: rgb(0, 153, 255);
+    color: white;
+}
+
+.project-btn:hover {
+    background-color: rgb(0, 101, 168);
+}
+
+.project-card:last-child .project-btn{
+    border: 2px solid red;
+}
+
+.main-footer {
+    display: flex;
+    align-items: flex-end;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background-color: rgb(36, 54, 94);
+    height: 100px;
+    z-index: 10;
+    align-items: center;
+    justify-content: space-between;
+}

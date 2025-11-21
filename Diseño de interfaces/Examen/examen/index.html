@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil de Usuario - Ejercicio Práctico</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="main-header">
+      <h1>Mi Perfil</h1>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#inicio" class="nav-link">Inicio</a></li>
+          <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+          <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+          <li><a href="#contacto" class="nav-link active">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <aside class="sidebar">
+        <div class="profile-card">
+          <img
+            src="./images.webp"
+            alt="Foto de perfil"
+            class="profile-img"
+          />
+          <h2>Ana García</h2>
+          <p class="profile-title">Desarrolladora Frontend</p>
+          <div class="social-links">
+            <a href="https://twitter.com" class="social-link" title="Twitter">
+              <img
+                src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitter.svg"
+                alt="Twitter"
+                width="24"
+                height="24"
+              />
+            </a>
+            <a href="https://linkedin.com" class="social-link" title="LinkedIn">
+              <img
+                src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg"
+                alt="LinkedIn"
+                width="24"
+                height="24"
+              />
+            </a>
+            <a href="https://github.com" class="social-link" title="GitHub">
+              <img
+                src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg"
+                alt="GitHub"
+                width="24"
+                height="24"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div class="skills">
+          <h3>Habilidades</h3>
+          <ul>
+            <li data-level="advanced">HTML5</li>
+            <li data-level="advanced">CSS3</li>
+            <li data-level="intermediate">JavaScript</li>
+            <li data-level="beginner">React</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section id="inicio" class="content-section">
+          <h2>Bienvenido a mi perfil</h2>
+          <p>
+            Soy una desarrolladora apasionada por crear interfaces web
+            atractivas y funcionales.
+          </p>
+
+          <blockquote class="quote">
+            "El diseño no es solo cómo se ve, sino cómo funciona"
+          </blockquote>
+        </section>
+
+        <section id="proyectos" class="content-section">
+          <h2>Proyectos Destacados</h2>
+          <div class="projects">
+            <article class="project-card">
+              <h3>E-commerce Responsive</h3>
+              <p>
+                Diseño y desarrollo de tienda online completamente responsive.
+              </p>
+              <button class="project-btn">Ver detalles</button>
+            </article>
+
+            <article class="project-card">
+              <h3>Dashboard Analytics</h3>
+              <p>
+                Interfaz de usuario para visualización de datos en tiempo real.
+              </p>
+              <button class="project-btn">Ver detalles</button>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+    
+
+    <footer class="main-footer">
+      <p>&copy; 2024 Mi Perfil. Todos los derechos reservados.</p>
+    </footer>
+  </body>
+</html>
