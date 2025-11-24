@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor</title>
+</head>
+<body>
+    <h1>Conversor Euros - Pesetas</h1>
+
+    <form action="Ejer5.php" method="POST">
+        <label>Cantidad:</label>
+        <input type="number" step="any" name="cantidad" id="cantidad" required>
+
+        <label>Convertir a:</label>
+        <select name="convertir" id="convertir">
+            <option value="pesetas">Pesetas</option>
+            <option value="euros">Euros</option>
+        </select>
+
+        <input type="submit" value="Convertir">
+    </form>
+</body>
+</html>
