@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    // al pulsar el reinciar se añade borrar al header y con esto resetea los intentos
     if (isset($_GET['borrar'])) {
         session_destroy();
         header("Location: Ejer7.php");

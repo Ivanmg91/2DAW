@@ -1,40 +1,40 @@
 function comprobarRequisitos() {
+    let nombre;
+    let clasePersonaje;
+    let nivel;
     let resultado;
 
-    // Validación de nombre
-    let nombre = prompt("Introduce el nombre del personaje.").trim();
-    while (nombre == "" || nombre == null) {
-        nombre = prompt("El nombre del personaje no puede estar en blanco.").trim();
-    }
+    do {
+        resultado = "Denegado"; 
 
-    // Validación de clase de personaje
-    let clasePersonaje = prompt("Introduce el tipo del personaje.").trim();
-    while (clasePersonaje != "Guerrero" && clasePersonaje != "Mago") {
-        clasePersonaje = prompt("El tipo del personaje debe ser Guerrero o Mago.").trim();
-    }
+        // Validación de nombre
+        nombre = prompt("Introduce el nombre del personaje.").trim();
+        while (nombre == "" || nombre == null) {
+            nombre = prompt("El nombre del personaje no puede estar en blanco.").trim();
+        }
 
-    // Validación de nivel
-    let nivel = parseInt(prompt("Introduce el nivel del personaje.").trim());
-    while (isNaN(nivel)) {
-        nivel = parseInt(prompt("Introduce un nivel válido.").trim());
-    }
+        // Validación de clase de personaje
+        clasePersonaje = prompt("Introduce el tipo del personaje.").trim();
+        while (clasePersonaje != "Guerrero" && clasePersonaje != "Mago") {
+            clasePersonaje = prompt("El tipo del personaje debe ser Guerrero o Mago.").trim();
+        }
 
-    // Comprobar acceso por nivel
-    if (clasePersonaje == "Mago" && nivel > 35) {
-        alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO CONCEDIDO`);
-        resultado = "Concedido";
-    } else if (clasePersonaje == "Mago" && nivel <= 35) {
-        alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO DENEGADO, debes introducir los datos de nuevo.`);
-        resultado = "Denegado";
-    }
+        // Validación de nivel
+        nivel = parseInt(prompt("Introduce el nivel del personaje.").trim());
+        while (isNaN(nivel)) {
+            nivel = parseInt(prompt("Introduce un nivel válido.").trim());
+        }
 
-    if (clasePersonaje == "Guerrero" && nivel > 40) {
-        alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO CONCEDIDO`);
-        resultado = "Concedido";
-    } else if (clasePersonaje == "Guerrero" && nivel <= 35) {
-        alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO DENEGADO, debes introducir los datos de nuevo.`);
-        resultado = "Denegado";
-    }
+        // Comprobar acceso por nivel
+        if ((clasePersonaje == "Mago" && nivel > 35) || (clasePersonaje == "Guerrero" && nivel > 40)) {
+            alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO CONCEDIDO`);
+            resultado = "Concedido";
+        } 
+        else {
+            alert(`Personaje ${nombre} de clase ${clasePersonaje} y nivel ${nivel}. ACCESO DENEGADO, debes introducir los datos de nuevo.`);
+        }
+
+    } while (resultado != "Concedido");
 
     // Respuesta
     return new Array(nombre, clasePersonaje, nivel, resultado);
@@ -133,11 +133,8 @@ class Guerrero extends Personaje {
 }
 
 // Funcion calcular daño
-function calcularDano(DANO_BASE, multiplicador) {
-    // Si no se establece multiplicador lo establecemos por defecto
-    if (isNaN(multiplicador)) {
-        multiplicador = 3;
-    }
+// Por defecto multiplicador = 3
+function calcularDano(DANO_BASE, multiplicador = 3) {
     return DANO_BASE * multiplicador;
 }
 
