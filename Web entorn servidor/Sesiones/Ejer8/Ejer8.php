@@ -12,23 +12,27 @@
     $_SESSION['zona'] = $zona_actual;
     $_SESSION['hora'] = $hora_actual;
 
-    echo "Zona horaria actual: $zona_actual<br>";
-    echo "Hora actual: $hora_actual<br><br>";
-
-    echo "Zona horaria anterior: $zona_anterior<br>";
-    echo "Hora anterior: $hora_anterior<br><br>";
-
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Zona Horaria</title>
-</head>
-<body>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Zona Horaria</title>
+    </head>
+    <body>
 
-<a href="index.html">Volver</a>
+        <p>
+            Zona horaria actual: <?php echo $zona_actual; ?>
+            Hora actual: <?php echo $hora_actual; ?>
+        </p>
 
-</body>
+        <p>
+            Zona horaria anterior: <?php echo $zona_anterior; ?>
+            Hora anterior: <?php echo $hora_anterior; ?>
+        </p>
+
+        <a href="index.html">Volver</a>
+
+    </body>
 </html>

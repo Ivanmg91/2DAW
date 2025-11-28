@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Ejer10</title></head>
+<body>
+    <form action="Ejer10.php" id="formulario" method="POST">
+        <label>Correo:</label><br>
+        <input type="email" name="correo" required>
+
+        <br>
+
+        <label>Confirmar correo:</label><br>
+        <input type="email" name="confirmacion" required>
+
+        <br>
+
+        <input type="checkbox" name="publicidad" id="publicidad"> Acepto recibir publicidad
+
+        <br><br>
+
+        <input type="submit" value="Enviar">
+        <button type="button" onclick="document.getElementById('formulario').reset()">Borrar</button>
+    </form>
+</body>
+</html>
