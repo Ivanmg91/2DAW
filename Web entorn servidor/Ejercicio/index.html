@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Ejer10</title></head>
+<body>
+    <form action="procesar.php" id="formulario" name="formulario" method="POST" enctype="multipart/form-data">
+        <label><strong>Nombre completo</strong></label><br>
+        <input type="text" name="nombre_completo" id="nombre_completo" required>
+
+        <br>
+
+        <label><strong>Contraseña</strong></label><br>
+        <input type="text" name="constrasena" id="contrasena" minlength="6" required>
+
+        <br><br>
+
+        <label><strong>Nivel de estudios</strong></label>
+        <li>
+            <ul><input type="radio" name="estudios" value="sin_estudios" required>Sin Estudios</ul>
+            <ul><input type="radio" name="estudios" value="eso">Educación Secundaria Obligatoria</ul>
+            <ul><input type="radio" name="estudios" value="bachillerato">Bachillerato</ul>
+            <ul><input type="radio" name="estudios" value="fp">Formación Profesional</ul>
+            <ul><input type="radio" name="estudios" value="estudios_universitarios">Estudios Universitarios</ul>
+        </li>
+
+        <br>
+
+        <!-- REVISAR -->
+        <label><strong>Nacionalidad</strong></label>
+        <li>
+            <ul><input type="radio" name="nacionalidad" value="espanola" required>Española</ul>
+            <ul><input type="radio" name="nacionalidad" value="">Otra<input type="text" name="otra"></ul>
+        </li>
+
+        <label><strong>Idiomas</strong></label><br>
+        <input type="checkbox" name="idiomas[]" value="Español" required>Español
+        <input type="checkbox" name="idiomas[]" value="Ingles">Inglés
+        <input type="checkbox" name="idiomas[]" value="Frances">Francés
+        <input type="checkbox" name="idiomas[]" value="Aleman">Alemán
+        <input type="checkbox" name="idiomas[]" value="Italiano">Italiano
+
+        <br><br>
+
+        <label><strong>Email</strong></label><br>
+        <input type="email" name="email" id="email" required>
+
+        <br><br>
+
+        <label><strong>Imagen</strong></label><br>
+        <input type="file" name="imagen" accept="image/jpeg, image/gif, image/png" required>
+
+
+        <br>
+        <button type="submit" name="enviar">Enviar</button>
+        <button type="reset">Limpiar</button>
+    </form>
+</body>
+</html>
