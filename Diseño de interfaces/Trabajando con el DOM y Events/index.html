@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios DOM y Eventos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section>
+        <div class="ejercicio">
+            <h3>1.1 Modificar Elementos</h3>
+            <h1 id="titulo">Mi Primera Página</h1>
+            <p class="descripcion">Esta es una descripción inicial.</p>
+            <button id="cambiar">Cambiar Texto</button>
+        </div>
+
+        <div class="ejercicio">
+            <h3>1.2 Crear Elementos</h3>
+            <div id="contenedor">
+                <h2>Lista de Tareas</h2>
+            </div>
+            <button id="btn-crear-lista">Generar Lista (Click aquí)</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="ejercicio">
+            <h3>2.1 Click Simple</h3>
+            <button id="saludar">Saludar</button>
+            <p id="mensaje"></p>
+        </div>
+
+        <div class="ejercicio" id="contador-app">
+            <h3>2.2 Contador: <span id="numero">0</span></h3>
+            <button id="sumar">+</button>
+            <button id="restar">-</button>
+            <button id="reset">Reset</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="ejercicio">
+            <h3>3.1 Validación</h3>
+            <form id="formulario">
+                <input type="text" id="nombre" placeholder="Tu nombre">
+                <input type="email" id="email" placeholder="Tu email">
+                <button type="submit">Enviar</button>
+            </form>
+            <div id="errores"></div>
+        </div>
+
+        <div class="ejercicio" id="lista-compras">
+            <h3>3.2 Lista de Compras</h3>
+            <input type="text" id="nuevo-item" placeholder="Agregar producto">
+            <button id="agregar">Agregar</button>
+            <ul id="lista"></ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="ejercicio">
+            <h3>4.1 Cambiar Apariencia</h3>
+            <div id="caja" class="caja-normal">
+                <p>Esta es una caja</p>
+            </div>
+            <button id="cambiar-estilo">Cambiar Estilo</button>
+        </div>
+
+        <div class="ejercicio">
+            <h3>4.2 Semáforo</h3>
+            <div id="semaforo">
+                <div class="luz roja activa"></div>
+                <div class="luz amarilla"></div>
+                <div class="luz verde"></div>
+            </div>
+            <button id="siguiente-semaforo">Siguiente Luz</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="ejercicio">
+            <h3>5.1 Mostrar/Ocultar</h3>
+            <button id="toggle">Mostrar/Ocultar</button>
+            <div id="contenido" style="display: none;">
+                <h4>Contenido Secreto</h4>
+                <p>Este contenido se puede mostrar y ocultar.</p>
+            </div>
+        </div>
+
+        <div class="ejercicio" id="galeria">
+            <h3>5.2 Galería</h3>
+            <img id="imagen-actual" src="" alt="Galeria" style="max-width: 200px; display: block; margin-bottom: 10px;">
+            <div id="controles">
+                <button id="anterior">← Anterior</button>
+                <span id="contador-galeria">1 / 3</span>
+                <button id="siguiente-galeria">Siguiente →</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="ejercicio">
+            <h3>6.1 Teclado (Usa las flechas)</h3>
+            <div id="juego">
+                <div id="cuadrado"></div>
+            </div>
+        </div>
+
+        <div class="ejercicio">
+            <h3>6.2 Buscador</h3>
+            <input type="text" id="buscador" placeholder="Buscar frutas...">
+            <ul id="lista-frutas">
+                <li>Manzana</li>
+                <li>Banana</li>
+                <li>Naranja</li>
+                <li>Pera</li>
+                <li>Uva</li>
+                <li>Fresa</li>
+            </ul>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
