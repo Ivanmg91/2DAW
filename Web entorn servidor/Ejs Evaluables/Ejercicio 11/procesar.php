@@ -1,7 +1,5 @@
 <?php
-    // Comprobamos si se ha enviado el formulario
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Recogemos los datos del formulario comprobando si se han subido
         $nombre_completo = isset($_POST['nombre_completo']) ? $_POST['nombre_completo'] : null;
         $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : null;
         $estudios = isset($_POST['estudios']) ? $_POST['estudios'] : null;
@@ -53,6 +51,7 @@
             // echo "size:".$_FILES['imagen']['size']."\n";
             // echo "type:".$_FILES['imagen']['type']."\n";
         ?></p>
+
     </body>
     </html>
 

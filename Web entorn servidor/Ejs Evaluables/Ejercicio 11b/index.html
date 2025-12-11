@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 11 - Formulario</title>
+</head>
+<body>
+    <h2>Formulario de Registro</h2>
+
+    <form action="procesar.php" method="POST" enctype="multipart/form-data">
+        
+        <label>Nombre completo:</label><br>
+        <input type="text" name="nombre_completo" required><br><br>
+
+        <label>Contraseña (mín. 6 caracteres):</label><br>
+        <input type="password" name="contrasena" required><br><br>
+
+        <label>Nivel de estudios:</label><br>
+        <input type="radio" name="estudios" value="Sin estudios" required> Sin Estudios<br>
+        <input type="radio" name="estudios" value="ESO"> ESO<br>
+        <input type="radio" name="estudios" value="Bachillerato"> Bachillerato<br>
+        <input type="radio" name="estudios" value="FP"> FP<br>
+        <input type="radio" name="estudios" value="Universidad"> Universidad<br><br>
+
+        <label>Nacionalidad:</label><br>
+        <input type="radio" name="nacionalidad" value="espanola" checked> Española<br>
+        <input type="radio" name="nacionalidad" value="otra"> Otra: 
+        <input type="text" name="nacionalidad_texto"><br><br>
+
+        <label>Idiomas:</label><br>
+        <input type="checkbox" name="idiomas[]" value="Español" checked> Español
+        <input type="checkbox" name="idiomas[]" value="Inglés"> Inglés
+        <input type="checkbox" name="idiomas[]" value="Francés"> Francés
+        <input type="checkbox" name="idiomas[]" value="Alemán"> Alemán<br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Adjuntar Foto (Máx 50KB - jpg, png, gif):</label><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="51200">
+        <input type="file" name="imagen" required><br><br>
+
+        <input type="submit" name="accion" value="Validar">
+        <input type="submit" name="accion" value="Enviar">
+        <button type="reset">Limpiar</button>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #333;
+}
+
+.timer-container {
+    text-align: center;
+    padding: 30px;
+    width: 300px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    
+    /* Estado Inicial: Estilo para la lógica activa/normal */
+    background-color: #007bff; 
+    transition: background-color 0.5s ease;
+}
+
+#tiempo {
+    font-size: 5em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#estado {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+#boton-control {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: #007bff;
+    transition: background-color 0.3s;
+}
+
+#boton-control:hover {
+    background-color: #eee;
+}
+
+/* CLASES PARA MANIPULACIÓN DEL DOM (Tareas 2 y 3) */
+
+/* Tarea 2: Estado de Alerta (Menos de 3 minutos) */
+.alerta {
+    background-color: #ff9800; /* Naranja de Alerta */
+}
+.alerta #boton-control {
+    color: #ff9800;
+}
+
+/* Tarea 3: Estado Finalizado (00:00) */
+.finalizado {
+    background-color: #dc3545; /* Rojo de Error/Fin */
+}
+.finalizado #boton-control {
+    color: #dc3545;
+}

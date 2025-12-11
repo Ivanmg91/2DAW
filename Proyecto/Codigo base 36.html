@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4del.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="generar-codigo">GENERAR CODIGO</h1>
+<pre class=" language-php"><code class="prism  language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$digits</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"0"</span><span class="token punctuation">,</span><span class="token string">"1"</span><span class="token punctuation">,</span><span class="token string">"2"</span><span class="token punctuation">,</span><span class="token string">"3"</span><span class="token punctuation">,</span><span class="token string">"4"</span><span class="token punctuation">,</span><span class="token string">"5"</span><span class="token punctuation">,</span><span class="token string">"6"</span><span class="token punctuation">,</span><span class="token string">"7"</span><span class="token punctuation">,</span><span class="token string">"8"</span><span class="token punctuation">,</span><span class="token string">"9"</span><span class="token punctuation">,</span><span class="token string">"A"</span><span class="token punctuation">,</span><span class="token string">"B"</span><span class="token punctuation">,</span><span class="token string">"C"</span><span class="token punctuation">,</span><span class="token string">"D"</span><span class="token punctuation">,</span><span class="token string">"E"</span><span class="token punctuation">,</span><span class="token string">"F"</span><span class="token punctuation">,</span><span class="token string">"G"</span><span class="token punctuation">,</span><span class="token string">"H"</span><span class="token punctuation">,</span>
+<span class="token string">"I"</span><span class="token punctuation">,</span><span class="token string">"J"</span><span class="token punctuation">,</span><span class="token string">"K"</span><span class="token punctuation">,</span><span class="token string">"L"</span><span class="token punctuation">,</span><span class="token string">"M"</span><span class="token punctuation">,</span><span class="token string">"N"</span><span class="token punctuation">,</span><span class="token string">"O"</span><span class="token punctuation">,</span><span class="token string">"P"</span><span class="token punctuation">,</span><span class="token string">"Q"</span><span class="token punctuation">,</span><span class="token string">"R"</span><span class="token punctuation">,</span><span class="token string">"S"</span><span class="token punctuation">,</span><span class="token string">"T"</span><span class="token punctuation">,</span><span class="token string">"U"</span><span class="token punctuation">,</span><span class="token string">"V"</span><span class="token punctuation">,</span><span class="token string">"W"</span><span class="token punctuation">,</span><span class="token string">"X"</span><span class="token punctuation">,</span><span class="token string">"Y"</span><span class="token punctuation">,</span><span class="token string">"Z"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$base</span><span class="token operator">=</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token variable">$digits</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$output</span><span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$ref</span><span class="token operator">&gt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token variable">$output</span><span class="token punctuation">.</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token variable">$digits</span><span class="token punctuation">[</span><span class="token variable">$ref</span><span class="token operator">%</span><span class="token variable">$base</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token variable">$ref</span><span class="token operator">/</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">strrev</span><span class="token punctuation">(</span><span class="token variable">$output</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span>
+</code></pre>
+<p>El código PHP proporcionado toma la marca de tiempo (timestamp) Unix actual, la convierte a una representación en <strong>base-36</strong> y almacena la cadena resultante en la variable <code>$ref</code>.</p>
+<h3 id="⚙️-desglose-del-código">⚙️ Desglose del Código</h3>
+<p>Aquí está una explicación paso a paso de lo que hace el código:</p>
+<ol>
+<li><strong>Obtener Marca de Tiempo Actual:</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>La variable <code>$ref</code> se inicializa con la <strong>marca de tiempo Unix</strong> actual (el número de segundos transcurridos desde el 1 de enero de 1970, 00:00:00 UTC). Este es un número entero grande.</p>
+<ol start="2">
+<li><strong>Definir Dígitos Base-36:</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$digits</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"0"</span><span class="token punctuation">,</span><span class="token string">"1"</span><span class="token punctuation">,</span><span class="token string">"2"</span><span class="token punctuation">,</span><span class="token string">"3"</span><span class="token punctuation">,</span><span class="token string">"4"</span><span class="token punctuation">,</span><span class="token string">"5"</span><span class="token punctuation">,</span><span class="token string">"6"</span><span class="token punctuation">,</span><span class="token string">"7"</span><span class="token punctuation">,</span><span class="token string">"8"</span><span class="token punctuation">,</span><span class="token string">"9"</span><span class="token punctuation">,</span>
+<span class="token string">"A"</span><span class="token punctuation">,</span><span class="token string">"B"</span><span class="token punctuation">,</span><span class="token string">"C"</span><span class="token punctuation">,</span><span class="token string">"D"</span><span class="token punctuation">,</span><span class="token string">"E"</span><span class="token punctuation">,</span><span class="token string">"F"</span><span class="token punctuation">,</span><span class="token string">"G"</span><span class="token punctuation">,</span><span class="token string">"H"</span><span class="token punctuation">,</span><span class="token string">"I"</span><span class="token punctuation">,</span><span class="token string">"J"</span><span class="token punctuation">,</span><span class="token string">"K"</span><span class="token punctuation">,</span><span class="token string">"L"</span><span class="token punctuation">,</span><span class="token string">"M"</span><span class="token punctuation">,</span><span class="token string">"N"</span><span class="token punctuation">,</span><span class="token string">"O"</span><span class="token punctuation">,</span>
+<span class="token string">"P"</span><span class="token punctuation">,</span><span class="token string">"Q"</span><span class="token punctuation">,</span><span class="token string">"R"</span><span class="token punctuation">,</span><span class="token string">"S"</span><span class="token punctuation">,</span><span class="token string">"T"</span><span class="token punctuation">,</span><span class="token string">"U"</span><span class="token punctuation">,</span><span class="token string">"V"</span><span class="token punctuation">,</span><span class="token string">"W"</span><span class="token punctuation">,</span><span class="token string">"X"</span><span class="token punctuation">,</span><span class="token string">"Y"</span><span class="token punctuation">,</span><span class="token string">"Z"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$base</span><span class="token operator">=</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token variable">$digits</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// $base será 36</span>
+</code></pre>
+<p>Se define un array <code>$digits</code> que contiene 36 caracteres: los numerales del 0 al 9 y las letras mayúsculas de la A a la Z. Esto actúa como el conjunto de símbolos para un sistema de numeración en <strong>base-36</strong>. <code>$base</code> se establece en 36.</p>
+<ol start="3">
+<li><strong>Bucle de Conversión:</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$output</span><span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$ref</span><span class="token operator">&gt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$output</span><span class="token punctuation">.</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token variable">$digits</span><span class="token punctuation">[</span><span class="token variable">$ref</span><span class="token operator">%</span><span class="token variable">$base</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token variable">$ref</span><span class="token operator">/</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Este bucle realiza la <strong>conversión de base</strong> de base-10 (la marca de tiempo) a base-36 utilizando el método de <strong>división y resto repetidos</strong>:</p>
+<ul>
+<li>
+<p><code>$ref % $base</code>: Calcula el resto cuando <code>$ref</code> se divide por 36. Este resto (de 0 a 35) es el valor del siguiente dígito en base-36.</p>
+</li>
+<li>
+<p><code>$digits[...]</code>: El resto se usa como índice en el array <code>$digits</code> para obtener el carácter base-36 correspondiente.</p>
+</li>
+<li>
+<p><code>$output.=...</code>: Este carácter se <strong>concatena</strong> a la cadena <code>$output</code> (ya que se agrega a la derecha en el bucle, pero los restos se generan en orden inverso).</p>
+</li>
+<li>
+<p><code>$ref=floor($ref/$base)</code>: <code>$ref</code> se actualiza al resultado entero de la división, y el proceso se repite hasta que <code>$ref</code> sea menor que 36.</p>
+</li>
+</ul>
+<p>En este punto, la cadena <code>$output</code> contiene la representación en base-36, pero actualmente está en <strong>orden inverso</strong>.</p>
+<ol start="4">
+<li><strong>Invertir la Cadena:</strong></li>
+</ol>
+<pre class=" language-php"><code class="prism  language-php"><span class="token variable">$ref</span><span class="token operator">=</span><span class="token function">strrev</span><span class="token punctuation">(</span><span class="token variable">$output</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ol>
+<li>La función PHP <code>strrev()</code> invierte la cadena <code>$output</code>, corrigiendo el orden de los dígitos base-36. La cadena final en base-36, correctamente ordenada, de la marca de tiempo se asigna de nuevo a la variable <strong><code>$ref</code></strong>.</li>
+</ol>
+<hr>
+<h3 id="💡-resultado">💡 Resultado</h3>
+<p>El valor final de la variable <strong><code>$ref</code></strong> es la representación en <strong>base-36</strong> de la marca de tiempo Unix en el momento en que se ejecuta el código.</p>
+<blockquote>
+<h4 id="nota">Nota:</h4>
+<p><strong>el valor de <code>$ref</code> podría repetirse</strong>, pero la probabilidad de que eso ocurra en la práctica es extremadamente baja en condiciones<br>
+normales de uso.</p>
+<p>Aquí te explico los dos factores clave que influyen en esta<br>
+posibilidad:</p>
+<h3 id="⏱️-la-precisión-del-timestamp-el-valor-de-entrada">1. ⏱️ La Precisión del Timestamp (El Valor de Entrada)</h3>
+<p>El valor de entrada es la función <code>time()</code>, que devuelve la marca de<br>
+tiempo Unix, es decir, el número de <strong>segundos</strong> enteros desde el 1 de<br>
+enero de 1970.</p>
+<ul>
+<li>
+<p><strong>Riesgo de Repetición:</strong> Si el código se ejecuta <strong>más de una vez dentro del mismo segundo</strong>, la función <code>time()</code> devolverá el <strong>mismo<br>
+número</strong> entero para todas esas ejecuciones.</p>
+</li>
+<li>
+<p><strong>Resultado:</strong> Dado que la conversión a base-36 siempre produce el mismo resultado para la misma entrada, si se ejecuta dos veces en el<br>
+mismo segundo, ambas ejecuciones darán como resultado el <strong>mismo valor<br>
+para <code>$ref</code></strong>.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Solución Típica:</strong> Para generar IDs únicos a alta velocidad, en lugar de <code>time()</code>, los desarrolladores suelen usar funciones con mayor<br>
+precisión, como <code>microtime(true)</code>, que devuelve el tiempo con<br>
+microsegundos (fracciones decimales) y hace que la repetición sea<br>
+mucho menos probable en una única máquina.</p>
+</blockquote>
+<hr>
+<h3 id="🌌-espacio-de-colisión-el-valor-de-salida">2. 🌌 Espacio de Colisión (El Valor de Salida)</h3>
+<p>El valor de <code>$ref</code> es una cadena en base-36.</p>
+<ul>
+<li>
+<p><strong>Riesgo de Colisión:</strong> El único riesgo real de que se repita <strong>sin que la marca de tiempo de entrada se repita</strong> es si el proceso de conversión de base generara una colisión, lo cual es imposible<br>
+aquí. La conversión de base-10 a base-36 es una <strong>función biyectiva</strong>;<br>
+es decir, a cada número de entrada le corresponde exactamente una<br>
+cadena de salida, y viceversa.</p>
+</li>
+<li>
+<p><strong>La Limitación:</strong> La longitud de la cadena resultante en base-36 es suficiente para representar cualquier marca de tiempo de la vida<br>
+útil actual de Unix (hasta aproximadamente el año 2038). Una vez<br>
+invertida, la cadena representa el número de segundos, por lo que<br>
+<strong>solo se repite si el número de segundos se repite</strong>, lo cual solo ocurre dentro del mismo segundo de ejecución, como se explicó<br>
+anteriormente.</p>
+</li>
+</ul>
+<hr>
+<h3 id="conclusión">Conclusión</h3>
+<p>El valor de <code>$ref</code> solo se repetirá si el código se ejecuta <strong>dos o más veces dentro del mismo segundo de tiempo real</strong>. Si se usa como identificador único (ID) en un sistema de alto tráfico, este es un riesgo que debe mitigarse usando funciones de tiempo de mayor resolución.</p>
+</blockquote>
+</div>
+</body>
+
+</html>
