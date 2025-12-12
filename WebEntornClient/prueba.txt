@@ -1,0 +1,16 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+const starsContainer = document.querySelectorAll('.fa-star');
+
+let botonPulsado = starsContainer
+
+// Añadir o quitar clase .active
+function highlightStars(value) {
+    
+}
+
+
+
+
+
+});
