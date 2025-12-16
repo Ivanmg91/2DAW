@@ -5,6 +5,18 @@ function validaRequerido($valor) {
     return trim($valor) !== '';
 }
 
+function validaAlfa($valor) {
+    return ctype_alpha($valor);
+}
+
+function validaAlfaNum($valor) {
+    return ctype_alnum($valor);
+}
+
+function validaNum($valor) {
+    return ctype_digit($valor);
+}
+
 // Validar formato de email
 function validaEmail($valor) {
     return filter_var($valor, FILTER_VALIDATE_EMAIL) !== FALSE;

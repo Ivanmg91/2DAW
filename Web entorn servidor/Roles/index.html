@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 11 - Formulario</title>
+</head>
+<body>
+    <h2>Formulario de Registro</h2>
+
+    <form action="procesar.php" method="POST" enctype="multipart/form-data">
+        
+        <label>Nombre:</label><br>
+        <input type="text" name="nombre" required><br><br>
+
+        <label>Perfil</label>
+        <select id="perfil" name="perfil" required>
+            <option value="Gerente">Gerente</option>
+            <option value="Sindicalista">Sindicalista</option>
+            <option value="Responsable">Responsable</option>
+        </select>
+
+        <br><br>
+
+        <input type="submit" name="accion" value="Validar">
+        <input type="submit" name="accion" value="Enviar">
+        <button type="reset">Limpiar</button>
+
+    </form>
+</body>
+</html>

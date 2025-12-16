@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combo Forma Pago</title>
+    <!--url para que se vean los iconos-->
+    <!--https://cdnjs.com/libraries/font-awesome/-->
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" 
+    />
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="combo gira">
+        <p>Forma Pago</p>
+        <!--https://fontawesome.com/icons/-->
+        <i class="fa-regular fa-circle-up fa-2x"></i>
+    </div>
+        <ul class = "forma_pago oculto">
+            <li>
+                <i class="fa-brands fa-cc-visa fa-2x" style = "color: blue"></i>
+                <p id = "visa" style = "color: blue">Visa</p>    
+            </li>
+            <li>
+                <i class="fa-brands fa-cc-mastercard fa-2x" style = "color: orange"></i>
+                <p id = "master" style = "color: orange">Master Card</p>    
+            </li>
+            <li>
+                <i class="fa-brands fa-cc-paypal fa-2x" style = "color: blue"></i>
+                <p id = "paypal" style = "color: blue">PayPal</p>    
+            </li>
+            <li>
+                <i class="fa-solid fa-money-bill-transfer fa-2x" style = "color:brown"></i>
+                <p id = "transfer" style = "color: brown">Transferencia Bancaria</p>    
+            </li> 
+            <li>
+                <i class="fa-solid fa-money-bill-1-wave fa-2x" style = "color: green"></i>
+                <p id = "cash" style = "color: green">Contra Reembolso</p>    
+            </li>       
+        </ul>
+        
+
+</body>
+<script src="script.js"></script>
+</html>

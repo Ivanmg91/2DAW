@@ -1,0 +1,70 @@
+body{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(125deg, lightgrey 20%, rgb(181, 129, 77) 80%);
+}
+
+.combo{
+    background-color: lightgoldenrodyellow;
+    width: 300px;
+    opacity: 0.4;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+
+}
+.combo p{
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.forma_pago{
+    background-color: lightgoldenrodyellow;
+    width: 300px;
+    padding: 10px;
+    opacity: 0.4;
+    list-style-type: none;
+    border-radius: 6px;
+}
+
+.forma_pago li{
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+    transition: padding 0.2s linear;
+}
+
+.forma_pago li:hover{
+    background-color: darkgray;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.forma_pago li .fa{
+    margin: 0 10px;
+}
+
+.forma_pago li p{
+    padding-left: 3px;
+}
+
+.forma_pago .fa{
+    transition: transform .2s;
+}
+
+.gira .fa-regular{
+    transform: rotate(180deg);
+}
+
+.oculto{
+    visibility: hidden;
+}
