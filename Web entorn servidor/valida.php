@@ -1,5 +1,18 @@
 <?php
 
+// Validar q el campos sea nombre apellido apellido
+function validaNombreApellidosSimple($valor) {
+    // Convertimos la cadena en un array separando por espacios
+    $partes = explode(" ", trim($valor));
+
+    // Verificamos si hay exactamente 3 trozos
+    if (count($partes) === 3) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // Validar que un campo no esté vacío
 function validaRequerido($valor) {
     return trim($valor) !== '';

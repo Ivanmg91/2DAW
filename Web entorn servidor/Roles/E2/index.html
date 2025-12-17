@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 11 - Formulario</title>
+</head>
+<body>
+    <h2>Formulario de Identificación</h2>
+
+    <form action="procesar.php" method="POST" enctype="multipart/form-data">
+        
+        <label>Nombre y Apellido:</label><br>
+        <input type="text" name="nombre" required><br><br>
+
+        <label>Asignatura</label><br>
+        <input type="text" name="asignatura" required><br><br>
+
+        <label>Grupo</label><br>
+        <input type="text" name="grupo" required><br><br>
+
+        <input type="radio" name="edad" value="menor" required> Menor de edad
+        <input type="radio" name="edad" value="mayor"> Mayor de edad
+
+        <br><br>
+
+        <input type="radio" name="cargo" value="si" required> Con cargo
+        <input type="radio" name="cargo" value="no"> Sin cargo
+
+        <br><br>
+
+        <input type="submit" name="accion" value="Validar">
+        <input type="submit" name="accion" value="Enviar">
+        <button type="reset">Limpiar</button>
+
+    </form>
+</body>
+</html>
+
+<!-- Iván Montiano González -->
