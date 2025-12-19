@@ -3,7 +3,7 @@ const contador = document.querySelector('.contador');
 const loading = document.getElementsByTagName('h1')[0];
 
 let porcentajeCarga = 0;
-intervalo = setInterval(cargarBarra, 50);
+let intervalo = setInterval(cargarBarra, 50);
 
 
 
@@ -21,7 +21,7 @@ function cargarBarra() {
     // DETENCION Y FINALIZACION
     if (porcentajeCarga >= 100) {
         clearInterval(intervalo);
-        loading.innerHTML = '¡Carga Completa!';
+        loading.textContent = '¡Carga Completa!';
     }
 
     porcentajeCarga++;
