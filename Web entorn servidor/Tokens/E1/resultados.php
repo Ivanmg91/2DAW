@@ -1,17 +1,16 @@
 <?php
 session_start();
-// 1. Recogemos los datos de la URL (GET)
-// Tu procesar.php los envió así: resultados.php?nombre=Ivan&perfil=Gerente
+// Recoger los datos
 $nombre = $_SESSION['nombre'];
 $perfil = $_SESSION['perfil'];
 $minimo = $_SESSION['minimo'];
 $maximo = $_SESSION['maximo'];
 $media  = $_SESSION['media'];
 
-// 2. Seguridad básica
+// Seguridad
 // Si alguien intenta entrar directamente escribiendo "resultados.php" sin datos,
 if (!$nombre || !$perfil) {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -54,7 +53,7 @@ if (!$nombre || !$perfil) {
 
     <br><br>
 
-    <a href="logout.php"><button>Cerrar Sesión</button></a>
+    <a href="logout.php?token=<?php echo $_SESSION['token']; ?>"><button>Cerrar Sesión</button></a>
 
 </body>
 </html>

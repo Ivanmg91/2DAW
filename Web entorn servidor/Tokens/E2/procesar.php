@@ -1,8 +1,24 @@
 <?php
-// importar funcines de validacion
+session_start(); // SIEMPRE LO PRIMERO
 require_once '../../valida.php';
 
-session_start();
+// ---------------------------------------------------------
+// VERIFICACIÓN DE SEGURIDAD (TOKEN CSRF)
+// ---------------------------------------------------------
+if (!isset($_POST['token'])) {
+    echo "<h3 style='color:red'>Error: No se ha encontrado el token de seguridad.</h3>";
+    echo "<a href='index.php'>Volver</a>";
+    exit(); 
+} 
+else {
+    if (hash_equals($_SESSION['token'], $_POST['token']) === false) {
+        echo "<h3 style='color:red'>¡El token no coincide! (Posible ataque CSRF)</h3>";
+        echo "<p>Por seguridad, la solicitud ha sido bloqueada.</p>";
+        echo "<a href='index.php'>Volver</a>";
+        exit(); // IMPORTANTE: Detenemos la ejecución aquí
+    }
+}
+// ---------------------------------------------------------
 
 // inicializar variables
 $errores = [];
@@ -59,21 +75,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
-    //SI NO HAY ERRORES
+    // SI NO HAY ERRORES
     if (count($errores) === 0) {
         $procesado_exito = true;
     }
 
-
     // LOGICA
-    if (count($errores) === 0) { // SI TODO ESTA BIEN
+    if (count($errores) === 0) { 
 
         if ($accion === 'Validar') {
-            // Si solo queria validar, todo correcot
             $mensaje_exito = "¡Todo correcto! El formulario está listo para enviarse.";
         } elseif ($accion === 'Enviar') {
-            // Si quiere enviar, construimos el header y nos vamos a resultados php
             
             $_SESSION['usuario'] = [
                 'nombre' => $nombre,
@@ -84,29 +96,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'perfil' => $perfil
             ];
 
-            // REDIRECCIÓN
             header("Location: resultados.php" );
-            exit(); // Detener script al final
+            exit(); 
         }
     }
 } else {
-    // Si intentan entrar directamente a procesar.php sin formulario
-    header("Location: index.html");
+    // Si entran directo, al index.php
+    header("Location: index.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Resultado del Formulario</title>
 </head>
-
 <body>
 
-    <!-- lo q se meustra si el array de errores tiene alguno -->
     <?php if (count($errores) > 0): ?>
 
         <div>
@@ -118,55 +126,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </ul>
             <p>Por favor, vuelve atrás y corrige los campos.</p>
         </div>
-
-        <div>
-            <h4>Datos introducidos (intento fallido):</h4>
-            <p><strong>Nombre:</strong> <?php echo $nombre; ?></p>
-                <p><strong>Asignatura:</strong> <?php echo $asignatura; ?></p>
-                <p><strong>Grupo:</strong> <?php echo $grupo; ?></p>
-                <p><strong>Mayor de edad:</strong> <?php if ($edad == "mayor") {
-                    echo "Si";
-                } else {
-                    echo "No";
-                } ?></p>
-                <p><strong>Cargo:</strong> <?php echo $cargo; ?></p>
-        </div>
-
         <br>
         <a href="javascript:history.back()"><button>Volver al formulario</button></a>
 
+    <?php elseif ($procesado_exito && $accion === 'Validar'): ?>
 
-    <?php elseif ($procesado_exito): ?>
-
-        <?php if ($accion === 'Validar'): ?>
-
-            <div>
-                <p>Formulario validado correctamente</p>
-            </div>
-
-            <div>
-                <h3>Resumen de datos:</h3>
-                <p><strong>Nombre:</strong> <?php echo $nombre; ?></p>
-                <p><strong>Asignatura:</strong> <?php echo $asignatura; ?></p>
-                <p><strong>Grupo:</strong> <?php echo $grupo; ?></p>
-                <p><strong>Mayor de edad:</strong> <?php if ($edad == "mayor") {
-                    echo "Si";
-                } else {
-                    echo "No";
-                } ?></p>
-                <p><strong>Cargo:</strong> <?php echo $cargo; ?></p>
-            </div>
-
-            <br>
-            <p>Todo parece correcto. Puedes volver para enviar los datos definitivamente.</p>
-            <a href="javascript:history.back()"><button>Volver</button></a>
-
-        <?php endif; ?>
+        <div>
+            <p>Formulario validado correctamente</p>
+            <h3>Resumen de datos:</h3>
+            <p><strong>Nombre:</strong> <?php echo $nombre; ?></p>
+            <p><strong>Perfil detectado:</strong> <?php echo $perfil; ?></p>
+        </div>
+        <br>
+        <a href="javascript:history.back()"><button>Volver</button></a>
 
     <?php endif; ?>
 
 </body>
-
 </html>
-
-<!-- Iván Montiano González -->

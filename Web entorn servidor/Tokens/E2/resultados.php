@@ -6,19 +6,16 @@
         exit();
     }
 
-
     // sesion
     $datos_usuario = $_SESSION['usuario'];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Panel de usuario</title>
 </head>
-
 <body>
 
     <h1>Resultado: <?php echo $datos_usuario['perfil']; ?></h1>
@@ -34,10 +31,9 @@
 
     <br><br>
 
-    <a href="index.html"><button>Cerrar Sesión</button></a>
+    <a href="logout.php?token=<?php echo $_SESSION['token']; ?>">
+        <button>Cerrar Sesión</button>
+    </a>
 
 </body>
-
 </html>
-
-<!-- Iván Montiano González -->

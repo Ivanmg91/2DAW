@@ -3,6 +3,20 @@ session_start();
 // importar funcines de validacion
 require_once '../../valida.php';
 
+// Verificación del token
+if (!isset($_POST['token'])) {
+    echo "No se ha encontrado token!";
+    exit;
+} else {
+    if (hash_equals($_SESSION['token'], $_POST['token']) === false) {
+        echo "<h3 style='color:red'>¡El token no coincide! (Ataque detectado)</h3><a href='index.php'>Volver</a>";
+        exit;
+    } else {
+        //El token es correcto y continúa el procesamiento con seguridad
+        // no pongo exit por q debe seguir el codigo
+    }
+}
+
 // inicializar variables
 $errores = [];
 $procesado_exito = false;
@@ -18,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // RECOGER DATOS
     $nombre = $_POST['nombre'] ?? '';
     $perfil = $_POST['perfil'] ?? '';
-
-    $_SESSION['nombre'] = $nombre;
-    $_SESSION['perfil'] = $perfil;
 
     // VALIDACIONES
     // Validar nombre
