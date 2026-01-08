@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Direcciones Flex</title>
+    <style>
+        .contenedor {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            height: 200px;
+
+            display: flex;
+        }
+
+        /* Fila inversa */
+        .contenedor-a {
+            flex-direction: row-reverse;
+        }
+
+        /* Columna vertical */
+        .contenedor-b {
+            flex-direction: column;
+        }
+
+        /* Columna inversa */
+        .contenedor-c {
+            flex-direction: column-reverse;
+        }
+
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+        .item:nth-child(4) { background: #9C27B0; }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 2: Direcciones de Flexbox</h1>
+    
+    <h2>Contenedor A - Fila inversa</h2>
+    <div class="contenedor contenedor-a">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+    
+    <h2>Contenedor B - Columna</h2>
+    <div class="contenedor contenedor-b">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+    
+    <h2>Contenedor C - Columna inversa</h2>
+    <div class="contenedor contenedor-c">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+</body>
+</html>

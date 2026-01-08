@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3 - Flex Wrap</title>
+    <style>
+        .contenedor {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 500px;
+
+            display: flex; /* Flexbox */
+        }
+
+        /* Sin envolvimiento */
+        .contenedor-sin-wrap {
+            flex-wrap: nowrap;
+        }
+
+        /* Con envolvimiento */
+        .contenedor-con-wrap {
+            flex-wrap: wrap;
+        }
+
+        /* Con envolvimiento inverso */
+        .contenedor-wrap-reverse {
+            flex-wrap: wrap-reverse;
+        }
+
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            width: 120px;
+        }
+        .item:nth-child(2n) { background: #2196F3; }
+        .item:nth-child(3n) { background: #FF9800; }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 3: Envolvimiento de Elementos</h1>
+    
+    <h2>Sin envolvimiento (comportamiento por defecto)</h2>
+    <div class="contenedor contenedor-sin-wrap">
+        <div class="item">Elemento 1</div>
+        <div class="item">Elemento 2</div>
+        <div class="item">Elemento 3</div>
+        <div class="item">Elemento 4</div>
+        <div class="item">Elemento 5</div>
+        <div class="item">Elemento 6</div>
+    </div>
+    
+    <h2>Con envolvimiento</h2>
+    <div class="contenedor contenedor-con-wrap">
+        <div class="item">Elemento 1</div>
+        <div class="item">Elemento 2</div>
+        <div class="item">Elemento 3</div>
+        <div class="item">Elemento 4</div>
+        <div class="item">Elemento 5</div>
+        <div class="item">Elemento 6</div>
+    </div>
+    
+    <h2>Con envolvimiento inverso</h2>
+    <div class="contenedor contenedor-wrap-reverse">
+        <div class="item">Elemento 1</div>
+        <div class="item">Elemento 2</div>
+        <div class="item">Elemento 3</div>
+        <div class="item">Elemento 4</div>
+        <div class="item">Elemento 5</div>
+        <div class="item">Elemento 6</div>
+    </div>
+</body>
+</html>

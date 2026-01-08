@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 4 - Justify Content</title>
+    <style>
+        .contenedor {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 600px;
+
+            display: flex; /* Flexbox */
+        }
+
+        /* Centrado */
+        .contenedor-center {
+            justify-content: center;
+        }
+
+        /* Separación entre elementos */
+        .contenedor-between {
+            justify-content: space-between;
+        }
+
+        /* Espacio alrededor de elementos */
+        .contenedor-around {
+            justify-content: space-around;
+        }
+
+        /* Alineación al final */
+        .contenedor-end {
+            justify-content: flex-end;
+        }
+
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            width: 80px;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 4: Alineación en el Eje Principal</h1>
+    
+    <h2>Centrado</h2>
+    <div class="contenedor contenedor-center">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Separación entre elementos</h2>
+    <div class="contenedor contenedor-between">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Espacio alrededor de elementos</h2>
+    <div class="contenedor contenedor-around">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Alineación al final</h2>
+    <div class="contenedor contenedor-end">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+    </div>
+</body>
+</html>
