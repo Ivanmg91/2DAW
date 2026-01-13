@@ -12,7 +12,11 @@
 
         public function llama($terminal, $segundosDeLlamada) {
             $this->tiempoConversacion += $segundosDeLlamada;
-            $terminal = $segundosDeLlamada;
+            $terminal->actualizaTiempo($segundosDeLlamada);
+        }
+
+        public function actualizaTiempo($segundos) {
+            $this->tiempoConversacion += $segundos;
         }
     }
 
