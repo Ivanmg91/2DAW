@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5 - Align Items</title>
+    <style>
+        .contenedor {
+            display: flex;
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            height: 150px;
+        }
+
+
+        .contenedor-center {
+            align-items: center;
+        }
+
+        .contenedor-end {
+            align-items: flex-end;
+        }
+
+        .contenedor-baseline {
+            align-items: baseline;
+        }
+
+        .contenedor-stretch {
+            align-items: stretch;
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            width: 80px;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+        .item.alto { height: 80px; }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 5: Alineación en el Eje Cruzado</h1>
+    
+    <h2>Centrado vertical</h2>
+    <div class="contenedor contenedor-center">
+        <div class="item">A</div>
+        <div class="item alto">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Alineación al final</h2>
+    <div class="contenedor contenedor-end">
+        <div class="item">A</div>
+        <div class="item alto">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Alineación por línea base</h2>
+    <div class="contenedor contenedor-baseline">
+        <div class="item">A</div>
+        <div class="item alto">B</div>
+        <div class="item">C</div>
+    </div>
+    
+    <h2>Estiramiento (por defecto)</h2>
+    <div class="contenedor contenedor-stretch">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+    </div>
+</body>
+</html>

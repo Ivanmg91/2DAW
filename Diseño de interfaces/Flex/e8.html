@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8 - Flex Shrink</title>
+    <style>
+        .contenedor {
+            display: flex;
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 300px; /* Contenedor estrecho para forzar encogimiento */
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            width: 150px; /* Ancho inicial grande */
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+
+        .item-b2 {
+            flex-shrink: 0;
+        }
+
+        .item-c1 {
+            flex-shrink: 3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 8: Encogimiento de Elementos</h1>
+    
+    <h2>Caso A: Encogimiento por defecto</h2>
+    <p>Observa el comportamiento por defecto (todos se encogen igual)</p>
+    <div class="contenedor">
+        <div class="item item-a1">Elemento 1</div>
+        <div class="item item-a2">Elemento 2</div>
+        <div class="item item-a3">Elemento 3</div>
+    </div>
+    
+    <h2>Caso B: Elemento que no se encoge</h2>
+    <p>El elemento 2 no debe encogerse, solo los otros dos</p>
+    <div class="contenedor">
+        <div class="item item-b1">Elemento 1</div>
+        <div class="item item-b2">Elemento 2</div>
+        <div class="item item-b3">Elemento 3</div>
+    </div>
+    
+    <h2>Caso C: Encogimiento diferencial</h2>
+    <p>El elemento 1 se encoge más rápido que los otros</p>
+    <div class="contenedor">
+        <div class="item item-c1">Elemento 1</div>
+        <div class="item item-c2">Elemento 2</div>
+        <div class="item item-c3">Elemento 3</div>
+    </div>
+</body>
+</html>

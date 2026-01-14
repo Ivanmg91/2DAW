@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 7 - Flex Grow</title>
+    <style>
+        .contenedor {
+            display: flex;
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 600px;
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+        .item:nth-child(4) { background: #9C27B0; }
+
+        .item-a1, .item-a2, .item-a3 {
+            flex-grow: 1;
+        }
+
+        .item-b1, .item-b3 {
+            flex-grow: 1;
+        }
+        .item-b2 {
+            flex-grow: 2;
+        }
+
+        .item-c1, .item-c2 {
+            flex-grow: 0;
+        }
+        .item-c3 {
+            flex-grow: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 7: Crecimiento de Elementos</h1>
+    
+    <h2>Caso A: Crecimiento igual</h2>
+    <p>Todos los elementos deben crecer por igual para llenar el espacio</p>
+    <div class="contenedor">
+        <div class="item item-a1">1</div>
+        <div class="item item-a2">2</div>
+        <div class="item item-a3">3</div>
+    </div>
+    
+    <h2>Caso B: Crecimiento proporcional</h2>
+    <p>El elemento 2 debe crecer el doble que los otros</p>
+    <div class="contenedor">
+        <div class="item item-b1">1</div>
+        <div class="item item-b2">2</div>
+        <div class="item item-b3">3</div>
+    </div>
+    
+    <h2>Caso C: Solo uno crece</h2>
+    <p>Solo el elemento 3 debe crecer para llenar el espacio restante</p>
+    <div class="contenedor">
+        <div class="item item-c1">1</div>
+        <div class="item item-c2">2</div>
+        <div class="item item-c3">3</div>
+    </div>
+</body>
+</html>
+
