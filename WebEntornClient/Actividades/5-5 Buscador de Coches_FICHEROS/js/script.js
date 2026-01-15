@@ -6,6 +6,8 @@ const puertas = document.querySelector('#puertas');
 const transmision = document.querySelector('#transmision');
 const color = document.querySelector('#color');
 
+const contenedorResultados = document.querySelector('#resultado');
+
 const datos = {
     marca: '',
     anyo: '',
