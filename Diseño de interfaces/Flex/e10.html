@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 - Propiedad Flex</title>
+    <style>
+        .contenedor {
+            display: flex;
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            width: 500px;
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+
+        .item-a1, .item-a2, .item-a3 {
+            flex: auto;
+        }
+
+        .item-b1, .item-b2, .item-b3 {
+            flex: none;
+        }
+
+        .item-c1, .item-c3 {
+            flex: 1;
+        }
+
+        .item-c2 {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 10: Propiedad Flex Combinada</h1>
+    
+    <h2>Caso A: Elementos completamente flexibles</h2>
+    <p>Todos pueden crecer y encogerse libremente</p>
+    <div class="contenedor">
+        <div class="item item-a1">Flexible 1</div>
+        <div class="item item-a2">Flexible 2</div>
+        <div class="item item-a3">Flexible 3</div>
+    </div>
+    
+    <h2>Caso B: Elementos inflexibles</h2>
+    <p>Mantienen su tamaño natural, no crecen ni se encogen</p>
+    <div class="contenedor">
+        <div class="item item-b1">Fijo 1</div>
+        <div class="item item-b2">Fijo 2</div>
+        <div class="item item-b3">Fijo 3</div>
+    </div>
+    
+    <h2>Caso C: Proporciones específicas</h2>
+    <p>Elemento 1: proporción 1, Elemento 2: proporción 2, Elemento 3: proporción 1</p>
+    <div class="contenedor">
+        <div class="item item-c1">1</div>
+        <div class="item item-c2">2</div>
+        <div class="item item-c3">3</div>
+    </div>
+</body>
+</html>

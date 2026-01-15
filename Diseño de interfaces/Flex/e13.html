@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 13 - Barra de Navegación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .nav-item:hover {
+            background: #555;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .search-box {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            margin-left: auto;
+            margin: 0 1rem;
+        }
+        
+        .user-menu {
+            background: #4CAF50;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            
+            background: #333;
+            color: white;
+            padding: 1rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">MiSitio</div>
+        <a href="#" class="nav-item">Inicio</a>
+        <a href="#" class="nav-item">Productos</a>
+        <a href="#" class="nav-item">Servicios</a>
+        <a href="#" class="nav-item">Contacto</a>
+        <input type="text" class="search-box" placeholder="Buscar...">
+        <div class="user-menu">Usuario</div>
+    </nav>
+    
+    <main style="padding: 2rem;">
+        <h1>Contenido de la página</h1>
+        <p>Esta es una página de ejemplo con la barra de navegación que has creado.</p>
+    </main>
+</body>
+</html>

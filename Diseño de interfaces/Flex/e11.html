@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 11 - Align Self</title>
+    <style>
+        .contenedor {
+            display: flex;
+            align-items: flex-start; /* Alineación por defecto del contenedor */
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            height: 200px;
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            width: 80px;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+        .item:nth-child(4) { background: #9C27B0; }
+        .item:nth-child(5) { background: #F44336; }
+
+        .item-1 {
+            align-self: flex-start;
+        }
+
+        .item-2 {
+            align-self: center;
+        }
+
+        .item-3 {
+            align-self: flex-end;
+        }
+
+        .item-4 {
+            align-self: stretch;
+        }
+
+        .item-5 {
+            align-self: baseline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 11: Alineación Individual</h1>
+    
+    <h2>Diferentes alineaciones individuales</h2>
+    <p>Contenedor alineado al inicio, pero cada elemento con alineación diferente</p>
+    <div class="contenedor">
+        <div class="item item-1">Inicio</div>
+        <div class="item item-2">Centro</div>
+        <div class="item item-3">Final</div>
+        <div class="item item-4">Estirar</div>
+        <div class="item item-5">Base</div>
+    </div>
+</body>
+</html>

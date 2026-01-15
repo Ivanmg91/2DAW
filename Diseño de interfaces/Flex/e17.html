@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 17 - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        
+        .dashboard {
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            width: 250px;
+            padding: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .main-content {
+            background: #ecf0f1;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .stats-grid {
+            margin: -1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            margin: 1rem;
+            flex: 1 1 200px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .content-sections {
+            gap: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1 1 300px;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .nav-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .nav-item:hover {
+            background: #34495e;
+        }
+        
+        .user-info {
+            text-align: center;
+            padding: 1rem;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 1rem;
+        }
+        
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="user-info">
+                <div class="avatar">👤</div>
+                <h3>Admin User</h3>
+                <p>Administrador</p>
+            </div>
+            
+            <nav>
+                <a href="#" class="nav-item">📊 Dashboard</a>
+                <a href="#" class="nav-item">👥 Usuarios</a>
+                <a href="#" class="nav-item">📦 Productos</a>
+                <a href="#" class="nav-item">📈 Ventas</a>
+                <a href="#" class="nav-item">⚙️ Configuración</a>
+                <a href="#" class="nav-item">🚪 Salir</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <header class="header">
+                <h1>Panel de Control</h1>
+                <p>Bienvenido al dashboard de administración</p>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1,234</div>
+                    <div class="stat-label">Usuarios Totales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">567</div>
+                    <div class="stat-label">Ventas del Mes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">€12,345</div>
+                    <div class="stat-label">Ingresos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">Productos</div>
+                </div>
+            </div>
+            
+            <div class="content-sections">
+                <div class="section">
+                    <h2 class="section-title">Actividad Reciente</h2>
+                    <p>Aquí se mostraría la actividad reciente del sistema...</p>
+                    <ul>
+                        <li>Usuario Juan se registró</li>
+                        <li>Nueva venta procesada</li>
+                        <li>Producto actualizado</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">Gráficos y Estadísticas</h2>
+                    <p>Espacio para gráficos y análisis de datos...</p>
+                    <div style="height: 200px; background: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666;">
+                        [Aquí iría un gráfico]
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

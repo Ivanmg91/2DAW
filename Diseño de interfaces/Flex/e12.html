@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 12 - Order</title>
+    <style>
+        .contenedor {
+            display: flex;
+            background: #f0f0f0;
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .item {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            min-width: 100px;
+        }
+        .item:nth-child(2) { background: #2196F3; }
+        .item:nth-child(3) { background: #FF9800; }
+        .item:nth-child(4) { background: #9C27B0; }
+        .item:nth-child(5) { background: #F44336; }
+
+        .item-inv-5 { order: 1; }
+        .item-inv-4 { order: 2; }
+        .item-inv-3 { order: 3; }
+        .item-inv-2 { order: 4; }
+        .item-inv-1 { order: 5; }
+
+        .item-cust-3 { order: 1; }
+        .item-cust-1 { order: 2; }
+        .item-cust-5 { order: 3; }
+        .item-cust-2 { order: 4; }
+        .item-cust-4 { order: 5; }
+        
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 12: Reordenamiento de Elementos</h1>
+    
+    <h2>Orden original (HTML)</h2>
+    <p>Primero, Segundo, Tercero, Cuarto, Quinto</p>
+    <div class="contenedor contenedor-original">
+        <div class="item">Primero</div>
+        <div class="item">Segundo</div>
+        <div class="item">Tercero</div>
+        <div class="item">Cuarto</div>
+        <div class="item">Quinto</div>
+    </div>
+    
+    <h2>Orden inverso</h2>
+    <p>Debe mostrarse: Quinto, Cuarto, Tercero, Segundo, Primero</p>
+    <div class="contenedor contenedor-inverso">
+        <div class="item item-inv-1">Primero</div>
+        <div class="item item-inv-2">Segundo</div>
+        <div class="item item-inv-3">Tercero</div>
+        <div class="item item-inv-4">Cuarto</div>
+        <div class="item item-inv-5">Quinto</div>
+    </div>
+    
+    <h2>Orden personalizado</h2>
+    <p>Debe mostrarse: Tercero, Primero, Quinto, Segundo, Cuarto</p>
+    <div class="contenedor contenedor-custom">
+        <div class="item item-cust-1">Primero</div>
+        <div class="item item-cust-2">Segundo</div>
+        <div class="item item-cust-3">Tercero</div>
+        <div class="item item-cust-4">Cuarto</div>
+        <div class="item item-cust-5">Quinto</div>
+    </div>
+</body>
+</html>
