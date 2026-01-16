@@ -32,7 +32,7 @@ function rellenarAnyos() {
     }
 }
 
-function mostrarResultados(datos) {
+function filtrarCoches(datos) {
     const resultado = coches.filter(coche => {
         if (datos.marca && coche.marca !== datos.marca) {
             return false;
@@ -61,49 +61,71 @@ function mostrarResultados(datos) {
 
 
     console.log(resultado);
+    mostrarResultados(resultado);
 }
+
+function mostrarResultados(resultados) {
+    contenedorResultados.innerHTML = '';
+
+    if (resultados.length === 0) {
+        const p = document.createElement('p');
+        p.textContent = 'No se encontraron resultados';
+        p.classList.add('alerta');
+        p.classList.add('error');
+        contenedorResultados.appendChild(p);
+        return;
+    }
+
+    resultados.forEach(coche => {
+        const parrafo = document.createElement('p');
+        parrafo.textContent = `${coche.marca} - ${coche.modelo} - Año: ${coche.anyo} - ${coche.puertas} puertas - ${coche.transmision} - Color: ${coche.color} - Precio: $${coche.precio}
+        `;
+        contenedorResultados.appendChild(parrafo);
+    });
+}
+
 
 
 marca.addEventListener('change', e => {
     datos.marca = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 anyo.addEventListener('change', e => {
     datos.anyo = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 minimo.addEventListener('change', e => {
     datos.minimo = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 maximo.addEventListener('change', e => {
     datos.maximo = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 puertas.addEventListener('change', e => {
     datos.puertas = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 transmision.addEventListener('change', e => {
     datos.transmision = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 color.addEventListener('change', e => {
     datos.color = e.target.value;
     console.log(datos);
-    mostrarResultados(datos);
+    filtrarCoches(datos);
 });
 
 
