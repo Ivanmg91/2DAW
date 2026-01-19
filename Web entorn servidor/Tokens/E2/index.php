@@ -1,12 +1,12 @@
 <?php 
 session_start();
 
-// 1. GENERACIÓN DEL TOKEN
+// generación del token
 if (empty($_SESSION["token"])) {
     $_SESSION["token"] = bin2hex(openssl_random_pseudo_bytes(24));
 }
 
-// 2. Si ya está logueado, lo mandamos dentro
+// si ya está logueado, lo mandamos dentro
 if (isset($_SESSION['usuario'])) {
     header("Location: resultados.php");
     exit();
@@ -59,16 +59,13 @@ if (isset($_SESSION['usuario'])) {
     </form>
 
     <?php
-    // --- LÓGICA DE LA TRAMPA ---
-    // Si se pulsa el botón, regeneramos el token AQUÍ (después de haber pintado el formulario).
-    // Así: Formulario tiene token viejo VS Sesión tiene token nuevo.
+    // si se pulsa el botón regeneramos el token despues del formulario. asi el formulario tiene el token viejo y la sesión el nuevo.
     if (isset($_POST['cambiar_sid'])) {
         $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(24));
         
         echo "<br><div style='color:red; border:1px solid red; padding:10px;'>";
-        echo "<strong>¡TOKEN REGENERADO!</strong><br>";
-        echo "El formulario de arriba ahora tiene un token CADUCADO.<br>";
-        echo "Si intentas enviar datos ahora, procesar.php detectará el ataque.";
+        echo "<strong>TOKEN REGENERADO</strong><br>";
+        echo "El formulario de arriba ahora tiene un token caducado.<br>";
         echo "</div>";
     }
     ?>
