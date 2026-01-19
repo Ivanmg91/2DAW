@@ -1,24 +1,19 @@
 <?php
-session_start(); // SIEMPRE LO PRIMERO
+session_start();
 require_once '../../valida.php';
 
-// ---------------------------------------------------------
-// VERIFICACIÓN DE SEGURIDAD (TOKEN CSRF)
-// ---------------------------------------------------------
+//verificación token
 if (!isset($_POST['token'])) {
     echo "<h3 style='color:red'>Error: No se ha encontrado el token de seguridad.</h3>";
     echo "<a href='index.php'>Volver</a>";
     exit(); 
-} 
-else {
+} else {
     if (hash_equals($_SESSION['token'], $_POST['token']) === false) {
-        echo "<h3 style='color:red'>¡El token no coincide! (Posible ataque CSRF)</h3>";
-        echo "<p>Por seguridad, la solicitud ha sido bloqueada.</p>";
+        echo "<h3 style='color:red'>El token no coincide</h3>";
         echo "<a href='index.php'>Volver</a>";
-        exit(); // IMPORTANTE: Detenemos la ejecución aquí
+        exit();
     }
 }
-// ---------------------------------------------------------
 
 // inicializar variables
 $errores = [];
@@ -101,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    // Si entran directo, al index.php
+    // si entran directo
     header("Location: index.php");
     exit();
 }
