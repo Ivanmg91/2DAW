@@ -54,8 +54,8 @@ if (isset($_SESSION['usuario'])) {
     <hr>
 
     <form action="index.php" method="POST">
-         <p>Zona de pruebas:</p>
-         <input type="submit" name="cambiar_sid" value="Cambiar SID (Regenerar Token)">
+        <p>Zona de pruebas:</p>
+        <input type="submit" name="cambiar_sid" value="Cambiar SID (Regenerar Token)">
     </form>
 
     <?php
