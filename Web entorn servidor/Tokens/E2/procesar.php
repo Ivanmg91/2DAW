@@ -137,5 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php endif; ?>
 
-</body>
+</body>$enviar = $_POST['enviar'];
+    $validar = $_POST['validar'];
 </html>
