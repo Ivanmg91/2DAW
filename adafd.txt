@@ -10,3 +10,24 @@ Upload a document with screenshots and code with comments in English, explained.
 
 
 Record a small video (minimum 3 min.,- máx., 10 min) explaining the way it works in English; explain the code; don't forget to add comments to the code in English.
+
+
+<?php
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['accion'])) {
+
+        if ($_POST['accion'] === 'Validar') {
+            // lógica de validación
+            echo "Se pulsó VALIDAR";
+        }
+
+        if ($_POST['accion'] === 'Enviar') {
+            // lógica de envío
+            echo "Se pulsó ENVIAR";
+        }
+    }
+}
+?>
