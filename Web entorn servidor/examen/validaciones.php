@@ -5,35 +5,48 @@
 
 function validaRequerido($valor){
     // Debe devolver true si el valor NO está vacío
-
-    if (isset($valor)) {
+    if(trim($valor) == "") {
+        return false;
+    } else {
         return true;
     }
-    return false; // <-- completar
 }
 
 function validaEmail($valor){
     // Debe validar un email 
-    
-    return false; // <-- completar
+    if (filter_var($valor, FILTER_VALIDATE_EMAIL) === false) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function validaAlfabeto($valor){
     // Debe devolver true si el valor contiene SOLO letras
-    
-    return false; // <-- completar
+    if (ctype_alpha($valor)) {
+        return true;
+    } else {
+        return false;
+    }
 }
-
 function validaAlfanum($valor){
     // Debe devolver true si el valor contiene SOLO letras y números 
     
-    return false; // <-- completar
+    if (ctype_alnum($valor)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function validaNumero($valor){
     // Debe devolver true si el valor contiene SOLO números 
     
-    return false; // <-- completar
+    if (is_numeric($valor)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 ?>

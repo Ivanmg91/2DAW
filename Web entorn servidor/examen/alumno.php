@@ -19,19 +19,41 @@
 
     $errores = [];
 
-    // validar los campos
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        // En caso de q los errores sean 0
-        if (count($errores) === 0) {
-            
-            if ($accion === "Validar") { // En caso de pulsar validar
-                echo "Has pulsado validar";
-            } 
 
+        // SI PULSA VALIDAR = VALIDACIONES
+        if ($accion === "Validar") {
+            
+            // Si no escribe usuario            
+            if (!validaRequerido($usuario)) {
+                $errores[] = "El usuario es obligatorio";
+            }
+
+            // Si el email esta mal escrito            
+            if (!validaEmail($email) && !empty($email)) {
+                $errores[] = "El email no esta escrito correctamente";
+            }
+
+            // Si el nombre contiene números
+            if (!validaAlfabeto($nombre) && !empty($nombre)) {
+                $errores[] = "El nombre solo puede contener carácteres del alfabeto";
+            }
+
+            // Si la contraseña no es alfanumérica
+            if (!validaAlfanum($contrasena) && !empty($contrasena)) {
+                $errores[] = "La contraseña solo puede contener carácteres alfanuméricos";
+            }
+
+            // Si el cp no se numérico
+            if (!validaNumero($codigo_postal) && !empty($codigo_postal)) {
+                $errores[] = "El código postal solo puede contener numeros";
+            }
         }
+
+
 
 
     }
@@ -47,12 +69,12 @@
 </head>
 <body>
     <form action="alumno.php" method="POST" y enctype="multipart/form-data">
-        Usuario: <input type="text" name="usuario"><br>
-        Password: <input type="text" name="password"><br>
-        Nombre: <input type="text" name="nombre"><br>
-        Email: <input type="email" name="email"><br>
-        Dirección: <input type="text" name="direccion"><br>
-        Código Postal: <input type="number" name="codigo_postal"><br>
+        Usuario: <input type="text" name="usuario" value="<?= htmlspecialchars($usuario) ?>"><br>
+        Password: <input type="password" name="password" value="<?= htmlspecialchars($password) ?>"><br>
+        Nombre: <input type="text" name="nombre" value="<?= htmlspecialchars($nombre) ?>"><br>
+        Email: <input type="text" name="email" value="<?= htmlspecialchars($email) ?>"><br>
+        Dirección: <input type="text" name="direccion" value="<?= htmlspecialchars($direccion) ?>"><br>
+        Código Postal: <input type="text" name="codigo_postal" value="<?= htmlspecialchars($codigo_postal) ?>"><br>
         Rol<br><input type="radio" name="rol" value="nuevo" checked>Nuevo Usuario <br>
         <input type="radio" name="rol" value="registrado">Registrado <br><br>
 
@@ -82,6 +104,20 @@
             <OPTION VALUE="meses">Meses</OPTION>
         </SELECT>
 
+        <br><br>
+
+        <?php if (!empty($errores)): ?>
+            <h2 style="color: red;">Errores:</h2>
+            <ul>
+                <?php foreach ($errores as $error): ?>
+                    <li style="color: red;"><?php echo $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php elseif ($accion === "Validar"): ?>
+            <ul>
+                <li style="color: green;">Todo está correcto</li>
+            </ul>
+        <?php endif; ?>
         <br><br>
 
         <input type="submit" name="accion" value="Validar">
