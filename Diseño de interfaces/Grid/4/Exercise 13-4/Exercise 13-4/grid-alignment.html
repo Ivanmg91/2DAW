@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Justify and Align Content</title>
+<style>
+body {
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	font-size: 2em;
+	color: white;
+}
+
+#container {
+	height: 500px;
+	width: 700px;
+	border: 2px solid gray;
+	display: grid;
+	grid: repeat(3, 120px) / repeat(4, 120px);
+
+	align-content: center;
+	justify-content: center;
+
+	align-items: center;
+	justify-items: center;
+}
+
+.item:nth-child(5n) {
+	background-color: #C64A4C;
+}
+.item:nth-child(5n+1) {
+	background-color: #F28F4D;
+}
+.item:nth-child(5n+2) {
+	background-color: #9BC431;
+}
+.item:nth-child(5n+3) {
+	background-color: #09A7C6;
+}
+.item:nth-child(5n+4) {
+	background-color: #A353C0;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <div class="item" id="one">One</div>
+  <div class="item" id="two">Two</div>
+  <div class="item" id="three">Three</div>
+  <div class="item" id="four">Four</div>
+  <div class="item" id="five">Five</div>
+  <div class="item" id="six">Six</div>
+  <div class="item" id="seven">Seven</div>
+  <div class="item" id="eight">Eight</div>
+  <div class="item" id="nine">Nine</div>
+  <div class="item" id="ten">Ten</div>
+  <div class="item" id="eleven">Eleven</div>
+  <div class="item" id="twelve">Twelve</div>
+</div>
+
+</body>
+</html>

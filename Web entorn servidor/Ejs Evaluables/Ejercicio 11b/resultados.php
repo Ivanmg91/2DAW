@@ -1,29 +1,21 @@
 <?php
-// Recogemos los datos que nos llegan por la URL
-// Usamos el operador fusión de null (??) por si alguien entra directo sin datos
-$nombre = $_GET['nombre'] ?? 'Desconocido';
-$estudios = $_GET['estudios'] ?? 'No especificado';
-$nacionalidad = $_GET['nacionalidad'] ?? 'No especificada';
-$email = $_GET['email'] ?? 'No especificado';
-$idiomas = $_GET['idiomas'] ?? 'Ninguno';
-$ruta_imagen = $_GET['ruta_imagen'] ?? '';
+    $nombre = $_GET['nombre'] ?? 'Desconocido';
+    $estudios = $_GET['estudios'] ?? 'No especificado';
+    $nacionalidad = $_GET['nacionalidad'] ?? 'No especificada';
+    $email = $_GET['email'] ?? 'No especificado';
+    $idiomas = $_GET['idiomas'] ?? 'Ninguno';
+    $ruta_imagen = $_GET['ruta_imagen'] ?? '';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Procesado con Éxito</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .ficha { border: 1px solid #ccc; padding: 20px; background: #f9f9f9; max-width: 600px; }
-        img { max-width: 300px; display: block; margin-top: 15px; border: 5px solid white; shadow: 0 0 5px #ccc; }
-        .firma { margin-top: 30px; border-top: 2px solid #333; padding-top: 10px; color: #555; }
-    </style>
+    <title>Procesado</title>
 </head>
 <body>
 
-    <h1>¡Procesado con Éxito!</h1>
+    <h1>Procesado</h1>
     <p>Sus datos han sido registrados correctamente en el sistema.</p>
 
     <div class="ficha">
@@ -48,7 +40,7 @@ $ruta_imagen = $_GET['ruta_imagen'] ?? '';
 
     <div class="firma">
         <p>Realizado por: <strong>Iván Montiano González</strong> | Grupo: <strong>2 DAW</strong></p>
-        <a href="procesar.php"><button>Volver al inicio</button></a>
+        <a href="procesar.php"><button>Volver</button></a>
     </div>
 
 </body>

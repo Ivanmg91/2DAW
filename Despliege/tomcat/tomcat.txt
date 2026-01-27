@@ -1,0 +1,81 @@
+Guía Rápida: Entorno Java + Tomcat + MySQL en Linux
+
+Esta guía resume los comandos necesarios para gestionar el servidor web Tomcat y la base de datos MySQL durante el desarrollo.
+
+1. Encender el entorno (Al empezar el día)
+
+Ejecuta estos comandos para iniciar los servicios.
+Bash
+
+# Arrancar MySQL
+sudo service mysql start
+
+# Arrancar Tomcat
+sudo service tomcat9 start
+
+2. Apagar el entorno (Al terminar)
+
+Ejecuta estos comandos para detener los servicios y liberar memoria.
+Bash
+
+# Parar Tomcat
+sudo service tomcat9 stop
+
+# Parar MySQL
+sudo service mysql stop
+
+3. Flujo de Trabajo: Aplicar Cambios
+
+Dependiendo de qué archivo modifiques, debes seguir un proceso distinto.
+
+CASO A: Has modificado código Java (.java)
+
+Si editas tu Servlet, debes recompilar y mover el archivo.
+
+    Compilar: javac MiServlet.java
+
+    Actualizar el servidor (Mover el .class): sudo cp MiServlet.class /var/lib/tomcat9/webapps/Proyecto1/WEB-INF/classes/
+
+    Reiniciar Tomcat: sudo service tomcat9 restart
+
+CASO B: Has modificado configuración (web.xml)
+
+Si solo cambias el XML, no necesitas compilar.
+
+    Reiniciar Tomcat: sudo service tomcat9 restart
+
+CASO C: Has modificado datos en MySQL
+
+No se requiere ninguna acción en el servidor. Los cambios son inmediatos.
+
+4. Diagnóstico y Errores
+
+Usa estos comandos si algo no funciona (Error 404, 500, o la página no carga).
+
+Verificar estado de los servicios:
+Bash
+
+# ¿Está MySQL corriendo? (Debe poner "active running")
+sudo service mysql status
+
+# ¿Está Tomcat corriendo?
+sudo service tomcat9 status
+
+Ver errores en tiempo real (Logs): Este es el comando más importante para ver por qué falla tu código Java.
+Bash
+
+sudo tail -f /var/log/tomcat9/catalina.out
+
+(Para salir de la pantalla de logs presiona Ctrl + C)
+
+¿Cómo guardar esto en PDF?
+
+    Selecciona todo el texto que está entre las líneas divisorias de arriba.
+
+    Abre Google Docs o Microsoft Word.
+
+    Pega el texto.
+
+    Ve a Archivo > Descargar (o Guardar como) > Documento PDF.
+    
+    http://localhost:8080/Proyecto1/servlet

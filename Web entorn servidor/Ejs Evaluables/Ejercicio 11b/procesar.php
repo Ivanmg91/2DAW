@@ -1,13 +1,13 @@
 <?php
-// Incluimos fichero de validación
+// Añadir validaciones
 require_once 'valida.php';
 
-// Inicializar variables vacías para que el formulario no de error al cargar la primera vez
+// Inicializar variables
 $errores = [];
 $nombre = "";
 $contrasena = "";
 $estudios = "";
-$nacionalidad = "espanola"; // Valor por defecto
+$nacionalidad = "espanola";
 $nacionalidad_texto = "";
 $idiomas = [];
 $email = "";
@@ -16,29 +16,28 @@ $ruta_imagen = "";
 $accion = $_POST['accion'] ?? null;
 $mensaje_exito = "";
 
-// PROCESAMIENTO (Solo si se ha enviado el formulario)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // 1. RECOGIDA DE DATOS (Saneamiento básico)
+    // recoger datos
     $nombre = $_POST['nombre_completo'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
     $estudios = $_POST['estudios'] ?? '';
     $email = $_POST['email'] ?? '';
     $idiomas = $_POST['idiomas'] ?? [];
     
-    // Lógica Nacionalidad
+    // Nacionalidad
     $nac_radio = $_POST['nacionalidad'] ?? '';
     $nac_texto = $_POST['nacionalidad_texto'] ?? '';
     
     if ($nac_radio === 'otra') {
-        $nacionalidad = $nac_texto; // Para guardar el valor real
+        $nacionalidad = $nac_texto; // Para guardar el valor
         $nacionalidad_radio_seleccionado = 'otra'; // Para mantener el radio marcado
     } else {
         $nacionalidad = "Española";
         $nacionalidad_radio_seleccionado = 'espanola';
     }
 
-    // 2. VALIDACIONES
+    // Validaciones
     if (!validaRequerido($nombre)) $errores[] = "El nombre completo es obligatorio.";
     if (!validaContrasena($contrasena)) $errores[] = "La contraseña debe tener al menos 6 caracteres.";
     if (!validaRequerido($estudios)) $errores[] = "Debes seleccionar un nivel de estudios.";
@@ -50,10 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($idiomas)) $errores[] = "Debes seleccionar al menos un idioma.";
     if (!validaEmail($email)) $errores[] = "El formato del email no es válido.";
 
-    // Validación de Imagen
-    // NOTA: Si hay errores en el resto del formulario, la imagen se subirá igualmente
-    // pero no la procesaremos como válida para el envío final hasta que todo esté bien.
-    $checkImagen = validarYGuardarImagen($_FILES['imagen']);
+    // Validacion imagen
+    $checkImagen = $_FILES['imagen'];
     
     if ($checkImagen['correcto'] === false) {
         $errores[] = $checkImagen['mensaje'];
@@ -61,35 +58,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $ruta_imagen = $checkImagen['ruta'];
     }
 
-    // 3. LÓGICA DE DECISIÓN
+    // Si hay errores o no
     if (count($errores) === 0) {
-        // --- CASO: TODO BIEN ---
+        // No errores
         
         if ($accion === 'Validar') {
-            // Si solo quería validar, mostramos mensaje verde en esta misma página
             $mensaje_exito = "¡Todo correcto! El formulario está listo para enviarse.";
         } 
-        elseif ($accion === 'Enviar') {
-            // Si quiere enviar, construimos el HEADER y nos vamos a resultados.php
-            // Como NO HAY SESIONES, pasamos los datos por la URL (query string)
+        elseif ($accion === 'Enviar') { // Si envias
             
-            // Preparamos los datos para la URL
             $datos_a_pasar = [
                 'nombre' => $nombre,
                 'estudios' => $estudios,
                 'nacionalidad' => $nacionalidad,
                 'email' => $email,
-                // Convertimos el array de idiomas a string para pasarlo
-                'idiomas' => implode(", ", $idiomas), 
+                'idiomas' => implode(", ", $idiomas), // array a string
                 'ruta_imagen' => $ruta_imagen
             ];
             
-            // http_build_query convierte el array en "nombre=pepe&email=...@..."
             $query_string = http_build_query($datos_a_pasar);
             
-            // REDIRECCIÓN
             header("Location: resultados.php?" . $query_string);
-            exit(); // Importante detener el script después del header
+            exit();
         }
     }
 }
@@ -156,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Email:</label>
         <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
 
-        <label>Adjuntar Foto (Máx 50KB - jpg, png, gif):</label>
+        <label>Adjuntar Foto (max 50kb - jpg, png, gif):</label>
         <input type="hidden" name="MAX_FILE_SIZE" value="51200">
         <input type="file" name="imagen" required><br><br>
 

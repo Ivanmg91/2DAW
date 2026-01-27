@@ -1,0 +1,21 @@
+DROP DATABASE IF EXISTS INCIDENCIAS;
+CREATE DATABASE INCIDENCIAS;
+USE INCIDENCIAS;
+CREATE TABLE INCIDENCIA (
+	CODIGO INTEGER,
+    ESTADO VARCHAR (100) NOT NULL,
+    PUESTO VARCHAR (15),
+    PROBLEMA VARCHAR(255),
+    RESOLUCION VARCHAR(255),
+    CONSTRAINT PK_CODIGO PRIMARY KEY(CODIGO)
+);
+
+
+-- mysql> CREATE USER 'developerphp'@'%' IDENTIFIED BY 'developerphp';
+-- Query OK, 0 rows affected (0,04 sec)
+
+-- mysql> GRANT ALL PRIVILEGES ON mi_base.* TO 'developerphp'@'%';
+-- Query OK, 0 rows affected (0,01 sec)
+
+-- mysql> FLUSH PRIVILEGES;
+-- Query OK, 0 rows affected (0,01 sec)
