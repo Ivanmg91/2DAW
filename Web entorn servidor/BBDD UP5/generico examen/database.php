@@ -5,7 +5,6 @@ require_once "config.php";
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    // HE BORRADO LA LÍNEA QUE DABA ERROR. NO LA NECESITAS.
 ];
 
 try {
