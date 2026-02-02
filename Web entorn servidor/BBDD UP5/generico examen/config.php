@@ -1,3 +1,5 @@
+<!-- CONFIG DB -->
+
 <?php
     /**
      * Archivo de configuración de la base de datos.
@@ -5,10 +7,10 @@
      */
 
     // Definición de constantes de conexión (UP5 Pág. 39)
-    const HOST = '127.0.0.1';
+    const HOST = '192.168.1.109:3306';
     const DBNAME = 'EMPRESA'; // Cambia esto por el nombre real de tu base de datos
     const USERNAME = 'dwes';
-    const PASSWORD = 'dbdwespass';
+    const PASSWORD = 'password';
 
     // Opciones del array de PDO (UP5 Pág. 39)
     // ATTR_ERRMODE => ERRMODE_EXCEPTION: Obligatorio para usar try/catch como en los apuntes

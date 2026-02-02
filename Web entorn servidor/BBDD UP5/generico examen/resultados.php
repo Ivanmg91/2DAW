@@ -1,15 +1,17 @@
+<!-- RESULTADOS -->
+
 <?php
-session_start();
-require_once 'Alumno.php'; // Vital para que funcione unserialize
+    session_start();
+    require_once 'Alumno.php'; // Vital para que funcione unserialize
 
-// Si no hay alumno en sesión, fuera
-if (!isset($_SESSION['alumno'])) {
-    header("Location: index.php");
-    exit;
-}
+    // Si no hay alumno en sesión, fuera
+    if (!isset($_SESSION['alumno'])) {
+        header("Location: index.php");
+        exit;
+    }
 
-// Recuperamos el objeto
-$alumno = unserialize($_SESSION['alumno']);
+    // Recuperamos el objeto
+    $alumno = unserialize($_SESSION['alumno']);
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +37,6 @@ $alumno = unserialize($_SESSION['alumno']);
     <?php endif; ?>
 
     <br><br>
-    <a href="index.php">Volver al formulario</a>
+    <a href="form.php">Volver al formulario</a>
 </body>
 </html>

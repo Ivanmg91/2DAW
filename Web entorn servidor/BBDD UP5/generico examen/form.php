@@ -6,11 +6,11 @@ require_once 'controller.php';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario Seniatours</title>
+    <title>Formulario</title>
 </head>
 <body>
 
-<h1>Formulario SENIATOURS</h1>
+<h1>Formulario</h1>
 
 <?php if (!empty($errores)): ?>
     <ul style="color:red;">
@@ -78,7 +78,7 @@ require_once 'controller.php';
     <p><strong>Foto:</strong></p>
     <input type="file" name="foto"><br><br>
     
-    <input type="reset" value="Borrar">
+    <a href="form.php"><button type="button">Borrar todo</button></a>
     <input type="submit" name="accion" value="Validar">
     <input type="submit" name="accion" value="Enviar">
 

@@ -1,3 +1,5 @@
+<!-- CONTROLADOR -->
+
 <?php 
 // controller.php
 session_start();
