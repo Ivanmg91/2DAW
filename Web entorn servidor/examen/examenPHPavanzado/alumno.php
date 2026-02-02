@@ -32,7 +32,7 @@ $checkboxAmueblado = in_array('Amueblado', $servicios) ? true : false ;
 
 // Validación
 if ($accion === "Validar" || $accion === "Enviar") {
-     if (!isset($_POST['token']) || !hash_equals($_SESSION['token'], $_POST['token'])) {
+    if (!isset($_POST['token']) || !hash_equals($_SESSION['token'], $_POST['token'])) {
         $errores[] = "Error de seguridad: token inválido.";
     }
     if ($nombre === '') {
