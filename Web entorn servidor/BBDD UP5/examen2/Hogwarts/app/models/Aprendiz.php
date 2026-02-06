@@ -34,9 +34,13 @@ class Aprendiz {
      */
         try {
 
+            // CREAR TABLA SI NO EXISTE ***
+
+            
             $pdo = new Database()->conectar();
 
-            $sql = "INSERT INTO aprendices (nombre, casa, varita, asignaturas, nivel, foto_registro) VALUES (:nombre, :casa, :varita, :asignaturas, :nivel, :foto_registro)";
+            $sql = "INSERT INTO aprendices (nombre, casa, varita, asignaturas, nivel, foto_registro) 
+            VALUES (:nombre, :casa, :varita, :asignaturas, :nivel, :foto_registro)";
 
             $stmt = $pdo->prepare($sql);
 

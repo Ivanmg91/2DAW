@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Portal</title>
+</head>
+<body bgcolor="#E0E0E0"> <!-- Grey background for admin area -->
+    <h1 align="center">Seller Administration</h1>
+    
+    <div align="center" style="border: 2px solid darkred; padding: 20px; width: 300px; margin: auto; background-color: white;">
+        <h3>Staff Login</h3>
+        
+        <!-- Points to MiServlet_vendedor.java -->
+        <form action="servlet_vendedor" method="post">
+            <input type="hidden" name="action" value="login_seller">
+            
+            Username:<br>
+            <input type="text" name="username" required><br><br>
+            Password:<br>
+            <input type="password" name="password" required><br><br>
+            
+            <input type="submit" value="Access Dashboard">
+        </form>
+        <br>
+        <a href="parametros.html">Back to Shop</a>
+    </div>
+</body>
+</html>

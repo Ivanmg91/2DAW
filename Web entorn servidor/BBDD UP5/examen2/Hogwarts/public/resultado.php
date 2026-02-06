@@ -1,5 +1,6 @@
 <?php
 
+// TERMINAR ***
 
 // Obtenemosel id del aprendiz o es null
 

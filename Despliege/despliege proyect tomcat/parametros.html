@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Web Shop - Home</title>
+</head>
+<body bgcolor="#FDF5E6">
+    <h1 align="center">Welcome to the Web Shop</h1>
+    
+    <!-- CUSTOMER LOGIN BOX -->
+    <div align="center" style="border: 1px solid #ccc; padding: 20px; width: 300px; margin: auto; background-color: white;">
+        <h3>Customer Login</h3>
+        
+        <!-- CUSTOMER LOGIN FORM -->
+        <form action="servlet" method="post">
+            <input type="hidden" name="action" value="login_customer">
+            
+            Username:<br>
+            <input type="text" name="username" required><br><br>
+            Password:<br>
+            <input type="password" name="password" required><br><br>
+            
+            <input type="submit" value="Enter Shop">
+        </form>
+        
+        <hr>
+        
+        <!-- COOKIE HISTORY BUTTON -->
+        <form action="servlet" method="post">
+            <input type="hidden" name="action" value="history_cookie">
+            <input type="submit" value="View My Past Purchases (Cookie)"
+            style="background-color: #eee; border: 1px solid #999; cursor: pointer;">
+        </form>
+        <br>
+
+        <p>New here? <a href="registro.html">Register now</a></p>
+        
+        <p style="font-size: small; margin-top: 20px;">
+            Staff access: <a href="login_vendedor.html">Seller Login</a>
+        </p>
+    </div>
+</body>
+</html>

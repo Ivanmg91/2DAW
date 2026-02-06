@@ -79,7 +79,7 @@ session_start();
     // Comprobar token CSRF y finalizar si no es válido
    
 
-    if ($action === 'ENVIAR' || $action === 'VALIDAR') {
+    if ($action === 'ENVIAR' || $action === 'VALIDAR') { // SEPARAR EN 2 ***
 
             /**
              * VALIDACIONES y guardar valores en sesión
@@ -233,7 +233,7 @@ session_start();
     </p>
 
    <p><label>Nivel mágico (1-100):</label>
-        <input type="number" name="nivel" min="1" max="100">
+        <input type="text" name="nivel" min="1" max="100">
     </p>
     <!-- Campo para subir la foto -->
     <!-- Si ya hay foto en sesión, no mostramos el campo de subida -->
@@ -246,17 +246,20 @@ session_start();
 
     <br><br>
 
-    <!-- VALIDAR visible si:
+    <!-- VALIDAR visible si: ***
          - NO es POST
          - O es POST con errores -->
    
         <button type="submit" name="action" value="VALIDAR">VALIDAR</button>
   
 
-    <!-- ENVIAR visible si:
+    <!-- ENVIAR visible si: ***
          - ES POST
          - Y NO hay errores -->
    
         <button type="submit" name="action" value="ENVIAR">ENVIAR</button>
- 
+
 </form>
+
+
+<!-- MANTENER LOS DATOS Q ESTAN CORRECTOS -->

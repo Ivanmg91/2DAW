@@ -40,7 +40,7 @@ function filtrarCoches(datos) {
         if (datos.anyo && Number(coche.anyo) !== Number(datos.anyo)) {
             return false;
         }
-        if (datos.minimo && Number(coche.precio) < Number(datos.minimo)) { // Car prize becaus is defined in db.js
+        if (datos.minimo && Number(coche.precio) < Number(datos.minimo)) {
             return false;
         }
         if (datos.maximo && Number(coche.precio) > Number(datos.maximo)) {

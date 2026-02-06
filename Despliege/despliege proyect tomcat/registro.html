@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New User Registration</title>
+</head>
+<body bgcolor="#FDF5E6">
+    <h1 align="center">Create Account</h1>
+    
+    <div align="center">
+        <form action="servlet" method="post">
+            <!-- Specific action for registration in MiServlet.java -->
+            <input type="hidden" name="action" value="register">
+            
+            Pick a Username:<br>
+            <input type="text" name="username" required><br><br>
+            
+            Pick a Password:<br>
+            <input type="password" name="password" required><br><br>
+            
+            <input type="submit" value="Sign Up">
+        </form>
+        <br>
+        <a href="parametros.html">Cancel and go back to Login</a>
+    </div>
+</body>
+</html>

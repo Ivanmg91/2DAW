@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen JS - TechStore 2º DAW</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>TechStore DAW</h1>
+        <div id="resumen-carrito">
+            Carrito: <span id="contador-productos">0</span> ítems
+        </div>
+    </header>
+
+    <main>
+        <section class="filtros">
+            <label for="filtro-categoria">Filtrar por categoría:</label>
+            <select id="filtro-categoria">
+                <option value="todos">Todos los productos</option>
+                <option value="Moviles">Móviles</option>
+                <option value="Laptops">Laptops</option>
+                <option value="Accesorios">Accesorios</option>
+            </select>
+        </section>
+
+        <div id="loading" class="loading">Cargando productos...</div>
+
+        <div class="contenedor-principal">
+            <section id="lista-productos" class="grid-productos">
+                
+            </section>
+
+            <aside class="carrito-detalle">
+                <h2>Tu Compra</h2>
+                <ul id="carrito-items">
+                
+                
+                </ul>
+
+
+                <div class="total-compra">
+                    <strong>Total: <span id="precio-total">0</span>€</strong>
+                </div>
+
+                
+                <button id="vaciar-carrito">Vaciar Carrito</button>
+            </aside>
+        </div>
+    </main>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
