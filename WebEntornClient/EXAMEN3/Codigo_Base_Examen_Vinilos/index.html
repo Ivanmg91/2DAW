@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinilos Store - Colección Exclusiva</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts para un look más retro/elegante -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="overlay-background"></div>
+
+    <header>
+        <div class="header-content">
+            <h1>Vinyl<span>Records</span></h1>
+            <div id="resumen-carrito" class="cart-pill">
+                <span class="icon">🛒</span>
+                <span id="contador-productos">0</span> ítems
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="filtros">
+            <div class="filtro-group">
+                <label for="filtro-categoria">Explorar Género</label>
+                <select id="filtro-categoria">
+                    <option value="todos">Todos los Géneros</option>
+                    <option value="Rock">Rock Clásico</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Jazz">Jazz & Blues</option>
+                    <option value="Electronic">Electrónica</option>
+                </select>
+            </div>
+        </section>
+
+        <div id="loading" class="loading">Sintonizando el catálogo...</div>
+
+        <div class="contenedor-principal">
+            <section id="lista-vinilos" class="grid-productos">
+                <!-- Productos dinámicos -->
+            </section>
+
+            <aside class="carrito-detalle">
+                <h2>Tu Selección</h2>
+                <div class="carrito-scroll">
+                    <ul id="carrito-items">
+                        <!-- Items del carrito -->
+                    </ul>
+                </div>
+                <div class="total-compra">
+                    <span class="label">Total Estimado</span>
+                    <span class="amount"><span id="precio-total">0</span>€</span>
+                </div>
+                <button id="vaciar-carrito" class="btn-clear">Limpiar Carrito</button>
+            </aside>
+        </div>
+    </main>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>

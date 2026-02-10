@@ -193,10 +193,28 @@ function eliminarProducto(e) {
     if (e.target.classList.contains('btn-remove')) {
         const id = e.target.getAttribute('data-id');
 
-        // Filtra y guarda todos los q no tengan ese id
-        articulosCarrito = articulosCarrito.filter(producto => producto.id != id);
+        const producto = productosBD.find(p => p.id == id);
+        
+        if (producto) {
+            producto.stock++;
 
-        // Limpiar
+            const botonAdd = document.querySelector(`.btn-add[data-id="${id}"]`);
+            const card = botonAdd.parentElement;
+            
+            card.querySelector('.stock-cantidad').textContent = `Stock: ${producto.stock}`;
+            botonAdd.disabled = false;
+            botonAdd.textContent = 'Añadir al carrito';
+            card.classList.remove('agotado');
+        }
+
+        for (let i = 0; i < articulosCarrito.length; i++) {
+            
+            if (articulosCarrito[i].id == id) {
+                articulosCarrito.splice(i, 1);
+                break;
+            }
+        }
+
         listaTuCompra.innerHTML = '';
         total = 0;
         totalPrecio.innerHTML = 0;
@@ -219,7 +237,7 @@ listaTuCompra.addEventListener('click', eliminarProducto);
 
 /* EJECUCIÓN */
 await obtenerProductos();
-pintarCards(productosBD);
+pintarCards(productosBD);console.log("productosdb")
 cargarCarritoAlInicio(); // Esto carga lo q hay en el localstorage
 
 console.log(productosBD[0].id)
